@@ -1,0 +1,142 @@
+import { z } from "zod";
+import { useRendering } from "../helpers/use-rendering";
+import { CompositionProps, COMP_NAME } from "../lambda/types/constants";
+import { AlignEnd } from "./remotion/AlignEnd";
+import { ButtonRe } from "./remotion/Button/Button";
+import { InputContainer } from "./remotion/Container";
+import { DownloadButton } from "./DownloadButton";
+import { ErrorComp } from "./remotion/Error";
+import { Input } from "./ui/input";
+import { ProgressBar } from "./ProgressBar";
+import { Spacing } from "./Spacing";
+import { ChangeEvent, useState } from "react";
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Button } from "./ui/button";
+import { Label } from "./ui/label";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+
+export const RenderControls: React.FC<{
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+  setInputProps: React.Dispatch<React.SetStateAction<any>>;
+  inputProps: z.infer<typeof CompositionProps>;
+  videos: { name: string }[];
+}> = ({ text, setText, setInputProps, inputProps, videos }) => {
+  const { renderMedia, state, undo } = useRendering(COMP_NAME, inputProps);
+  const [selectedVideo, setSelectedVideo] = useState<string>();
+
+  const videoCount: number = Object.keys(inputProps).filter(key => key.startsWith('video')).length;
+  const textCount: number = Object.keys(inputProps).filter(key => key.startsWith('title')).length;
+
+  const videosArray = Object.entries(videos).map(([name, url]) => ({ name, url }));
+
+  const videoUrls = Object.values(videos).map(videoObj => videoObj.video);
+
+  console.log('the videos')
+  console.log(videos)
+
+  console.log(videosArray);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
+    const { value } = e.target;
+    setInputProps((prevProps: any) => ({ ...prevProps, [key]: value }));
+  };
+
+  const handleVideoChange = (url: string, key: string) => {
+    setInputProps((prevProps: any) => ({ ...prevProps, [key]: url }));
+  };
+
+  return (
+    <InputContainer>
+      {state.status === "init" ||
+      state.status === "invoking" ||
+      state.status === "error" ? (
+        <>
+             {Object.entries(inputProps).map(([key, value], index) => {
+                if (key.startsWith('title')) {
+                  return (
+                    <div key={index} className="mb-5">
+                      <label htmlFor={key}>{key}</label>
+                      <Input
+                        id={key}
+                        disabled={state.status === "invoking"}
+                        value={value}
+                        onChange={(e) => handleInputChange(e, key)}
+                      />
+                    </div>
+                  );
+                } else if (key.startsWith('video')) {
+                  // Assuming you have a dropdown component for videos
+                  return (
+                    <div key={index} className="mb-5">
+                      <label htmlFor={key}>{key}</label>
+                      <Sheet>
+                        <SheetTrigger asChild>
+                          <Button variant="outline">Open</Button>
+                        </SheetTrigger>
+                        <SheetContent side={"bottom"}>
+                          <SheetHeader>
+                            <SheetTitle>Change Video</SheetTitle>
+                            <SheetDescription>
+                              Choose another video for this segment.
+                            </SheetDescription>
+                          </SheetHeader>
+                          <div className="relative">
+                          <ScrollArea>
+                          <div className="flex space-x-4 pb-4 pt-5">
+                            {videoUrls.map((video, index1) => (
+                                <video  className={`h-64 w-42 object-cover transition-all hover:scale-95 aspect-[3/4] rounded-md  border-2 ${selectedVideo === video ? 'border-gray-800' : 'border-transparent'} cursor-pointer`}
+                                    controls={false} 
+                                    key={index1}
+                                    onClick={() => setSelectedVideo(video)}
+                                    muted
+                                    loop>
+                                    <source src={video} type="video/mp4" />
+                                  </video>
+                            ))}
+                          </div>
+                          <ScrollBar orientation="horizontal" />
+                            </ScrollArea>
+                          </div>
+                          <SheetFooter>
+                            <SheetClose asChild>
+                              <Button type="submit" onClick={() => handleVideoChange(selectedVideo, key)}>Save changes</Button>
+                            </SheetClose>
+                          </SheetFooter>
+                        </SheetContent>
+                      </Sheet>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            <div className="flex justify-end">
+              <ButtonRe
+                disabled={state.status === "invoking"}
+                loading={state.status === "invoking"}
+                onClick={renderMedia}
+              >
+                Render video
+              </ButtonRe>
+              </div>
+              <Spacing></Spacing>
+            {state.status === "error" ? (
+              <ErrorComp message={state.error.message}></ErrorComp>
+            ) : null}
+        </>
+      ) : null}
+      {state.status === "rendering" || state.status === "done" ? (
+        <>
+          <ProgressBar
+            progress={state.status === "rendering" ? state.progress : 1}
+          />
+          <Spacing></Spacing>
+          <AlignEnd>
+            <DownloadButton undo={undo} state={state}></DownloadButton>
+          </AlignEnd>
+          <Spacing></Spacing>
+        </>
+      ) : null}
+    </InputContainer>
+  );
+};
