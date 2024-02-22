@@ -298,9 +298,6 @@ const ContentGenerator = () => {
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>
-                        What is the topic of the video? Make sure this aligns with the content type you want to generate.
-                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -319,9 +316,6 @@ const ContentGenerator = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>
-                      Who is this post targeted for?
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -480,7 +474,7 @@ const ContentGenerator = () => {
             </RadioGroup>
               )}
             />
-            <div className="pt-5">
+            <div className="pt-7">
             <Button type="submit">
                <span className="">Generate Video and Caption</span>
                <ChevronRight className="h-4 w-4 ml-1" />
