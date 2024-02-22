@@ -3,7 +3,7 @@ import {
   AwsRegion,
   getRenderProgress,
 } from "@remotion/lambda/client";
-import { DISK, RAM, REGION, TIMEOUT } from "../../../../config.mjs/index.js";
+import { DISK, RAM, REGION, TIMEOUT } from "../../../../config.mjs";
 import { executeApi } from "../../../../helpers/api-response";
 import { ProgressRequest, ProgressResponse } from "../../../../lambda/types/schema";
 

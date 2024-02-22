@@ -3,7 +3,7 @@ import {
   renderMediaOnLambda,
   speculateFunctionName,
 } from "@remotion/lambda/client";
-import { DISK, RAM, REGION, SITE_NAME, TIMEOUT } from "../../../../config.mjs/index.js";
+import { DISK, RAM, REGION, SITE_NAME, TIMEOUT } from "../../../../config.mjs";
 import { executeApi } from "../../../../helpers/api-response";
 import { RenderRequest } from "../../../../lambda/types/schema";
 
