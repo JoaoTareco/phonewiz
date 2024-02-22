@@ -125,7 +125,6 @@ const ContentGenerator = () => {
     try {
 
       setVideoHook(values.hook)
-      setGeneratedCaption(undefined);
 
       let genProps = {};
   
@@ -460,8 +459,8 @@ const ContentGenerator = () => {
               render={({ field }) => (
             <RadioGroup onValueChange={field.onChange} defaultValue={field.value}  className="flex flex-col space-y-1">
             <div className="grid grid-cols-3 gap-4">
-              {Object.entries(hookOptions).map(([key, label]) => (
-                <FormItem className="flex items-center space-x-3 space-y-0">
+              {Object.entries(hookOptions).map(([key, label], index)  => (
+                <FormItem className="flex items-center space-x-3 space-y-0" key={index}>
                 <FormControl>
                   <RadioGroupItem value={label}/>
                 </FormControl>
