@@ -137,7 +137,10 @@ const ContentGenerator = () => {
       axios.get(`/api/get-content`).then((response1: { data: any; }) => {
           const videos = response1.data;
 
-          setfullVideoList(videos)
+          const transformedVideos = videos.map((video: any) => ({ video: video.video }));
+
+          setfullVideoList(transformedVideos);
+
       
           const videoCount: number = Object.keys(genProps).filter((key) => key.startsWith('video')).length;
       
