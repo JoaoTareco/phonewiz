@@ -1,23 +1,18 @@
 "use client";
 
-import * as z from "zod";
 import axios from "axios";
 import { Key, useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { FileAudio, Videotape } from "lucide-react";
+
+import {  Videotape } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Loader } from "@/components/loader";
-import { Empty } from "@/components/ui/empty";
+
 import { useProModal } from "@/hooks/use-pro-modal";
 
-import { formSchema } from "./constants";
+
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
@@ -25,7 +20,6 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Label } from "@/components/ui/label";
 
 import { Loader2 } from "lucide-react"
-import { HoverCard, HoverCardContent } from "@/components/ui/hover-card";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -119,7 +113,7 @@ const VideoPage = () => {
                     </div>
                     <DialogFooter>
                      <DialogClose asChild>
-                      {!uploading && (<Button onClick={handleFileUpload}>Upload Video</Button>)}
+                      {!uploading && (<Button onClick={(e) => handleFileUpload(e as unknown as React.ChangeEvent<HTMLInputElement>)}>Upload Video</Button>)}
                       </DialogClose>
                     </DialogFooter>
                   </DialogContent>

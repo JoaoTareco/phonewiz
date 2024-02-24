@@ -14,14 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Loader } from "@/components/loader";
-import { Empty } from "@/components/ui/empty";
+
 import { useProModal } from "@/hooks/use-pro-modal";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import { CounterClockwiseClockIcon } from "@radix-ui/react-icons";
+
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
@@ -134,7 +134,7 @@ const ContentGenerator = () => {
         genProps = readCaptionProps;
       }
     
-      axios.get(`/api/get-content`).then((response1) => {
+      axios.get(`/api/get-content`).then((response1: { data: any; }) => {
           const videos = response1.data;
 
           setfullVideoList(videos)
@@ -148,7 +148,7 @@ const ContentGenerator = () => {
             const randomIndex = Math.floor(Math.random() * videos.length); // Generate a random index
             const randomVideo = videos[randomIndex]; // Access the video at the random index
             console.log('here3');
-            setVideos((prevState) => ({ ...prevState, [videoName]: randomVideo.video }));
+            setVideos((prevState: any) => ({ ...prevState, [videoName]: randomVideo.video }));
           }
 
       })
@@ -286,7 +286,7 @@ const ContentGenerator = () => {
         <form onSubmit={form.handleSubmit(generateHook)} className="space-y-6">
           <FormField
                   name="video_topic"
-                  render={({ field }) => (
+                  render={({ field }: { field: any }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Video Topic</FormLabel>
                       <FormControl className="w-[1200px]">
@@ -303,7 +303,7 @@ const ContentGenerator = () => {
             />
             <FormField
                 name="target_audience"
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel>Target Audience</FormLabel>
                     <FormControl className="w-[1200px]">
@@ -321,7 +321,7 @@ const ContentGenerator = () => {
           />
           <FormField
               name="personal_insights"
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Personal Insights</FormLabel>
                   <FormControl className="w-[1200px]">
@@ -342,7 +342,7 @@ const ContentGenerator = () => {
           />
            <FormField
               name="call_to_action"
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Call to Action</FormLabel>
                   <FormControl className="w-[1200px]">
@@ -363,7 +363,7 @@ const ContentGenerator = () => {
           <FormField
             control={form.control}
             name="video_template"
-            render={({ field }) => (
+            render={({ field }: { field: any }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Video Template</FormLabel>
                 <Popover>
@@ -456,16 +456,16 @@ const ContentGenerator = () => {
             <FormField
               control={form2.control}
               name="hook"
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
             <RadioGroup onValueChange={field.onChange} defaultValue={field.value}  className="flex flex-col space-y-1">
             <div className="grid grid-cols-3 gap-4">
               {Object.entries(hookOptions).map(([key, label], index)  => (
                 <FormItem className="flex items-center space-x-3 space-y-0" key={index}>
                 <FormControl>
-                  <RadioGroupItem value={label}/>
+                  <RadioGroupItem value={label as string}/>
                 </FormControl>
                 <FormLabel className="font-normal">
-                  {label}
+                  {label as string}
                 </FormLabel>
                 </FormItem>
               ))}
