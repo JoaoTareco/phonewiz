@@ -493,7 +493,7 @@ const ContentGenerator = () => {
              </Button>
              <h1 className="mb-5">Video Options</h1>
            <RenderControls
-              text={video_hook}
+              text={video_hook || ''}
               setText={setVideoHook}
               setInputProps={setGeneralProps}
               inputProps={generalProps}
