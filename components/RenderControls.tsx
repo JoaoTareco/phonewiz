@@ -16,17 +16,17 @@ import { Label } from "./ui/label";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 export const RenderControls: React.FC<{
-  text: string;
-  setText: React.Dispatch<React.SetStateAction<string>>;
   setInputProps: React.Dispatch<React.SetStateAction<any>>;
   inputProps: z.infer<typeof CompositionProps>;
-  videos: { name: string }[];
-}> = ({ text, setText, setInputProps, inputProps, videos }) => {
+  videos: {
+    video: any; name: string 
+}[];
+}> = ({ setInputProps, inputProps, videos }) => {
   const { renderMedia, state, undo } = useRendering(COMP_NAME, inputProps);
   const [selectedVideo, setSelectedVideo] = useState<string>();
 
-  const videoCount: number = Object.keys(inputProps).filter(key => key.startsWith('video')).length;
-  const textCount: number = Object.keys(inputProps).filter(key => key.startsWith('title')).length;
+  // const videoCount: number = Object.keys(inputProps).filter(key => key.startsWith('video')).length;
+  // const textCount: number = Object.keys(inputProps).filter(key => key.startsWith('title')).length;
 
   const videosArray = Object.entries(videos).map(([name, url]) => ({ name, url }));
 
@@ -42,7 +42,7 @@ export const RenderControls: React.FC<{
     setInputProps((prevProps: any) => ({ ...prevProps, [key]: value }));
   };
 
-  const handleVideoChange = (url: string, key: string) => {
+  const handleVideoChange = (url: string | undefined, key: string | undefined ) => {
     setInputProps((prevProps: any) => ({ ...prevProps, [key]: url }));
   };
 

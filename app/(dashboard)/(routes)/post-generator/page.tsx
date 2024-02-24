@@ -260,7 +260,7 @@ const ContentGenerator = () => {
     return {
       title: video_hook || "Default Hook",
       video1: videos.video1 || "Default video",
-      video2: videos.video2 || "Default video",
+      video2: videos.video2 || "Default video"
     };
   }, [video_hook,  videos.video1,  videos.video2]);
 
@@ -493,8 +493,6 @@ const ContentGenerator = () => {
              </Button>
              <h1 className="mb-5">Video Options</h1>
            <RenderControls
-              text={video_hook || ''}
-              setText={setVideoHook}
               setInputProps={setGeneralProps}
               inputProps={generalProps}
               videos={fullVideoList}
