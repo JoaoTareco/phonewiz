@@ -80,15 +80,15 @@ const ContentGenerator = () => {
   const [target_audience, setTargetAudience] = useState<string>();
   const [video_template, setVideoTemplate] = useState<string>();
   const [caption_template, setCaptionTemplate] = useState<string>();
-  const [video_hook, setVideoHook] = useState<string>();
-  const [video_link, setVideoLink] = useState<any>();
-  const [selectedValue, setSelectedValue] = useState<string>();
+  const [video_hook, setVideoHook] = useState<string | undefined>();
+  // const [video_link, setVideoLink] = useState<any>();
+  // const [selectedValue, setSelectedValue] = useState<string>();
   const [hookOptions, setHookOptions] = useState<any>();
   const [generalProps, setGeneralProps] = useState<any>();
-  const [componentId, setComponentId] = useState<any>();
+  // const [componentId, setComponentId] = useState<any>();
   const [videos, setVideos] = useState<{ [key: string]: string }>({});
   const [fullVideoList, setfullVideoList] = useState<{ [key: string]: string }>({});
-  const [texts, setTexts] = useState<{ [key: string]: string }>({});
+  // const [texts, setTexts] = useState<{ [key: string]: string }>({});
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -218,9 +218,9 @@ const ContentGenerator = () => {
     }
   }
 
-  const handleChange = (value: SetStateAction<string | undefined>) => {
-    setSelectedValue(value);
-  };
+  // const handleChange = (value: SetStateAction<string | undefined>) => {
+  //   setSelectedValue(value);
+  // };
 
 
   const returnButton = async () => {
