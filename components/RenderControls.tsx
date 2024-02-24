@@ -18,9 +18,7 @@ import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 export const RenderControls: React.FC<{
   setInputProps: React.Dispatch<React.SetStateAction<any>>;
   inputProps: z.infer<typeof CompositionProps>;
-  videos: {
-    video: any; name: string 
-}[];
+  videos: { video: string }[];
 }> = ({ setInputProps, inputProps, videos }) => {
   const { renderMedia, state, undo } = useRendering(COMP_NAME, inputProps);
   const [selectedVideo, setSelectedVideo] = useState<string>();
