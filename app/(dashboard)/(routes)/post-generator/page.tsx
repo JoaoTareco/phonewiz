@@ -137,7 +137,7 @@ const ContentGenerator = () => {
       axios.get(`/api/get-content`).then((response1: { data: any; }) => {
           const videos = response1.data;
 
-          const transformedVideos = Object.keys(videos).map((key) => ({ video: videos[key] }));
+          const transformedVideos = videos.map((video: any) => ({ video: video.video }));
 
           setfullVideoList(transformedVideos);
 
