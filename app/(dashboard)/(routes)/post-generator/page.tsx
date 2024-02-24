@@ -80,7 +80,7 @@ const ContentGenerator = () => {
   const [target_audience, setTargetAudience] = useState<string>();
   const [video_template, setVideoTemplate] = useState<string>();
   const [caption_template, setCaptionTemplate] = useState<string>();
-  const [video_hook, setVideoHook] = useState<string | undefined>();
+  const [video_hook, setVideoHook] = useState<string>();
   // const [video_link, setVideoLink] = useState<any>();
   // const [selectedValue, setSelectedValue] = useState<string>();
   const [hookOptions, setHookOptions] = useState<any>();
@@ -252,15 +252,15 @@ const ContentGenerator = () => {
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
     return {
       title: video_hook || "Default Hook",
-      video: videos.video1
+      video: videos.video1 || "Default video",
     };
   }, [video_hook, videos.video1]);
 
   const readCaptionProps: z.infer<typeof ReadCaptionProps> = useMemo(() => {
     return {
-      title: video_hook || "Default Title",
-      video1: videos.video1,
-      video2: videos.video2
+      title: video_hook || "Default Hook",
+      video1: videos.video1 || "Default video",
+      video2: videos.video2 || "Default video",
     };
   }, [video_hook,  videos.video1,  videos.video2]);
 
