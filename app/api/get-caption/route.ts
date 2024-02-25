@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
 // import Configuration from "openai"
 import { checkSubscription } from "@/lib/subscription";
-import { incrementApiLimit, checkApiLimit } from "@/lib/api-limit";
+import { checkApiLimit } from "@/lib/api-limit";
 
 // const configuration = new Configuration({
 //   apiKey: process.env.OPENAI_API_KEY,
