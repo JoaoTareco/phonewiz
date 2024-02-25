@@ -21,12 +21,16 @@ export async function GET(
     }
 
     const result = await prisma.$queryRawUnsafe(`SELECT name FROM storage.objects where name like '${userId}/%'`)
-  
-    console.log(result)
+
+    // Assert the type of result
+    const typedResult = result as { name: string }[];
+
+    console.log(typedResult);
 
     let assets: any[] = []
 
-    result.forEach((asset: string) => {
+    // Use typedResult instead of result
+    typedResult.forEach((asset) => {
       assets.push({video: `https://${project_id}.supabase.co/storage/v1/object/public/content-bank/${asset.name}`})
     });
 

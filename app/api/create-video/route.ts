@@ -66,7 +66,7 @@ export async function POST(
         console.log('Completed:', renders);
         
       })
-      .catch((error) => console.error(error));
+      .catch((error: any) => console.error(error));
 
 
     // if (!isPro) {

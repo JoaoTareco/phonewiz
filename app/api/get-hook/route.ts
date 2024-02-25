@@ -67,10 +67,11 @@ export async function POST(
 
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: prompt
+      messages: prompt as any
     });
 
-    const contentWithLineBreaks = JSON.parse(response.choices[0].message.content);
+    const contentWithLineBreaks = JSON.parse(response.choices[0].message.content as any);
+    
 
     // if (!isPro) {
     //   await incrementApiLimit();

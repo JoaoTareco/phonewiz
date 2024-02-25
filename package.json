@@ -83,6 +83,7 @@
     "shadcn-ui": "^0.4.1",
     "skeleton": "^0.1.2",
     "snowball-stemmers": "^0.6.0",
+    "sonner": "^1.4.1",
     "stemmer": "^2.0.1",
     "stripe": "^12.13.0",
     "tailwind-merge": "^1.13.2",
@@ -94,7 +95,7 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "@types/react": "18.2.22",
+    "@types/react": "^18.2.58",
     "@types/snowball-stemmers": "^0.6.2",
     "typescript": "5.2.2"
   }

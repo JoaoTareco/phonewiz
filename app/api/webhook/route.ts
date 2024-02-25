@@ -38,9 +38,9 @@ export async function POST(req: Request) {
         stripeSubscriptionId: subscription.id,
         stripeCustomerId: subscription.customer as string,
         stripePriceId: subscription.items.data[0].price.id,
-        stripeCurrentPeriodEnd: new Date(
+        stripeCurrentPeriodEnd: String(new Date(
           subscription.current_period_end * 1000
-        ),
+        )),
       },
     })
   }
@@ -52,13 +52,14 @@ export async function POST(req: Request) {
 
     await prismadb.userSubscription.update({
       where: {
-        stripeSubscriptionId: subscription.id,
+        //stripeSubscriptionId: subscription.id,
+        userId: session?.metadata?.userId
       },
       data: {
         stripePriceId: subscription.items.data[0].price.id,
-        stripeCurrentPeriodEnd: new Date(
+        stripeCurrentPeriodEnd: String(new Date(
           subscription.current_period_end * 1000
-        ),
+        )),
       },
     })
   }

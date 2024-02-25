@@ -34,7 +34,7 @@ async function uploadFile(bucketName: string, fileName: string, file: any) {
               cacheControl: 3600,
           },
           chunkSize: 6 * 1024 * 1024, // NOTE: it must be set to 6MB (for now) do not change it
-          onError: function (error) {
+          onError: function (error: string) {
               console.log('Failed because: ' + error)
               reject(error)
           },

@@ -87,7 +87,8 @@ const ContentGenerator = () => {
   const [generalProps, setGeneralProps] = useState<any>();
   // const [componentId, setComponentId] = useState<any>();
   const [videos, setVideos] = useState<{ [key: string]: string }>({});
-  const [fullVideoList, setfullVideoList] = useState<{ [key: string]: string }>({});
+  type VideoObject = { video: string };
+  const [fullVideoList, setfullVideoList] = useState<VideoObject[]>([]);
   // const [texts, setTexts] = useState<{ [key: string]: string }>({});
 
   const form = useForm<z.infer<typeof FormSchema>>({

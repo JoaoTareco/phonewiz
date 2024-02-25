@@ -43,8 +43,8 @@ export async function POST(
     console.log(body.hook)
 
    const prompt=[
-      {"role": "system", "content": "You are a viral content expert."},
-      {"role": "user", "content": `I need your help to generate a caption for an instagram reel.
+      {role: "system", content: "You are a viral content expert."},
+      {role: "user", content: `I need your help to generate a caption for an instagram reel.
 
       Make the copywritting impeccable and memorable, while being straightforward and like spoken language. Don't overly use adjectives. I want the caption to be very informative and have actionable value for who will read it.
       
@@ -89,7 +89,7 @@ export async function POST(
 
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: prompt
+      messages: prompt as any
     });
 
     const contentWithLineBreaks = response.choices[0].message.content?.slice(1, -1);

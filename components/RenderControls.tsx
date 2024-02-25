@@ -12,7 +12,7 @@ import { Spacing } from "./Spacing";
 import { ChangeEvent, useState } from "react";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
-import { Label } from "./ui/label";
+// import { Label } from "./ui/label";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 export const RenderControls: React.FC<{
@@ -41,7 +41,7 @@ export const RenderControls: React.FC<{
   };
 
   const handleVideoChange = (url: string | undefined, key: string | undefined ) => {
-    setInputProps((prevProps: any) => ({ ...prevProps, [key]: url }));
+    setInputProps((prevProps: any) => ({ ...prevProps, [key as any]: url }));
   };
 
   return (
