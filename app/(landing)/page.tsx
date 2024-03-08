@@ -19,7 +19,7 @@ import { useEffect } from 'react';
 
 const LandingPage = () => {
  useEffect(() => {
-    window.location.href = 'https://www.ctrlcap.com';
+    window.location.href = 'https://www.app.ctrlcap.com/sign-up';
  }, []);
 
  return null; // Return null since we're redirecting and not rendering any content
