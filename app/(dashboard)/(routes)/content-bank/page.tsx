@@ -3,6 +3,7 @@
 import axios from "axios";
 import { Key, useEffect, useState } from "react";
 
+
 import {  Videotape } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -102,7 +103,7 @@ const VideoPage = () => {
                     <DialogHeader>
                       <DialogTitle>Add Video</DialogTitle>
                       <DialogDescription>
-                        Select a video to upload.
+                        Please make sure it is longer than 3 seconds.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
@@ -124,7 +125,7 @@ const VideoPage = () => {
                   controls={false} 
                   autoPlay
                   muted
-                  loop>
+                  >
                     <source src={videoUrl} type="video/mp4" />
                   </video>
                 ))}

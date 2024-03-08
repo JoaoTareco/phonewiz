@@ -43,8 +43,8 @@ export async function GET() {
           price_data: {
             currency: "USD",
             product_data: {
-              name: "Locus Pro",
-              description: "Unlimited AI Generations"
+              name: "ctrlcap Pro",
+              description: "Pro plan."
             },
             unit_amount: 2000,
             recurring: {

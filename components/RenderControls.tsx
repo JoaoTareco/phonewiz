@@ -54,12 +54,13 @@ export const RenderControls: React.FC<{
                 if (key.startsWith('title')) {
                   return (
                     <div key={index} className="mb-5">
-                      <label htmlFor={key}>{key}</label>
+                      {/* <label htmlFor={key}>{key}</label> */}
                       <Input
                         id={key}
                         disabled={state.status === "invoking"}
                         value={value}
                         onChange={(e) => handleInputChange(e, key)}
+                        className=""
                       />
                     </div>
                   );
@@ -67,10 +68,10 @@ export const RenderControls: React.FC<{
                   // Assuming you have a dropdown component for videos
                   return (
                     <div key={index} className="mb-5">
-                      <label htmlFor={key}>{key}</label>
+                      {/* <label htmlFor={key}>{key}</label>  */}
                       <Sheet>
                         <SheetTrigger asChild>
-                          <Button variant="outline">Open</Button>
+                          <Button variant="outline">Change Video {index}</Button>
                         </SheetTrigger>
                         <SheetContent side={"bottom"}>
                           <SheetHeader>
@@ -108,7 +109,7 @@ export const RenderControls: React.FC<{
                 }
                 return null;
               })}
-            <div className="flex justify-end">
+            <div className="flex justify-start">
               <ButtonRe
                 disabled={state.status === "invoking"}
                 loading={state.status === "invoking"}

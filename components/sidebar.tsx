@@ -3,17 +3,24 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Montserrat } from 'next/font/google'
-import { Code, ImageIcon, LayoutDashboard, MessageSquare, Music, Settings, VideoIcon } from "lucide-react";
+import { Code, ImageIcon, LayoutDashboard, LifeBuoy, MessageSquare, Music, Newspaper, Settings, VideoIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { FreeCounter } from "@/components/free-counter";
+import { Card, CardContent } from "./ui/card";
 
 const poppins = Montserrat ({ weight: '600', subsets: ['latin'] });
 
 const routes = [
+  // {
+  //   label: 'Home',
+  //   icon: LayoutDashboard,
+  //   href: '/dashboard',
+  //   color: "text-sky-500"
+  // },
   {
-    label: 'Content Calendar',
+    label: 'Content Planner',
     icon: LayoutDashboard,
     href: '/content-calendar',
     color: "text-sky-500"
@@ -24,12 +31,12 @@ const routes = [
     color: "text-pink-700",
     href: '/post-generator',
   },
-  {
-    label: 'Templates',
-    icon: ImageIcon,
-    color: "text-pink-700",
-    href: '/templates',
-  },
+  // {
+  //   label: 'Templates',
+  //   icon: ImageIcon,
+  //   color: "text-pink-700",
+  //   href: '/templates',
+  // },
   {
     label: 'Content Bank',
     icon: MessageSquare,
@@ -73,13 +80,10 @@ export const Sidebar = ({
   return (
     <div className="space-y-4 py-4 flex flex-col h-full bg-background text-foreground border border-border">
       <div className="px-3 py-2 flex-1">
-      <Link href="/dashboard" className="flex items-center">
-          <div className="relative h-16 w-32 ml-7">
+      <Link href="/content-calendar" className="flex items-left">
+          <div className="relative h-16 w-32 ml-4 mr-4">
             <Image fill alt="Logo" src="/ctrlcap.png" />
           </div>
-          {/* <h1 className={cn("text-2xl font-bold", poppins.className)}>
-            Locus
-          </h1> */}
         </Link>
         <div className="space-y-1">
           {routes.map((route) => (
@@ -99,6 +103,21 @@ export const Sidebar = ({
           ))}
         </div>
       </div>
+      <Card className="bg-white/10 border-1">
+        <CardContent className="py-6">
+          {/* <div className="flex text-center text-sm font-medium text-muted-foreground space-y-2">
+
+             <LifeBuoy size={16} className="mr-1"/> Support
+          
+          </div> */}
+          {/* <Progress className="h-3" value={(apiLimitCount / MAX_FREE_COUNTS) * 100} /> */}
+          {/* <div className="flex text-center text-sm font-medium text-muted-foreground space-y-2 mt-3">
+
+          <Newspaper size={16} className="mr-1"/> What's New
+            
+          </div> */}
+        </CardContent>
+      </Card>
       <FreeCounter 
         apiLimitCount={apiLimitCount} 
         isPro={isPro}

@@ -17,7 +17,7 @@ export const defaultMyCompProps: z.infer<typeof CompositionProps> = {
   video: "https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/user_2aPY12uVo8oyqxKieBV7qpNOgOJ/IMG_2200.mp4",
 };
 
-export const DURATION_IN_FRAMES = 200;
+export const DURATION_IN_FRAMES = 180;
 export const VIDEO_WIDTH = 1080;
 export const VIDEO_HEIGHT = 1920;
 export const VIDEO_FPS = 30;

@@ -38,10 +38,6 @@ export async function POST(
       return new NextResponse("Free trial has expired. Please upgrade to pro.", { status: 403 });
     }
 
-    console.log(body.target_audience)
-    console.log(body.video_topic)
-    console.log(body.hook)
-
    const prompt=[
       {role: "system", content: "You are a viral content expert."},
       {role: "user", content: `I need your help to generate a caption for an instagram reel.
@@ -50,6 +46,8 @@ export async function POST(
       
       Create me a video caption that targets the ${body.target_audience} audience about the topic "${body.video_topic}". 
       The hook that will appear as text in the video is this: "${body.hook}".
+      Also re-write these personal insights into the caption: "${body.personal_insights}".
+      In the end, include also a call to action in the form of "${body.call_to_action}".
       Here is an example of a caption so you understand the structure and language type I want (disregard the content itself of the example, 
         as it may have nothing to do with the target audience and topic of the new caption I am asking you to write):
 

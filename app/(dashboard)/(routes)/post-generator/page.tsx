@@ -81,6 +81,8 @@ const ContentGenerator = () => {
   const [video_template, setVideoTemplate] = useState<string>();
   const [caption_template, setCaptionTemplate] = useState<string>();
   const [video_hook, setVideoHook] = useState<string>();
+  const [personal_insights, setPersonalInsights] = useState<string>();
+  const [call_to_action, setCallToAction] = useState<string>();
   // const [video_link, setVideoLink] = useState<any>();
   // const [selectedValue, setSelectedValue] = useState<string>();
   const [hookOptions, setHookOptions] = useState<any>();
@@ -166,7 +168,9 @@ const ContentGenerator = () => {
         target_audience: target_audience,
         video_template: video_template,
         caption_template: caption_template,
-        video_topic: video_topic
+        video_topic: video_topic,
+        call_to_action: call_to_action,
+        personal_insights: personal_insights
       }
 
       console.log(body)
@@ -200,6 +204,8 @@ const ContentGenerator = () => {
       console.log(values)
 
       isLoading2 = true;
+      setPersonalInsights(values.personal_insights)
+      setCallToAction(values.call_to_action)
       setTargetAudience(values.target_audience)
 
       const response = await axios.post(`/api/get-hook`, values);
