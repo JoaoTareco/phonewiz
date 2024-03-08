@@ -41,12 +41,12 @@ export async function GET() {
       line_items: [
         {
           price_data: {
-            currency: "USD",
+            currency: "EUR",
             product_data: {
               name: "ctrlcap Pro",
               description: "Pro plan."
             },
-            unit_amount: 2000,
+            unit_amount: 999,
             recurring: {
               interval: "month"
             }
