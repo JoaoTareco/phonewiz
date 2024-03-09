@@ -1,28 +1,25 @@
-import { Code, ImageIcon, MessageSquare, Music, VideoIcon } from "lucide-react";
+import { Wallet, ImageIcon, Film, Music, StickyNote } from "lucide-react";
 
 export const MAX_FREE_COUNTS = 5;
 
 export const tools = [
   {
-    label: 'Trending Keywords',
-    icon: MessageSquare,
-    href: '/trending',
-    color: "text-violet-500",
-    bgColor: "bg-violet-500/10",
+    label: 'Unlimited posts per month',
+    icon: StickyNote,
+    color: "text-gray-700",
+    bgColor: "bg-gray-700/10",
   },
   {
-    label: 'Search Keywords',
-    icon: Music,
-    href: '/search/keywords',
-    color: "text-emerald-500",
-    bgColor: "bg-emerald-500/10",
+    label: '60 video renders per month',
+    icon: Film,
+    color: "text-gray-700",
+    bgColor: "bg-gray-700/10",
   },
   {
-    label: 'Search Shops',
-    icon: ImageIcon,
-    color: "text-pink-700",
-    bgColor: "bg-pink-700/10",
-    href: '/search/shops',
+    label: 'Price will forever be 9,99€ for you',
+    icon: Wallet,
+    color: "text-gray-700",
+    bgColor: "bg-gray-700/10",
   },
   // {
   //   label: 'Video Generation',
