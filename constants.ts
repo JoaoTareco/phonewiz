@@ -6,12 +6,14 @@ export const tools = [
   {
     label: 'Unlimited posts per month',
     icon: StickyNote,
+    href: '/content-calendar',
     color: "text-gray-700",
     bgColor: "bg-gray-700/10",
   },
   {
     label: '60 video renders per month',
     icon: Film,
+    href: '/content-calendar',
     color: "text-gray-700",
     bgColor: "bg-gray-700/10",
   },
@@ -20,6 +22,7 @@ export const tools = [
     icon: Wallet,
     color: "text-gray-700",
     bgColor: "bg-gray-700/10",
+    href: '/content-calendar',
   },
   // {
   //   label: 'Video Generation',
