@@ -108,18 +108,24 @@ const ContentGenerator = () => {
   useEffect(() => {
     let genProps = {};
 
-    if (video_template === 'inputProps') {
-      genProps = {
-        title: video_hook,
-        video: videos.video1 // Assuming videos.video1 is the correct video URL
-      };
-    } else if (video_template === 'readCaptionProps') {
-      genProps = {
-        title: video_hook,
-        video1: videos.video1, // Assuming videos.video1 and videos.video2 are the correct video URLs
-        video2: videos.video2
-      };
-    }
+    // if (video_template === 'inputProps') {
+    //   genProps = {
+    //     title: video_hook,
+    //     video: videos.video1 // Assuming videos.video1 is the correct video URL
+    //   };
+    // } else if (video_template === 'readCaptionProps') {
+    //   genProps = {
+    //     title: video_hook,
+    //     video1: videos.video1, // Assuming videos.video1 and videos.video2 are the correct video URLs
+    //     video2: videos.video2
+    //   };
+    // }
+
+    genProps = {
+      title: video_hook,
+      video1: videos.video1, // Assuming videos.video1 and videos.video2 are the correct video URLs
+      video2: videos.video2
+    };
 
     setGeneralProps(genProps);
   }, [videos, video_template,video_hook]); // Specify the correct dependencies
@@ -130,12 +136,14 @@ const ContentGenerator = () => {
       setVideoHook(values.hook)
 
       let genProps = {};
+
+      genProps = readCaptionProps;
   
-      if (video_template === 'inputProps') {
-        genProps = inputProps;
-      } else if (video_template === 'readCaptionProps') {
-        genProps = readCaptionProps;
-      }
+      // if (video_template === 'inputProps') {
+      //   genProps = inputProps;
+      // } else if (video_template === 'readCaptionProps') {
+      //   genProps = readCaptionProps;
+      // }
     
       axios.get(`/api/get-content`).then((response1: { data: any; }) => {
           const videos = response1.data;
@@ -275,9 +283,10 @@ const ContentGenerator = () => {
   }, [video_hook,  videos.video1,  videos.video2]);
 
   const video_templates = [
-    { label: "Initial Demo", value: 'inputProps' },
-    { label: "Read Caption", value: 'readCaptionProps' },
-    { label: "Info Slides", value: "image" },
+    { label: "How To", value: 'How To' },
+    // { label: "Read Caption", value: 'readCaptionProps' },
+    { label: "Story", value: 'Story' },
+    { label: "Bullet List", value: "Bullet List" },
   ] as const
 
   return ( 
@@ -375,7 +384,7 @@ const ContentGenerator = () => {
             name="video_template"
             render={({ field }: { field: any }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Video Template</FormLabel>
+                <FormLabel>Caption Template</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -509,7 +518,7 @@ const ContentGenerator = () => {
             ></RenderControls>
            </div>
              <div className="rounded-md border bg-muted flex justify-center col-span-1">
-                {(video_template === "inputProps") && (  <Player
+                {/* {(video_template === "inputProps") && (  <Player
                     component={Main}
                     inputProps={generalProps}
                     durationInFrames={DURATION_IN_FRAMES}
@@ -520,8 +529,8 @@ const ContentGenerator = () => {
                     autoPlay
                     style={{ height: "100%" }}
                     loop
-                  />)}
-                {(video_template === "readCaptionProps") && (  <Player
+                  />)} */}
+                {/* {(video_template === "readCaptionProps") && (  <Player
                   component={ReadCaption}
                   inputProps={generalProps}
                   durationInFrames={DURATION_IN_FRAMES}
@@ -532,7 +541,19 @@ const ContentGenerator = () => {
                   autoPlay
                   style={{ height: "100%" }}
                   loop
-                />)}
+                />)} */}
+              <Player
+                  component={ReadCaption}
+                  inputProps={generalProps}
+                  durationInFrames={DURATION_IN_FRAMES}
+                  fps={VIDEO_FPS}
+                  compositionHeight={VIDEO_HEIGHT}
+                  compositionWidth={VIDEO_WIDTH}
+                  controls
+                  autoPlay
+                  style={{ height: "100%" }}
+                  loop
+                />
               {/* <video className="h-screen  object-cover transition-all aspect-[3/4] rounded-md" 
                   controls={false} 
                   autoPlay

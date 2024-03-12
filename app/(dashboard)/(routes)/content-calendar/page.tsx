@@ -131,12 +131,12 @@ const ContentPlan = () => {
       if (response.status === 200) {
         toast.success("Plan generated successfully.");
 
-        console.log(response.data)
-        console.log('here')
+        // console.log(response.data)
+        // console.log('here')
     
         setContentPlan(response.data)
-        console.log('final')
-        console.log(contentPlan)
+        // console.log('final')
+        // console.log(contentPlan)
       }
       
       isLoading = false;
@@ -152,18 +152,24 @@ const ContentPlan = () => {
   useEffect(() => {
     let genProps = {};
 
-    if (video_template === 'inputProps') {
-      genProps = {
-        title: video_hook,
-        video: videos.video1 // Assuming videos.video1 is the correct video URL
-      };
-    } else if (video_template === 'readCaptionProps') {
-      genProps = {
-        title: video_hook,
-        video1: videos.video1, // Assuming videos.video1 and videos.video2 are the correct video URLs
-        video2: videos.video2
-      };
-    }
+    // if (video_template === 'inputProps') {
+    //   genProps = {
+    //     title: video_hook,
+    //     video: videos.video1 // Assuming videos.video1 is the correct video URL
+    //   };
+    // } else if (video_template === 'readCaptionProps') {
+    //   genProps = {
+    //     title: video_hook,
+    //     video1: videos.video1, // Assuming videos.video1 and videos.video2 are the correct video URLs
+    //     video2: videos.video2
+    //   };
+    // }
+
+    genProps = {
+      title: video_hook,
+      video1: videos.video1, // Assuming videos.video1 and videos.video2 are the correct video URLs
+      video2: videos.video2
+    };
 
     setGeneralProps(genProps);
   }, [videos, video_template, video_hook]); // Specify the correct dependencies
@@ -198,11 +204,13 @@ const ContentPlan = () => {
 
       setHookOptions(response.data);
 
-      if (video_type === 'How To') {
-        setVideoTemplate('how_to')
-      } else if (video_type === 'Read Caption') {
-        setVideoTemplate('readCaptionProps')
-      }
+      setVideoTemplate(video_type)
+
+      // if (video_type === 'How To') {
+      //   setVideoTemplate('how_to')
+      // } else if (video_type === 'Read Caption') {
+      //   setVideoTemplate('readCaptionProps')
+      // }
       setVideoTopic(video_topic)
       setCTA(cta)
 
@@ -245,12 +253,14 @@ const ContentPlan = () => {
       setVideoHook(values.hook)
 
       let genProps = {};
+
+      genProps = readCaptionProps;
   
-      if (video_template === 'inputProps') {
-        genProps = inputProps;
-      } else if (video_template === 'readCaptionProps') {
-        genProps = readCaptionProps;
-      }
+      // if (video_template === 'inputProps') {
+      //   genProps = inputProps;
+      // } else if (video_template === 'readCaptionProps') {
+      //   genProps = readCaptionProps;
+      // }
     
       axios.get(`/api/get-content`).then((response1: { data: any; }) => {
           const videos = response1.data;
@@ -268,7 +278,7 @@ const ContentPlan = () => {
             const videoName = `video${i + 1}`;
             const randomIndex = Math.floor(Math.random() * videos.length); // Generate a random index
             const randomVideo = videos[randomIndex]; // Access the video at the random index
-            console.log('here3');
+ 
             setVideos((prevState: any) => ({ ...prevState, [videoName]: randomVideo.video }));
           }
 
@@ -558,7 +568,7 @@ const ContentPlan = () => {
                     <TableCell className="font-medium">{topic.weekDay}</TableCell>
                     <TableCell>{topic.topic}</TableCell>
                     <TableCell>
-                        {topic.type == 'Read Caption' && <Badge variant={"low"}>{topic.type}</Badge>}
+                        {topic.type == 'Story' && <Badge variant={"low"}>{topic.type}</Badge>}
                         {topic.type == 'Bullet List' && <Badge variant={"medium"}>{topic.type}</Badge>}
                         {topic.type == 'How To' && <Badge variant={"medium2"}>{topic.type}</Badge>}
                     </TableCell>
@@ -663,7 +673,7 @@ const ContentPlan = () => {
             ></RenderControls>
            </div>
              <div className="rounded-md border bg-muted flex justify-center col-span-1">
-                {(video_template === "inputProps") && (  <Player
+                {/* {(video_template === "inputProps") && (  <Player
                     component={Main}
                     inputProps={generalProps}
                     durationInFrames={DURATION_IN_FRAMES}
@@ -686,7 +696,20 @@ const ContentPlan = () => {
                   autoPlay
                   style={{ height: "100%" }}
                   loop
-                />)}
+                />)} */}
+
+                <Player
+                  component={ReadCaption}
+                  inputProps={generalProps}
+                  durationInFrames={DURATION_IN_FRAMES}
+                  fps={VIDEO_FPS}
+                  compositionHeight={VIDEO_HEIGHT}
+                  compositionWidth={VIDEO_WIDTH}
+                  controls
+                  autoPlay
+                  style={{ height: "100%" }}
+                  loop
+                />
               {/* <video className="h-screen  object-cover transition-all aspect-[3/4] rounded-md" 
                   controls={false} 
                   autoPlay
