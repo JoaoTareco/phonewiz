@@ -23,21 +23,63 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react"
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Card, CardContent } from "@/components/ui/card";
+import { useUser } from '@clerk/nextjs';
+
+import Uppy from '@uppy/core';
+import { Dashboard } from '@uppy/react';
+import Tus from '@uppy/tus';
+
+import '@uppy/core/dist/style.min.css';
+import '@uppy/dashboard/dist/style.min.css';
+
+
+const api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vZHRyeHRtaHd4d255d3NwZnVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQwMjM0NzksImV4cCI6MjAxOTU5OTQ3OX0.hTwPwcu50pbBDZIod4hz029-2cA5rCDzw_ZYSGclNMA';
+const project_id = 'modtrxtmhwxwnywspfuf';
+
 
 const VideoPage = () => {
   const router = useRouter();
   const proModal = useProModal();
   const [videos, setVideos] = useState<string[]>([]);
+  const [userId, setUserId] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [uploading, setUploading] = useState<boolean>(false);
+  const [uploaded, setUploaded] = useState<boolean>(false);
+  const [reloadVideos, setReloadVideos] = useState<boolean>(false);
   const [file, setFile] = useState<File>()
 
+
+  var uppy = new Uppy()
+  .use(Tus, {
+    endpoint: `https://${project_id}.supabase.co/storage/v1/upload/resumable`,
+    headers: {
+      authorization: `Bearer ${api_key}`,
+    },
+    chunkSize: 6 * 1024 * 1024,
+    allowedMetaFields: ['bucketName', 'objectName', 'contentType', 'cacheControl'],
+  })
+
+  uppy.on('file-added', (file) => {
+    file.meta = {
+      ...file.meta,
+      bucketName: 'content-bank',
+      objectName:  `${userId}/${file.name}`,
+      contentType: file.type,
+    }
+  })
+  
+  uppy.on('complete', (result) => {
+    setUploaded(true)
+    console.log('Upload complete! We’ve uploaded these files:', result.successful)
+  })
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/get-content`);
         setVideos(response.data.map((item: any) => item.video));
+        const userData = await axios.get(`/api/get-user-id`);
+        setUserId(userData.data)
+        console.log(userId)
       } catch (error) {
         console.error('API Error:', error);
       } finally{
@@ -48,30 +90,21 @@ const VideoPage = () => {
     fetchData();
   }, []);
 
-  async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
-    if (!file) return
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setReloadVideos(true)
+        const response = await axios.get(`/api/get-content`);
+        setVideos(response.data.map((item: any) => item.video));
+        setReloadVideos(false)
+        setUploaded(false)
+      } catch (error) {
+        console.error('API Error:', error);
+      }
+    };
 
-    try {
-      setUploading(true)
-      const data = new FormData()
-      data.set('file', file)
-
-      const res = await fetch('/api/add-content', {
-        method: 'POST',
-        body: data
-      })
-
-      setUploading(false)
-
-      const response = await axios.get(`/api/get-content`);
-      setVideos(response.data.map((item: any) => item.video));
-      // handle the error
-      if (!res.ok) throw new Error(await res.text())
-    } catch (e: any) {
-      // Handle errors here
-      console.error(e)
-    }
-  }
+    fetchData();
+  }, [uploaded]);
 
   return ( 
     <div>
@@ -84,7 +117,8 @@ const VideoPage = () => {
       />
       <div className="px-4 lg:px-8">
         <Separator className="my-4" />
-        <div className="relative">
+        {!reloadVideos && (
+             <div className="relative">
           <ScrollArea>
             <div className="flex space-x-4 pb-4">
               <div className="h-96 w-64 object-cover transition-all aspect-[3/4] justify-center text-center rounded-md border border-dashed">
@@ -99,27 +133,18 @@ const VideoPage = () => {
                       Upload video
                     </Button>
                   </DialogTrigger>
-                  <DialogContent>
+                  <DialogContent className="justify-center">
                     <DialogHeader>
                       <DialogTitle>Add Video</DialogTitle>
                       <DialogDescription>
                         Please make sure it is longer than 3 seconds.
                       </DialogDescription>
                     </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                      <div className="grid gap-2">
-                        <Label htmlFor="url">Video</Label>
-                        <Input type="file" name="file" onChange={(e) => setFile(e.target.files?.[0])}/>
-                      </div>
-                    </div>
-                    <DialogFooter>
-                     <DialogClose asChild>
-                      {!uploading && (<Button onClick={(e) => handleFileUpload(e as unknown as React.ChangeEvent<HTMLInputElement>)}>Upload Video</Button>)}
-                      </DialogClose>
-                    </DialogFooter>
+                    <div className="flex pt-5">{uppy && <Dashboard uppy={uppy} closeAfterFinish={false} note={'Videos longer than 3 seconds only, up to 30 MB'} className="w-[450px]"/>}</div>
                   </DialogContent>
                 </Dialog>
               </div>
+  
               {videos.map((videoUrl: string | undefined, index: Key | null | undefined) => (
                   <video className="h-96 w-64 object-cover transition-all hover:scale-105 aspect-[3/4] rounded-md" key={index}
                   controls={false} 
@@ -129,12 +154,13 @@ const VideoPage = () => {
                     <source src={videoUrl} type="video/mp4" />
                   </video>
                 ))}
+         
             </div>
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
-        </div>
+        </div>)}
       </div>
-      {uploading && (
+      {/* {uploading && (
       <div className="place-content-end w-40 h-4">
         <Card className="shadow-xl">
           <CardContent>
@@ -146,7 +172,7 @@ const VideoPage = () => {
             </div>
             </CardContent>
         </Card>
-      </div>)}
+      </div>)} */}
     </div>
    );
 }
