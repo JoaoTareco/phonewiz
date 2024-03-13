@@ -355,7 +355,7 @@ const ContentPlan = () => {
                                 
                                 disabled={isLoading
                                 } 
-                                placeholder="My niche is about SaaS and developing software products as solo founders. My ideal audience is software developers that want to build their own software business." 
+                                placeholder="E.g. My niche is about making money with digital products and instagram. My ideal audience is content creators wanting to grow their Instagram." 
                                 {...field}
                               />
                             </FormControl>
@@ -374,7 +374,7 @@ const ContentPlan = () => {
                                 
                                 disabled={isLoading
                                 } 
-                                placeholder="Not knowing where to start. Not knowing how to validate ideas, or what to build. Not giving the needed importance to marketing their own products." 
+                                placeholder="E.g. Not knowing how often to post, or what to post. Not focusing on hooks and giving value. Not knowing growth strategies." 
                                 {...field}
                               />
                             </FormControl>
@@ -393,7 +393,7 @@ const ContentPlan = () => {
                                 
                                 disabled={isLoading
                                 } 
-                                placeholder="Usually don't validate their ideas correctly. Take too long to build their products. Don't invest in marketing enough." 
+                                placeholder="E.g. Not improving their content. Focusing too much on quantity over quality. Disregarding the importance of IG stories." 
                                 {...field}
                               />
                             </FormControl>
@@ -412,7 +412,7 @@ const ContentPlan = () => {
                                 
                                 disabled={isLoading
                                 } 
-                                placeholder="That I've previously built successful software products and am currently building them too." 
+                                placeholder="E.g. That I have grown my Instagram audience by 5k followers in the last month."  
                                 {...field}
                               />
                             </FormControl>
@@ -472,7 +472,7 @@ const ContentPlan = () => {
                                 
                                 disabled={isLoading
                                 } 
-                                placeholder="My niche is about SaaS and developing software products as solo founders. My ideal audience is software developers that want to build their own software business." 
+                                placeholder="E.g. My niche is about making money with digital products and instagram. My ideal audience is content creators wanting to grow their Instagram."
                                 {...field}
                               />
                             </FormControl>
@@ -491,7 +491,7 @@ const ContentPlan = () => {
                                 
                                 disabled={isLoading
                                 } 
-                                placeholder="Not knowing where to start. Not knowing how to validate ideas, or what to build. Not giving the needed importance to marketing their own products." 
+                                placeholder="E.g. Not knowing how often to post, or what to post. Not focusing on hooks and giving value. Not knowing growth strategies."
                                 {...field}
                               />
                             </FormControl>
@@ -510,7 +510,7 @@ const ContentPlan = () => {
                                 
                                 disabled={isLoading
                                 } 
-                                placeholder="Usually don't validate their ideas correctly. Take too long to build their products. Don't invest in marketing enough." 
+                                placeholder="E.g. Not improving their content. Focusing too much on quantity over quality. Disregarding the importance of IG stories." 
                                 {...field}
                               />
                             </FormControl>
@@ -529,7 +529,7 @@ const ContentPlan = () => {
                                 
                                 disabled={isLoading
                                 } 
-                                placeholder="That I've previously built successful software products and am currently building them too." 
+                                placeholder="E.g. That I have grown my Instagram audience by 5k followers in the last month." 
                                 {...field}
                               />
                             </FormControl>

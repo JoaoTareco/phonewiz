@@ -312,7 +312,7 @@ const ContentGenerator = () => {
                         <Input
                           
                           disabled={isLoading1} 
-                          placeholder="How I've made 100k with Instagram." 
+                          placeholder="E.g. How I've made 100k with Instagram." 
                           {...field}
                         />
                       </FormControl>
@@ -330,7 +330,7 @@ const ContentGenerator = () => {
                         
                         disabled={isLoading1
                         } 
-                        placeholder="Target audience for the video" 
+                        placeholder="E.g. Content creators that sell digital products in Instagram" 
                         {...field}
                       />
                     </FormControl>
@@ -348,7 +348,7 @@ const ContentGenerator = () => {
                       
                       disabled={isLoading1
                       } 
-                      placeholder="Write some personal insight you want to give to your audience." 
+                      placeholder="E.g. For me, the biggest lesson is how to market your products. Not being too pushy but still raising awareness and converting clients. For that, what I do is..." 
                       {...field}
                     />
                   </FormControl>
@@ -366,7 +366,7 @@ const ContentGenerator = () => {
                   <FormLabel>Call to Action</FormLabel>
                   <FormControl className="w-[1200px]">
                     <Input
-                      placeholder="If you want a free guide on how to get started, comment “guide” and I’ll send it to you 🎁"
+                      placeholder="E.g. If you want a free guide on how to get started, comment “guide” and I’ll send it to you 🎁"
                       disabled={isLoading1
                       } 
                       {...field}

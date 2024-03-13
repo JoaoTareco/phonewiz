@@ -30,7 +30,7 @@ const logo: React.CSSProperties = {
 export const ReadCaption = ({ title, video1, video2 }: z.infer<typeof ReadCaptionProps>) => {
  
   const titleStyle: React.CSSProperties = useMemo(() => {
-    return { fontFamily: 'latin', fontSize: 70 , color: "#fff"};
+    return { fontFamily, fontSize: 70 , color: "#fff"};
   }, []);
 
   return (
