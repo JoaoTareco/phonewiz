@@ -32,6 +32,7 @@ export async function GET(
       assets.push({video: `https://${project_id}.supabase.co/storage/v1/object/public/content-bank/${asset.name}`})
     });
 
+    
     return NextResponse.json(assets);
   } catch (error) {
     console.log('[CODE_ERROR]', error);
