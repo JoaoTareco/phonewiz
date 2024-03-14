@@ -25,8 +25,6 @@ export async function GET(
     // Assert the type of result
     const typedResult = result as { name: string }[];
 
-    console.log(typedResult);
-
     let assets: any[] = []
 
     // Use typedResult instead of result
