@@ -21,7 +21,7 @@ const badgeVariants = cva(
         medium:
           "border-transparent bg-[#FEFCE8] text-[#A16207] hover:bg-[#FFF8B1]/80",
         medium2:
-          "border-transparent bg-[#FEFCE3] text-[#A16217] hover:bg-[#FFF8A2]/80",
+          "border-transparent bg-[#f2f6ff] text-[#004bed] hover:bg-[#cadafc]/80",
         low:
           "border-transparent bg-[#F0FDF4] text-[#047857] hover:bg-[#C8FFD9]/80",
       },
