@@ -46,12 +46,12 @@ export async function POST(
       return new NextResponse("Form Values are required", { status: 400 });
     }
 
-    const freeTrial = await checkApiLimit();
-    const isPro = await checkSubscription();
+    // const freeTrial = await checkApiLimit();
+    // const isPro = await checkSubscription();
 
-    if (!freeTrial && !isPro) {
-      return new NextResponse("Free trial has expired. Please upgrade to pro.", { status: 403 });
-    }
+    // if (!freeTrial && !isPro) {
+    //   return new NextResponse("Free trial has expired. Please upgrade to pro.", { status: 403 });
+    // }
 
    const prompt=[
       {
@@ -114,21 +114,15 @@ export async function POST(
 
     const contentWithLineBreaks = response.choices[0].message.content;
 
-    console.log(contentWithLineBreaks)
-
     const cleanedString = contentWithLineBreaks?.replace(/\r?\n|\r/g, "") || "";
 
-    console.log(cleanedString)
-
     const jsonObject = JSON.parse(cleanedString);
-
 
     // Update existing content plans to be inactive
     await prismadb.content_plans.updateMany({
       where: { user_id: userId },
       data: { innactive: true },
     });
-
 
      // Insert new content plan and set existing ones as inactive
     await prismadb.content_plans.create({
@@ -142,8 +136,6 @@ export async function POST(
         innactive: false,
       },
     });
-
-    console.log(jsonObject)
 
     // if (!isPro) {
     //   await incrementApiLimit();
