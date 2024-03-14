@@ -109,7 +109,7 @@ export async function POST(
       model: "gpt-3.5-turbo",
       messages: prompt as any,
       temperature: 0.5,
-      max_tokens: 4095,
+      max_tokens: 1500,
     });
 
     const contentWithLineBreaks = response.choices[0].message.content;
