@@ -96,6 +96,14 @@ export async function POST(
       },
       {
         "role": "assistant",
+        "content": "What are some specific topics you would like to cover with your content?"
+      },
+      {
+        "role": "user",
+        "content": body.specific_content
+      },
+      {
+        "role": "assistant",
         "content": "How should the plan be generated?"
       },
       {

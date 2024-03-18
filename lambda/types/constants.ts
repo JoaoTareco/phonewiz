@@ -10,6 +10,8 @@ export const ReadCaptionProps = z.object({
   title: z.string(),
   video1: z.string(),
   video2: z.string(),
+  readCap: z.string(),
+  selectedFont: z.string()
 });
 
 export const defaultMyCompProps: z.infer<typeof CompositionProps> = {

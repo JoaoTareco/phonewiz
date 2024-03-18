@@ -69,6 +69,9 @@ const ContentPlan = () => {
       required_error: "Please write some social proof that should be shown.",
     }),
     re_generate: z.boolean().default(false),
+    specific_content: z.string({
+      required_error: "If you don't have any speficic content ideas, please write None.",
+    }),
   })
 
   const FormSchema2 = z.object({
@@ -167,8 +170,10 @@ const ContentPlan = () => {
 
     genProps = {
       title: video_hook,
+      readCap: "Read Caption ↓",
       video1: videos.video1, // Assuming videos.video1 and videos.video2 are the correct video URLs
-      video2: videos.video2
+      video2: videos.video2,
+      selectedFont: "Montserrat"
     };
 
     setGeneralProps(genProps);
@@ -186,7 +191,9 @@ const ContentPlan = () => {
     return {
       title: video_hook || "Default Hook",
       video1: videos.video1 || "Default video",
-      video2: videos.video2 || "Default video"
+      video2: videos.video2 || "Default video",
+      readCap: "Read Caption ⬇️",
+      selectedFont: "Montserrat"
     };
   }, [video_hook,  videos.video1,  videos.video2]);
 
@@ -421,6 +428,25 @@ const ContentPlan = () => {
                           </FormItem>
                         )}
                     />
+                    <FormField
+                        name="specific_content"
+                        render={({ field }: { field: any }) => (
+                          <FormItem className="flex flex-col pb-2">
+                            <FormLabel>What are some specific topics you would like to cover with your content?</FormLabel>
+                            <FormControl className="w-full">
+                              <Textarea
+                                
+                                disabled={isLoading
+                                } 
+                                placeholder="E.g. I would like to make multiple posts about how I've built a digital product with Canva and have marketed it with my Instagram."  
+                                {...field}
+                              />
+                            </FormControl>
+                 
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                    />
                     <div className="flex justify-end">
                     <Button type="submit" variant="secondary" className="justify-end">
                         {isLoading && <Spinner size={20}></Spinner>}
@@ -530,6 +556,25 @@ const ContentPlan = () => {
                                 disabled={isLoading
                                 } 
                                 placeholder="E.g. That I have grown my Instagram audience by 5k followers in the last month." 
+                                {...field}
+                              />
+                            </FormControl>
+                 
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                    />
+                    <FormField
+                        name="specific_content"
+                        render={({ field }: { field: any }) => (
+                          <FormItem className="flex flex-col pb-2">
+                            <FormLabel>What are some specific topics you would like to cover with your content?</FormLabel>
+                            <FormControl className="w-full">
+                              <Textarea
+                                
+                                disabled={isLoading
+                                } 
+                                placeholder="E.g. I would like to make multiple posts about how I've built a digital product with Canva and have marketed it with my Instagram."  
                                 {...field}
                               />
                             </FormControl>

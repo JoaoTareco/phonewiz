@@ -123,8 +123,10 @@ const ContentGenerator = () => {
 
     genProps = {
       title: video_hook,
+      readCap: "Read Caption ↓",
       video1: videos.video1, // Assuming videos.video1 and videos.video2 are the correct video URLs
-      video2: videos.video2
+      video2: videos.video2,
+      selectedFont: "Montserrat"
     };
 
     setGeneralProps(genProps);
@@ -278,7 +280,9 @@ const ContentGenerator = () => {
     return {
       title: video_hook || "Default Hook",
       video1: videos.video1 || "Default video",
-      video2: videos.video2 || "Default video"
+      video2: videos.video2 || "Default video",
+      readCap: "Read Caption ↓",
+      selectedFont: "Montserrat"
     };
   }, [video_hook,  videos.video1,  videos.video2]);
 

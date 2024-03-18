@@ -10,11 +10,11 @@ import {
   useVideoConfig,
 } from "remotion";
 import { ReadCaptionProps } from "../../lambda/types/constants";
-import { NextLogo } from "./NextLogo";
-import { loadFont, fontFamily } from "@remotion/google-fonts/Inter";
+import { loadFont, fontFamily } from "@remotion/google-fonts/Montserrat";
 import React, { useMemo } from "react";
-import { Rings } from "./Rings";
 import { TextFade } from "./TextFade";
+ 
+
 
 loadFont();
 
@@ -22,15 +22,10 @@ const container: React.CSSProperties = {
   backgroundColor: "gray",
 };
 
-const logo: React.CSSProperties = {
-  justifyContent: "center",
-  alignItems: "center",
-};
-
-export const ReadCaption = ({ title, video1, video2 }: z.infer<typeof ReadCaptionProps>) => {
+export const ReadCaption = ({ title, video1, video2, readCap="Read Caption ↓" }: z.infer<typeof ReadCaptionProps>) => {
  
   const titleStyle: React.CSSProperties = useMemo(() => {
-    return { fontFamily, fontSize: 70 , color: "#fff"};
+    return { fontFamily, fontSize: 60 , color: "#fff"};
   }, []);
 
   return (
@@ -44,7 +39,7 @@ export const ReadCaption = ({ title, video1, video2 }: z.infer<typeof ReadCaptio
       </Sequence>
       <Sequence from={90} durationInFrames={90}>
         <TextFade>
-          <div className="flex justify-center h-full text-center" ><h1 style={titleStyle}>Read Caption ↓</h1></div>
+          <div className="flex justify-center h-full text-center" ><h1 style={titleStyle}>{readCap}</h1></div>
         </TextFade>
         
            <OffthreadVideo src={video2} />

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { useRendering } from "../helpers/use-rendering";
-import { CompositionProps, COMP_NAME } from "../lambda/types/constants";
+import { COMP_NAME, ReadCaptionProps } from "../lambda/types/constants";
 import { AlignEnd } from "./remotion/AlignEnd";
 import { ButtonRe } from "./remotion/Button/Button";
 import { InputContainer } from "./remotion/Container";
@@ -17,7 +17,7 @@ import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 export const RenderControls: React.FC<{
   setInputProps: React.Dispatch<React.SetStateAction<any>>;
-  inputProps: z.infer<typeof CompositionProps>;
+  inputProps: z.infer<typeof ReadCaptionProps>;
   videos: { video: string }[];
 }> = ({ setInputProps, inputProps, videos }) => {
   const { renderMedia, state, undo } = useRendering(COMP_NAME, inputProps);
@@ -64,6 +64,19 @@ export const RenderControls: React.FC<{
                       />
                     </div>
                   );
+                } else if (key.startsWith('readCap')) {
+                  return (
+                    <div key={index} className="mb-5">
+                      {/* <label htmlFor={key}>{key}</label> */}
+                      <Input
+                        id={key}
+                        disabled={state.status === "invoking"}
+                        value={value}
+                        onChange={(e) => handleInputChange(e, key)}
+                        className=""
+                      />
+                    </div>
+                  );
                 } else if (key.startsWith('video')) {
                   // Assuming you have a dropdown component for videos
                   return (
@@ -71,7 +84,7 @@ export const RenderControls: React.FC<{
                       {/* <label htmlFor={key}>{key}</label>  */}
                       <Sheet>
                         <SheetTrigger asChild>
-                          <Button variant="outline">Change Video {index}</Button>
+                          <Button variant="outline">Change Video {index-1}</Button>
                         </SheetTrigger>
                         <SheetContent side={"bottom"}>
                           <SheetHeader>
