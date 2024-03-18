@@ -79,7 +79,7 @@ const VideoPage = () => {
         setVideos(response.data.map((item: any) => item.video));
         const userData = await axios.get(`/api/get-user-id`);
         setUserId(userData.data)
-        console.log(userId)
+
       } catch (error) {
         console.error('API Error:', error);
       } finally{

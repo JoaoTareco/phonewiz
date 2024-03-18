@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { useRendering } from "../helpers/use-rendering";
-import { COMP_NAME, ReadCaptionProps } from "../lambda/types/constants";
+import { COMP_NAME, CompositionProps, ReadCaptionProps } from "../lambda/types/constants";
 import { AlignEnd } from "./remotion/AlignEnd";
 import { ButtonRe } from "./remotion/Button/Button";
 import { InputContainer } from "./remotion/Container";
@@ -17,7 +17,7 @@ import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 export const RenderControls: React.FC<{
   setInputProps: React.Dispatch<React.SetStateAction<any>>;
-  inputProps: z.infer<typeof ReadCaptionProps>;
+  inputProps: z.infer<typeof CompositionProps>;
   videos: { video: string }[];
 }> = ({ setInputProps, inputProps, videos }) => {
   const { renderMedia, state, undo } = useRendering(COMP_NAME, inputProps);
