@@ -25,14 +25,6 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <CrispProvider />
-        <head>
-
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-C1HTNXFEJG"
-        />
-
-        </head>
         <body className={font.className}>
           <ToasterProvider />
           <ModalProvider />
