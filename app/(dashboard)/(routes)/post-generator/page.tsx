@@ -41,6 +41,8 @@ import { ReadCaption } from "../../../../remotion/read-caption/Main";
 import { Player } from "@remotion/player";
 import { RenderControls } from "@/components/RenderControls";
 
+import { useMediaQuery } from 'react-responsive';
+
 const caption_templates = [
   { label: "Topic Based", value: "topic" },
   { label: "Story", value: "story" },
@@ -92,6 +94,8 @@ const ContentGenerator = () => {
   type VideoObject = { video: string };
   const [fullVideoList, setfullVideoList] = useState<VideoObject[]>([]);
   // const [texts, setTexts] = useState<{ [key: string]: string }>({});
+
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -149,24 +153,25 @@ const ContentGenerator = () => {
     
       axios.get(`/api/get-content`).then((response1: { data: any; }) => {
           const videos = response1.data;
+          if(videos.length > 0){
 
-          const transformedVideos = videos.map((video: any) => ({ video: video.video }));
+            const transformedVideos = videos.map((video: any) => ({ video: video.video }));
 
-          setfullVideoList(transformedVideos);
-
-      
-          const videoCount: number = Object.keys(genProps).filter((key) => key.startsWith('video')).length;
-      
-          console.log(videoCount);
-      
-          for (let i = 0; i < videoCount; i++) {
-            const videoName = `video${i + 1}`;
-            const randomIndex = Math.floor(Math.random() * videos.length); // Generate a random index
-            const randomVideo = videos[randomIndex]; // Access the video at the random index
-            console.log('here3');
-            setVideos((prevState: any) => ({ ...prevState, [videoName]: randomVideo.video }));
+            setfullVideoList(transformedVideos);
+  
+        
+            const videoCount: number = Object.keys(genProps).filter((key) => key.startsWith('video')).length;
+        
+            console.log(videoCount);
+        
+            for (let i = 0; i < videoCount; i++) {
+              const videoName = `video${i + 1}`;
+              const randomIndex = Math.floor(Math.random() * videos.length); // Generate a random index
+              const randomVideo = videos[randomIndex]; // Access the video at the random index
+              console.log('here3');
+              setVideos((prevState: any) => ({ ...prevState, [videoName]: randomVideo.video }));
+            }
           }
-
       })
 
       // setVideoLink(randomVideo.video)
@@ -312,7 +317,7 @@ const ContentGenerator = () => {
                   render={({ field }: { field: any }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Video Topic</FormLabel>
-                      <FormControl className="w-[1200px]">
+                      <FormControl className="w-full">
                         <Input
                           
                           disabled={isLoading1} 
@@ -329,7 +334,7 @@ const ContentGenerator = () => {
                 render={({ field }: { field: any }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel>Target Audience</FormLabel>
-                    <FormControl className="w-[1200px]">
+                    <FormControl className="w-full">
                       <Input
                         
                         disabled={isLoading1
@@ -347,7 +352,7 @@ const ContentGenerator = () => {
               render={({ field }: { field: any }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Personal Insights</FormLabel>
-                  <FormControl className="w-[1200px]">
+                  <FormControl className="w-full">
                     <Textarea
                       
                       disabled={isLoading1
@@ -368,7 +373,7 @@ const ContentGenerator = () => {
               render={({ field }: { field: any }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Call to Action</FormLabel>
-                  <FormControl className="w-[1200px]">
+                  <FormControl className="w-full">
                     <Input
                       placeholder="E.g. If you want a free guide on how to get started, comment “guide” and I’ll send it to you 🎁"
                       disabled={isLoading1
@@ -396,9 +401,10 @@ const ContentGenerator = () => {
                         variant="outline"
                         role="combobox"
                         className={cn(
-                          "w-[200px] justify-between",
+                          `justify-between ${isMobile ? 'w-full' : 'w-1/4'}`,
                           !field.value && "text-muted-foreground"
                         )}
+                        
                       >
                         {field.value
                           ? video_templates.find(
@@ -409,9 +415,9 @@ const ContentGenerator = () => {
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className="w-[200px] p-0">
+                  <PopoverContent className={` ${isMobile ? '' : ''}`}>
                     <Command>
-                      <CommandInput placeholder="Search video templates..." />
+                      <CommandInput placeholder="Search caption templates..." />
                       <CommandEmpty>No video template found.</CommandEmpty>
                       <CommandGroup>
                         {video_templates.map((video_template) => (
@@ -496,7 +502,7 @@ const ContentGenerator = () => {
             </RadioGroup>
               )}
             />
-            <div className="pt-7">
+            <div className="pt-7 pb-10">
             <Button type="submit">
                <span className="">Generate Video and Caption</span>
                <ChevronRight className="h-4 w-4 ml-1" />
@@ -507,21 +513,26 @@ const ContentGenerator = () => {
           </div>
         )}
         {generated_caption && generalProps && (
-          <div className="flex flex-col  space-y-4">
-           <div className="h-[750px] grid grid-rows-2 gap-6 lg:grid-cols-3 lg:grid-rows-1">
-           <div className="col-span-1">
+          <div className={`flex space-y-4 ${isMobile ? 'h-screen' : 'flex-col '}`} >
+            <div className={`${isMobile ? 'h-screen' : 'h-[750px] grid grid-rows-2 gap-6 lg:grid-cols-3 lg:grid-rows-1'}`}>
+            {isMobile && ( <Button variant="secondary" onClick={returnButton} className="mb-5">
+               <Undo2 className="h-4 w-4 mr-1" />
+               <span className="">Return</span>
+             </Button>)}
+           {!isMobile && (<div className="col-span-1">
             <Button variant="secondary" onClick={returnButton} className="mb-5">
                <Undo2 className="h-4 w-4 mr-1" />
                <span className="">Return</span>
              </Button>
-             <h1 className="mb-5">Video Options</h1>
-           <RenderControls
+             {fullVideoList.length >= 2 && (<div><h1 className="mb-5">Video Options</h1>
+             <RenderControls
               setInputProps={setGeneralProps}
               inputProps={generalProps}
               videos={fullVideoList}
-            ></RenderControls>
-           </div>
-             <div className="rounded-md border bg-muted flex justify-center col-span-1">
+            ></RenderControls></div>)}
+           </div>)}
+           {isMobile && (<div className="flex text-center text-gray-900 mb-5 text-sm">Please access on PC or Mac to generate and download videos.</div>)}
+             {!isMobile && (<div className="rounded-md border bg-muted flex justify-center col-span-1">
                 {/* {(video_template === "inputProps") && (  <Player
                     component={Main}
                     inputProps={generalProps}
@@ -571,10 +582,11 @@ const ContentGenerator = () => {
                   loop>
                     <source src="https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/user_2aPY12uVo8oyqxKieBV7qpNOgOJ/IMG_2199.mp4" type="video/mp4" />
                   </video> */}
-              </div>
+              </div>)}
+              {isMobile && (<div className="mb-1 ml-2">Generated Caption:</div>)}
              <Textarea
                placeholder="You erased the whole caption!"
-               className="col-span-1"
+               className={`${isMobile ? 'h-5/6' : 'col-span-1'}`}
                defaultValue={generated_caption}
              />
            </div>

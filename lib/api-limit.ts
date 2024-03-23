@@ -61,5 +61,5 @@ export const getApiLimitCount = async () => {
     return 0;
   }
 
-  return userApiLimit.count;
+  return Number(userApiLimit.count);
 };

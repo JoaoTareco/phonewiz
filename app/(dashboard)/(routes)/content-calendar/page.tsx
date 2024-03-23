@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Cog, Pen, Undo2 } from "lucide-react";
+import { Calendar, Cog, Pen, Undo2, Lock , MailWarning } from "lucide-react";
 import * as z from "zod";
 import { Heading } from "@/components/heading";
 import { Card } from "@/components/ui/card";
@@ -37,6 +37,10 @@ import {
 import { Main } from "../../../../remotion/MyComp/Main";
 import { ReadCaption } from "../../../../remotion/read-caption/Main";
 import { Loader } from "@/components/loader";
+import { checkSubscription } from "@/lib/subscription";
+import { useProModal } from "@/hooks/use-pro-modal";
+
+import { useMediaQuery } from 'react-responsive';
 
 const ContentPlan = () => {
 
@@ -54,6 +58,12 @@ const ContentPlan = () => {
   const [fullVideoList, setfullVideoList] = useState<VideoObject[]>([]);
   const [generalProps, setGeneralProps] = useState<any>();
   const [isLoading1, setIsLoading1] = useState(false);
+  const [closeDialog, setCloseDialog] = useState(false);
+  // const [isPro, setIsPro] = useState(false);
+
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+
+  const proModal = useProModal();
 
   const FormSchema = z.object({
     niche: z.string({
@@ -92,6 +102,8 @@ const ContentPlan = () => {
   })
 
   useEffect(() => {
+       // const isProAux = await checkSubscription();
+    // setIsPro(isProAux)
     const fetchContentPlan = async () => {
     const body = { first_time: true, re_generate: false };
 
@@ -114,6 +126,17 @@ const ContentPlan = () => {
 
     fetchContentPlan();
   }, []); 
+
+  // useEffect(() => {
+
+  //   const fetchIsPro = async () => {
+      
+  //       const isProAux = await checkSubscription();
+  //       setIsPro(isProAux)
+  //   };
+
+  //   fetchIsPro();
+  //   }, []); 
 
   let isLoading = form.formState.isSubmitting;
   let isLoading2 = false;
@@ -146,8 +169,9 @@ const ContentPlan = () => {
 
     } catch (error: any) {
       if (error?.response?.status === 403) {
+        proModal.onOpen();
       } else {
-        toast.error("Something went wrong...");
+        toast.error("Something went wrong.");
       }
     }
   }
@@ -225,10 +249,12 @@ const ContentPlan = () => {
 
     } catch (error: any) {
       if (error?.response?.status === 403) {
+        //  setCloseDialog(true);
+        proModal.onOpen();
       } else {
         toast.error("Something went wrong.");
       }
-    }
+    } 
   }
 
   const returnButton = async () => {
@@ -272,23 +298,25 @@ const ContentPlan = () => {
       axios.get(`/api/get-content`).then((response1: { data: any; }) => {
           const videos = response1.data;
 
-          const transformedVideos = videos.map((video: any) => ({ video: video.video }));
+          if(videos.length > 0){
 
-          setfullVideoList(transformedVideos);
+            const transformedVideos = videos.map((video: any) => ({ video: video.video }));
 
-      
-          const videoCount: number = Object.keys(genProps).filter((key) => key.startsWith('video')).length;
-      
-          console.log(videoCount);
-      
-          for (let i = 0; i < videoCount; i++) {
-            const videoName = `video${i + 1}`;
-            const randomIndex = Math.floor(Math.random() * videos.length); // Generate a random index
-            const randomVideo = videos[randomIndex]; // Access the video at the random index
- 
-            setVideos((prevState: any) => ({ ...prevState, [videoName]: randomVideo.video }));
+            setfullVideoList(transformedVideos);
+
+        
+            const videoCount: number = Object.keys(genProps).filter((key) => key.startsWith('video')).length;
+        
+            console.log(videoCount);
+        
+            for (let i = 0; i < videoCount; i++) {
+              const videoName = `video${i + 1}`;
+              const randomIndex = Math.floor(Math.random() * videos.length); // Generate a random index
+              const randomVideo = videos[randomIndex]; // Access the video at the random index
+  
+              setVideos((prevState: any) => ({ ...prevState, [videoName]: randomVideo.video }));
+            }
           }
-
       })
 
       // setVideoLink(randomVideo.video)
@@ -317,6 +345,7 @@ const ContentPlan = () => {
       form2.reset();
     } catch (error: any) {
       if (error?.response?.status === 403) {
+        proModal.onOpen();
       } else {
         toast.error("Something went wrong.");
       }
@@ -333,17 +362,18 @@ const ContentPlan = () => {
         iconColor="text-gray-700"
         bgColor="bg-gray-700/10"
       />
-      <div className="pl-10 pr-16 px-4">
+      <div className={` px-4 ${isMobile ? 'pb-20 h-max pr-4' : 'pl-10 pr-16'}`}>
       <Separator className="my-4" />
       {contentPlan.length == 0 && !generated_caption && !isLoading1 && ( <div className="flex justify-center">
-        <div className="h-full w-5/6 aspect-[2/1] object-cover transition-all  justify-center text-center rounded-md border border-dashed mt-24">
-          <h3 className="mt-52 text-lg font-semibold">Create a content plan</h3>
+        <div className={` w-5/6 aspect-[2/1] object-cover transition-all  justify-center text-center rounded-md ${isMobile ? 'mt-20' : 'mt-16'}`}>
+          <h3 className={`text-lg font-semibold ${isMobile ? 'mt-36 ' : 'mt-40'}`}>Create a content plan</h3>
           <p className="mb-4 mt-2 text-sm text-muted-foreground">
             Generate a new tailored content plan to always know what to post.
           </p>
-          <Dialog>
+          <Dialog >
               <DialogTrigger> <Button><Cog className=""/>Generate</Button></DialogTrigger>
-              <DialogContent>
+              <DialogContent className={`overflow-auto scroll-smooth h-5/6 ${isMobile ? '' : ''}`} >
+             
                 <DialogHeader>
                   <DialogTitle>Create a new Content Plan</DialogTitle>
                   <DialogDescription>
@@ -447,7 +477,7 @@ const ContentPlan = () => {
                           </FormItem>
                         )}
                     />
-                    <div className="flex justify-end">
+                    <div className={`flex justify-end`}>
                     <Button type="submit" variant="secondary" className="justify-end">
                         {isLoading && <Spinner size={20}></Spinner>}
                         <span className="pl-2">Generate Plan</span>
@@ -455,14 +485,15 @@ const ContentPlan = () => {
                     </div>
                   </form>
                 </Form>
-
+            
               </DialogContent>
             </Dialog>
+            {isMobile && (<div className="text-center text-gray-500 mt-5 text-xs">This app was designed to be used on PC or Mac. For a better experience, use it on Desktop.</div>)}
         </div>
       </div>)}
 
       {contentPlan.length > 0 && !generated_caption && !isLoading1 && (<Tabs defaultValue="week1" className="space-y-4">
-        <div className="flex justify-between">
+        <div  className="flex justify-between" >
          <TabsList>
               <TabsTrigger value="week1" >
                 Week 1
@@ -477,9 +508,10 @@ const ContentPlan = () => {
                 Week 4
               </TabsTrigger>
             </TabsList>
+            {/* {!isPro && (<Button onClick={proModal.onOpen} variant={'secondary'}><Lock size={20} className="pr-1"/>Re-Generate</Button>)} */}
             <Dialog>
-              <DialogTrigger> <Button><Cog className="pr-1"/>Re-Generate</Button></DialogTrigger>
-              <DialogContent>
+              <DialogTrigger> <Button  className={`${isMobile ? 'ml-1' : ''}`}><Cog className={`${isMobile ? '' : 'pr-1'}`} />{!isMobile && (<span>Re-Generate</span>)}</Button></DialogTrigger>
+              <DialogContent className={`overflow-auto scroll-smooth h-5/6 ${isMobile ? '' : ''}`} >
                 <DialogHeader>
                   <DialogTitle>Create a new Content Plan</DialogTitle>
                   <DialogDescription>
@@ -619,7 +651,7 @@ const ContentPlan = () => {
                     </TableCell>
                     <TableCell>{topic.cta}</TableCell>
                     <TableCell className="text-right">
-                      <Dialog>
+                      {!closeDialog && (<Dialog>
                         <DialogTrigger><Button variant={"outline"} onClick={() => onCreate(topic.topic, topic.type, topic.cta)}>Create<Pen className="pl-2"/></Button></DialogTrigger>
                         <DialogContent className="max-w-[1000px]">
                           <DialogHeader>
@@ -670,7 +702,7 @@ const ContentPlan = () => {
                                         />
                                       </FormControl>
                                       <FormDescription>
-                                        It is a good idea to provide your audience with value from your own experience. Add a personal touch to your content to increase engagement.
+                                        Add a personal touch to your content to increase engagement.
                                       </FormDescription>
                                       <FormMessage />
                                     </FormItem>
@@ -678,7 +710,7 @@ const ContentPlan = () => {
                               />
                               <div className="flex justify-end">
                               <DialogClose asChild>
-                              <Button type="submit" variant="secondary" className="justify-end mt-10">
+                              <Button type="submit" variant="secondary" className={`justify-end ${isMobile ? 'mt-5' : 'mt-5'}`}>
                                   {isLoading && <Spinner size={20}></Spinner>}
                                   <span className="">Create Video</span>
                                   </Button>
@@ -688,7 +720,7 @@ const ContentPlan = () => {
                           </Form>
 
                         </DialogContent>
-                      </Dialog>
+                      </Dialog>)}
                     </TableCell>
                     </TableRow>
                   ))}
@@ -703,9 +735,13 @@ const ContentPlan = () => {
               <Loader />
             </div>)}
       {generated_caption && generalProps && (
-          <div className="flex flex-col  space-y-4">
-           <div className="h-[750px] grid grid-rows-2 gap-6 lg:grid-cols-3 lg:grid-rows-1">
-           <div className="col-span-1">
+          <div className={`flex space-y-4 ${isMobile ? 'h-screen' : 'flex-col '}`} >
+           <div className={`${isMobile ? 'h-screen' : 'h-[750px] grid grid-rows-2 gap-6 lg:grid-cols-3 lg:grid-rows-1'}`}>
+           {isMobile && ( <Button variant="secondary" onClick={returnButton} className="mb-5">
+               <Undo2 className="h-4 w-4 mr-1" />
+               <span className="">Return</span>
+             </Button>)}
+           {!isMobile && (<div className="col-span-1">
             <Button variant="secondary" onClick={returnButton} className="mb-5">
                <Undo2 className="h-4 w-4 mr-1" />
                <span className="">Return</span>
@@ -716,8 +752,9 @@ const ContentPlan = () => {
               inputProps={generalProps}
               videos={fullVideoList}
             ></RenderControls>
-           </div>
-             <div className="rounded-md border bg-muted flex justify-center col-span-1">
+           </div>)}
+           {isMobile && (<div className="flex text-center text-gray-900 mb-5 text-sm">Please access on PC or Mac to generate and download videos.</div>)}
+             {!isMobile && (<div className="rounded-md border bg-muted flex justify-center col-span-1">
                 {/* {(video_template === "inputProps") && (  <Player
                     component={Main}
                     inputProps={generalProps}
@@ -767,10 +804,11 @@ const ContentPlan = () => {
                   loop>
                     <source src="https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/user_2aPY12uVo8oyqxKieBV7qpNOgOJ/IMG_2199.mp4" type="video/mp4" />
                   </video> */}
-              </div>
-             <Textarea
+              </div>)}
+              {isMobile && (<div className="mb-1 ml-2">Generated Caption:</div>)}
+              <Textarea
                placeholder="You erased the whole caption!"
-               className="col-span-1"
+               className={`${isMobile ? 'h-5/6' : 'col-span-1'}`}
                defaultValue={generated_caption}
              />
            </div>

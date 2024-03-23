@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
 // import Configuration from "openai"
 import { checkSubscription } from "@/lib/subscription";
-import { checkApiLimit } from "@/lib/api-limit";
+import { checkApiLimit, incrementApiLimit } from "@/lib/api-limit";
 
 // const configuration = new Configuration({
 //   apiKey: process.env.OPENAI_API_KEY,
@@ -215,9 +215,9 @@ And I will send you a link to check it out ✨️
 
     const contentWithLineBreaks = response.choices[0].message.content;
 
-    // if (!isPro) {
-    //   await incrementApiLimit();
-    // }
+    if (!isPro) {
+      await incrementApiLimit();
+    }
 
     return NextResponse.json(contentWithLineBreaks);
   } catch (error) {
