@@ -3,7 +3,10 @@ export const COMP_NAME = "read-caption";
 
 export const CompositionProps = z.object({
   title: z.string(),
-  video: z.string(),
+  video1: z.string(),
+  video2: z.string(),
+  readCap: z.string(),
+  selectedFont: z.string()
 });
 
 export const ReadCaptionProps = z.object({

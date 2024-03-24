@@ -23,7 +23,7 @@ const container: React.CSSProperties = {
 };
 
 export const ReadCaption = ({ title, video1, video2, readCap="Read Caption ↓" }: z.infer<typeof ReadCaptionProps>) => {
- 
+
   const titleStyle: React.CSSProperties = useMemo(() => {
     return { fontFamily, fontSize: 60 , color: "#fff"};
   }, []);

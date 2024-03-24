@@ -274,12 +274,12 @@ const ContentGenerator = () => {
     }
   }
 
-  const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
-    return {
-      title: video_hook || "Default Hook",
-      video: videos.video1 || "Default video",
-    };
-  }, [video_hook, videos.video1]);
+  // const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
+  //   return {
+  //     title: video_hook || "Default Hook",
+  //     video: videos.video1 || "Default video",
+  //   };
+  // }, [video_hook, videos.video1]);
 
   const readCaptionProps: z.infer<typeof ReadCaptionProps> = useMemo(() => {
     return {

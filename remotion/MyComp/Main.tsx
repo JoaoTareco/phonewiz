@@ -27,7 +27,7 @@ const logo: React.CSSProperties = {
   alignItems: "center",
 };
 
-export const Main = ({ title, video }: z.infer<typeof CompositionProps>) => {
+export const Main = ({ title, video1, video2, readCap="Read Caption ↓" }: z.infer<typeof CompositionProps>) => {
  
   const titleStyle: React.CSSProperties = useMemo(() => {
     return { fontFamily, fontSize: 70 , color: "#fff"};
@@ -40,7 +40,7 @@ export const Main = ({ title, video }: z.infer<typeof CompositionProps>) => {
           <div className="flex justify-center h-full text-center" ><h1 style={titleStyle}>{title}</h1></div>
         </TextFade>
         
-           <OffthreadVideo src={video} />
+           <OffthreadVideo src={video1} />
 
     </AbsoluteFill>
   );
