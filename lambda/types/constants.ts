@@ -14,9 +14,12 @@ export const ReadCaptionProps = z.object({
   selectedFont: z.string()
 });
 
-export const defaultMyCompProps: z.infer<typeof CompositionProps> = {
-  title: "Next.js and Remotion",
-  video: "https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/user_2aPY12uVo8oyqxKieBV7qpNOgOJ/IMG_2200.mp4",
+export const defaultMyCompProps: z.infer<typeof ReadCaptionProps> = {
+  title: "Default",
+  readCap: "Default",
+  selectedFont: "Default",
+  video1: "https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/user_2aPY12uVo8oyqxKieBV7qpNOgOJ/IMG_2200.mp4",
+  video2: "https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/user_2aPY12uVo8oyqxKieBV7qpNOgOJ/IMG_2200.mp4",
 };
 
 export const DURATION_IN_FRAMES = 180;

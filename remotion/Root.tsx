@@ -1,5 +1,5 @@
 import { Composition } from "remotion";
-import { Main } from "./MyComp/Main";
+import { ReadCaption } from "./read-caption/Main";
 import {
   COMP_NAME,
   defaultMyCompProps,
@@ -15,7 +15,7 @@ export const RemotionRoot: React.FC = () => {
     <>
       <Composition
         id={COMP_NAME}
-        component={Main}
+        component={ReadCaption}
         durationInFrames={DURATION_IN_FRAMES}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
