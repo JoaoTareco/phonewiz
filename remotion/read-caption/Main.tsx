@@ -22,6 +22,15 @@ const container: React.CSSProperties = {
   backgroundColor: "gray",
 };
 
+const styles: Record<string, React.CSSProperties> = {
+  flexContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: '100%',
+    textAlign: 'center'
+  }
+};
+
 export const ReadCaption = ({ title, video1, video2, readCap="Read Caption ↓" }: z.infer<typeof ReadCaptionProps>) => {
 
   const titleStyle: React.CSSProperties = useMemo(() => {
@@ -32,14 +41,14 @@ export const ReadCaption = ({ title, video1, video2, readCap="Read Caption ↓" 
     <AbsoluteFill style={container}>
       <Sequence from={0} durationInFrames={90}>
         <TextFade>
-          <div className="flex justify-center h-full text-center" ><h1 style={titleStyle}>{title}</h1></div>
+          <div style={styles.flexContainer} ><h1 style={titleStyle}>{title}</h1></div>
         </TextFade>
         
            <OffthreadVideo src={video1} />
       </Sequence>
       <Sequence from={90} durationInFrames={90}>
         <TextFade>
-          <div className="flex justify-center h-full text-center" ><h1 style={titleStyle}>{readCap}</h1></div>
+          <div style={styles.flexContainer} ><h1 style={titleStyle}>{readCap}</h1></div>
         </TextFade>
         
            <OffthreadVideo src={video2} />
