@@ -632,7 +632,6 @@ const ContentPlan = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-[100px]">Week Day</TableHead>
                     <TableHead>Topic</TableHead>
                     <TableHead>Post Type</TableHead>
                     <TableHead>CTA</TableHead>
@@ -642,7 +641,6 @@ const ContentPlan = () => {
                 <TableBody>
                   {weekTopics.map((topic) => (
                     <TableRow key={topic.weekDay}>
-                    <TableCell className="font-medium">{topic.weekDay}</TableCell>
                     <TableCell>{topic.topic}</TableCell>
                     <TableCell>
                         {topic.type == 'Story' && <Badge variant={"low"}>{topic.type}</Badge>}
