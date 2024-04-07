@@ -736,7 +736,7 @@ const ContentPlan = () => {
             </div>)}
       {generated_caption && generalProps && (
           <div className={`flex space-y-4 ${isMobile ? 'h-screen' : 'flex-col '}`} >
-           <div className={`${isMobile ? 'h-screen' : 'h-[750px] grid grid-rows-2 gap-6 lg:grid-cols-3 lg:grid-rows-1'}`}>
+           <div className={`${isMobile ? 'h-screen' : 'grid grid-rows-2 gap-6 lg:grid-cols-3 lg:grid-rows-1'}`}>
            {isMobile && ( <Button variant="secondary" onClick={returnButton} className="mb-5">
                <Undo2 className="h-4 w-4 mr-1" />
                <span className="">Return</span>
@@ -747,14 +747,15 @@ const ContentPlan = () => {
                <span className="">Return</span>
              </Button>
              <h1 className="mb-5">Video Options</h1>
-           <RenderControls
+             {fullVideoList.length < 2 && 
+            (<RenderControls
               setInputProps={setGeneralProps}
               inputProps={generalProps}
               videos={fullVideoList}
-            ></RenderControls>
+            ></RenderControls>)}
            </div>)}
            {isMobile && (<div className="flex text-center text-gray-900 mb-5 text-sm">Please access on PC or Mac to generate and download videos.</div>)}
-             {!isMobile && (<div className="rounded-md border bg-muted flex justify-center col-span-1">
+             {!isMobile && (<div className="rounded-md border bg-muted flex justify-center col-span-1  h-[78vh]">
                 {/* {(video_template === "inputProps") && (  <Player
                     component={Main}
                     inputProps={generalProps}
@@ -808,7 +809,7 @@ const ContentPlan = () => {
               {isMobile && (<div className="mb-1 ml-2">Generated Caption:</div>)}
               <Textarea
                placeholder="You erased the whole caption!"
-               className={`${isMobile ? 'h-5/6' : 'col-span-1'}`}
+               className={`${isMobile ? '' : 'col-span-1'}`}
                defaultValue={generated_caption}
              />
            </div>

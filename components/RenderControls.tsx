@@ -97,12 +97,13 @@ export const RenderControls: React.FC<{
                           <ScrollArea>
                           <div className="flex space-x-4 pb-4 pt-5">
                             {videoUrls.map((video, index1) => (
-                                <video  className={`h-64 w-42 object-cover transition-all hover:scale-95 aspect-[3/4] rounded-md  border-2 ${selectedVideo === video ? 'border-gray-800' : 'border-transparent'} cursor-pointer`}
-                                    controls={false} 
+                                <video  className={`h-64 w-42 object-cover transition-all hover:scale-95 aspect-[3/4] rounded-md  border-2 ${selectedVideo === video ? 'border-red-400' : 'border-transparent'} cursor-pointer`}
+                                    controls={true} 
+                          
                                     key={index1}
                                     onClick={() => setSelectedVideo(video)}
                                     muted
-                                    loop>
+                                    >
                                     <source src={video} type="video/mp4" />
                                   </video>
                             ))}

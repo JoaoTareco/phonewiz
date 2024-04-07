@@ -147,8 +147,8 @@ const VideoPage = () => {
   
               {videos.map((videoUrl: string | undefined, index: Key | null | undefined) => (
                   <video className="h-96 w-64 object-cover transition-all hover:scale-105 aspect-[3/4] rounded-md" key={index}
-                  controls={false} 
-                  autoPlay
+                  controls={true} 
+                  // autoPlay
                   muted
                   >
                     <source src={videoUrl} type="video/mp4" />
