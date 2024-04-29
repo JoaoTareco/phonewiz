@@ -199,12 +199,12 @@ And I will send you a link to check it out ✨️
     ]
 
     let prompt 
-    console.log(body.video_template)
-    if(body.video_template == "How To"){
+    console.log(body.caption_template)
+    if(body.caption_template == "How To"){
       prompt = promptHowTo
-    }else if (body.video_template == "Bullet List"){
+    }else if (body.caption_template == "Bullet List"){
       prompt = promptBullet
-    }else if (body.video_template == "Story"){
+    }else if (body.caption_template == "Story"){
       prompt = promptStory
     }
 

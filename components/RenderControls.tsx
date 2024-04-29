@@ -19,8 +19,18 @@ export const RenderControls: React.FC<{
   setInputProps: React.Dispatch<React.SetStateAction<any>>;
   inputProps: z.infer<typeof CompositionProps>;
   videos: { video: string }[];
-}> = ({ setInputProps, inputProps, videos }) => {
-  const { renderMedia, state, undo } = useRendering(COMP_NAME, inputProps);
+  video_template: string | any;
+}> = ({ setInputProps, inputProps, videos, video_template }) => {
+  
+  let composition = "read-caption";
+
+  if (video_template === "No Call to Action") {
+    composition = "bullet-list"
+    delete inputProps.video2;
+    delete inputProps.readCap;
+  }
+
+  const { renderMedia, state, undo } = useRendering(composition, inputProps);
   const [selectedVideo, setSelectedVideo] = useState<string>();
 
   // const videoCount: number = Object.keys(inputProps).filter(key => key.startsWith('video')).length;
@@ -84,7 +94,7 @@ export const RenderControls: React.FC<{
                       {/* <label htmlFor={key}>{key}</label>  */}
                       <Sheet>
                         <SheetTrigger asChild>
-                          <Button variant="outline">Change Video {index-1}</Button>
+                          <Button variant="outline">Change Video {index != 1 ? index-1 : index}</Button>
                         </SheetTrigger>
                         <SheetContent side={"bottom"}>
                           <SheetHeader>

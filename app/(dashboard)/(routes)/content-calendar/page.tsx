@@ -235,7 +235,7 @@ const ContentPlan = () => {
 
       setHookOptions(response.data);
 
-      setVideoTemplate(video_type)
+      setCaptionTemplate(video_type)
 
       // if (video_type === 'How To') {
       //   setVideoTemplate('how_to')
@@ -324,7 +324,7 @@ const ContentPlan = () => {
       const body = {
         hook: values.hook,
         target_audience: target_audience,
-        video_template: video_template,
+        video_template: 'Read Caption',
         caption_template: caption_template,
         video_topic: video_topic,
         call_to_action: CTA,
@@ -357,7 +357,7 @@ const ContentPlan = () => {
     <div>
       <Heading
         title="Content Planner"
-        description="High Level View of Generated Posts"
+        description="Get content ideas for new posts."
         icon={Calendar}
         iconColor="text-gray-700"
         bgColor="bg-gray-700/10"
@@ -745,11 +745,12 @@ const ContentPlan = () => {
                <span className="">Return</span>
              </Button>
              <h1 className="mb-5">Video Options</h1>
-             {fullVideoList.length < 2 && 
+             {fullVideoList.length >= 2 && 
             (<RenderControls
               setInputProps={setGeneralProps}
               inputProps={generalProps}
               videos={fullVideoList}
+              video_template={'Read Caption'}
             ></RenderControls>)}
            </div>)}
            {isMobile && (<div className="flex text-center text-gray-900 mb-5 text-sm">Please access on PC or Mac to generate and download videos.</div>)}

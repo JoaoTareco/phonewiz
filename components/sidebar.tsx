@@ -20,16 +20,16 @@ const routes = [
   //   color: "text-sky-500"
   // },
   {
-    label: 'Content Planner',
-    icon: LayoutDashboard,
-    href: '/content-calendar',
-    color: "text-sky-500"
-  },
-  {
     label: 'Post Generator',
     icon: ImageIcon,
     color: "text-pink-700",
     href: '/post-generator',
+  },
+  {
+    label: 'Content Planner',
+    icon: LayoutDashboard,
+    href: '/content-calendar',
+    color: "text-sky-500"
   },
   // {
   //   label: 'Templates',
@@ -44,36 +44,20 @@ const routes = [
     color: "text-gray-500",
   },
   // {
-  //   label: 'Video Bank',
-  //   icon: ImageIcon,
-  //   color: "text-pink-700",
-  //   href: '/video-bank',
+  //   label: 'Settings',
+  //   icon: Settings,
+  //   href: '/settings',
   // },
-  // {
-  //   label: 'Music Generation',
-  //   icon: Music,
-  //   color: "text-emerald-500",
-  //   href: '/music',
-  // },
-  // {
-  //   label: 'Keyword Insights',
-  //   icon: Code,
-  //   color: "text-green-700",
-  //   href: '/keywords',
-  // },
-  {
-    label: 'Settings',
-    icon: Settings,
-    href: '/settings',
-  },
 ];
 
 export const Sidebar = ({
   apiLimitCount = 0,
-  isPro = false
+  isPro = false,
+  boughtTokensCount = 10
 }: {
   apiLimitCount: number;
   isPro: boolean;
+  boughtTokensCount: number;
 }) => {
   const pathname = usePathname();
 
@@ -121,6 +105,7 @@ export const Sidebar = ({
       <FreeCounter 
         apiLimitCount={apiLimitCount} 
         isPro={isPro}
+        boughtTokensCount={boughtTokensCount}
       />
     </div>
   );

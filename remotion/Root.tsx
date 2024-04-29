@@ -9,12 +9,22 @@ import {
   VIDEO_WIDTH,
 } from "../lambda/types/constants";
 import { NextLogo } from "./MyComp/NextLogo";
+import { BulletList } from "./bullet-list/Main";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Composition
-        id={COMP_NAME}
+        id={"bullet-list"}
+        component={BulletList}
+        durationInFrames={DURATION_IN_FRAMES}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={defaultMyCompProps}
+      />
+       <Composition
+        id={"read-caption"}
         component={ReadCaption}
         durationInFrames={DURATION_IN_FRAMES}
         fps={VIDEO_FPS}

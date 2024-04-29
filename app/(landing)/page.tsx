@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 
 const LandingPage = () => {
  useEffect(() => {
-    window.location.href = '/content-calendar';
+    window.location.href = '/post-generator';
  }, []);
 
  return null; // Return null since we're redirecting and not rendering any content

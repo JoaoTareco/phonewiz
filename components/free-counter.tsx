@@ -1,4 +1,4 @@
-import { Zap } from "lucide-react";
+import { Coins, Plus, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { MAX_FREE_COUNTS } from "@/constants";
@@ -6,13 +6,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { Badge } from "./ui/badge";
 
 export const FreeCounter = ({
   isPro = false,
   apiLimitCount = 0,
+  boughtTokensCount = 10
 }: {
   isPro: boolean,
-  apiLimitCount: number
+  apiLimitCount: number,
+  boughtTokensCount: number
 }) => {
   const [mounted, setMounted] = useState(false);
   const proModal = useProModal();
@@ -35,14 +38,18 @@ export const FreeCounter = ({
       <Card className="bg-white/10 border-0">
         <CardContent className="py-6">
           <div className="text-center text-sm mb-4 space-y-2">
+          <div className="tooltip tooltip-secondary tooltip-right" data-tip="You can use one token to either generate a new post or generate a new content plan.">
             <p>
-              {apiLimitCount} / {MAX_FREE_COUNTS} Free Posts
+              <Badge variant={'secondary'} className="text-sm w-full flex justify-center shadow-md"><span className="mr-1 text-rose-600  font-bold">{apiLimitCount}</span> Tokens</Badge>
             </p>
-            <Progress className="h-3" value={(apiLimitCount / MAX_FREE_COUNTS) * 100} />
           </div>
-          <Button onClick={proModal.onOpen} type="submit" className="w-full">
-            Upgrade
-            <Zap className="w-4 h-4 ml-2 fill-white" />
+            {/* <Progress className="h-3" value={(apiLimitCount / boughtTokensCount) * 100} /> */}
+          </div>
+          <Button onClick={proModal.onOpen} type="submit" className="w-full text-sm">
+          Get More <Coins className="w-4 h-4 ml-2"/>
+          
+          {/* <Plus className="w-4 h-4 ml-2 fill-white"/> */}
+            
           </Button>
         </CardContent>
       </Card>

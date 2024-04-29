@@ -7,6 +7,37 @@ module.exports = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
 	],
+  daisyui: {
+    themes: [
+      {
+        myTheme: {
+          "background": "#ffffff",
+          "foreground": "#f3f3f3",
+          "card": "#ffffff",
+          "card-foreground": "#f3f3f3",
+          "popover": "#ffffff",
+          "popover-foreground": "#f3f3f3",
+          "primary": "#e11d48",
+          "primary-foreground": "#ffffff",
+          "secondary": "#f2f2f2",
+          "secondary-foreground": "#1f1f1f",
+          "muted": "#f2f2f2",
+          "muted-foreground": "#777777",
+          "accent": "#f2f2f2",
+          "accent-foreground": "#1f1f1f",
+          "destructive": "#d22f7f",
+          "destructive-foreground": "#fafafa",
+          "border": "#e4e4e4",
+          "input": "#e4e4e4",
+          "ring": "#e11d48",
+          "radius": "0.5rem",
+          "base-100": "#ffffff",
+          "base-200": "#f2f2f2",
+          "base-300": "#f3f3f3",
+        },
+      },
+    ],
+  },
   theme: {
     container: {
       center: true,
@@ -72,5 +103,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),require("daisyui")],
 }

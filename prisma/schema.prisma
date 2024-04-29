@@ -62,13 +62,14 @@ model objects {
 
   @@unique([bucket_id, name], map: "bucketid_objname")
   @@index([name], map: "name_prefix_search")
+  @@index([bucket_id, name], map: "idx_objects_bucket_id_name")
   @@schema("storage")
 }
 
 model UserApiLimit {
   id         Int       @id @default(autoincrement())
   userId     String?   @unique @db.VarChar
-  count      BigInt?
+  count      Int?
   created_at DateTime? @default(now()) @db.Timestamptz(6)
   updatedAt  DateTime? @db.Timestamptz(6)
 
@@ -83,6 +84,7 @@ model UserSubscription {
   stripePriceId          String?   @db.VarChar
   stripeCurrentPeriodEnd String?   @db.VarChar
   created_at             DateTime? @default(now()) @db.Timestamptz(6)
+  post_tokens            Int?      @db.SmallInt
 
   @@schema("public")
 }
@@ -100,4 +102,35 @@ model content_plans {
   innactive    Boolean?
 
   @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model s3_multipart_uploads {
+  id               String   @id
+  in_progress_size BigInt   @default(0)
+  upload_signature String
+  bucket_id        String
+  key              String
+  version          String
+  owner_id         String?
+  created_at       DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([bucket_id, key, created_at], map: "idx_multipart_uploads_list")
+  @@schema("storage")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model s3_multipart_uploads_parts {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  upload_id   String
+  size        BigInt   @default(0)
+  part_number Int
+  bucket_id   String
+  key         String
+  etag        String
+  owner_id    String?
+  version     String
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+
+  @@schema("storage")
 }

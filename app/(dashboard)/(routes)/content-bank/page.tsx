@@ -49,7 +49,8 @@ const VideoPage = () => {
 
 
   var uppy = new Uppy()
-  .use(Tus, {
+
+  uppy.use(Tus, {
     endpoint: `https://${project_id}.supabase.co/storage/v1/upload/resumable`,
     headers: {
       authorization: `Bearer ${api_key}`,
@@ -140,7 +141,7 @@ const VideoPage = () => {
                         Please make sure it is longer than 3 seconds.
                       </DialogDescription>
                     </DialogHeader>
-                    <div className="flex pt-5">{uppy && <Dashboard uppy={uppy} closeAfterFinish={false} note={'Videos longer than 3 seconds only, up to 30 MB'} className="w-[450px]"/>}</div>
+                    <div className="flex pt-5">{uppy && <Dashboard uppy={uppy} plugins={['Dashboard']} closeAfterFinish={false} note={'Videos longer than 3 seconds only, up to 30 MB'} className="w-[450px]"/>}</div>
                   </DialogContent>
                 </Dialog>
               </div>

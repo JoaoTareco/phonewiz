@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useState } from "react";
-import { Check, MoveUpRight, Zap } from "lucide-react";
+import { Check, Zap } from "lucide-react";
 import { toast } from "react-hot-toast";
 
 import { 
@@ -43,11 +43,14 @@ export const ProModal = () => {
         <DialogHeader>
           <DialogTitle className="flex justify-center items-center flex-col gap-y-4 pb-2">
             <div className="flex items-center font-semibold text-xl">
-             Get more Tokens for <p className="ml-1 font-bold">ctrl</p><p className="text-primary font-bold">cap</p>
+              Upgrade to <p className="ml-1 font-bold">ctrl</p><p className="text-primary font-bold">cap</p>
+              <Badge className="uppercase text-sm py-1 ml-2">
+                pro
+              </Badge>
             </div>
           </DialogTitle>
           <DialogDescription className="text-center pt-2 space-y-2 text-zinc-900 font-medium">
-            {/* {tools.map((tool) => (
+            {tools.map((tool) => (
               <Card key={tool.href} className="p-3 border-black/5 flex items-center justify-between">
                 <div className="flex items-center gap-x-4">
                   <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
@@ -59,25 +62,14 @@ export const ProModal = () => {
                 </div>
                 <Check className="text-primary w-5 h-5" />
               </Card>
-            ))} */}
-            <div className="">
-              <img src="/discount.png" width="230" height="230" />
-             <div className="">
-              <div className=" mb-5 text-black"><span className="line-through text-mute">29,99$</span> <span className=" font-bold">9,99$</span></div>
-              <div className=""><span className="text-5xl font-bold text-primary">30</span> <span className="text-primary text-lg">Tokens</span></div>
-              <div className=" text-black font-lg mt-5">That&apos;s just <span className="line-through text-mute">1$</span><span className=" font-bold"> 0,33$</span> <span className="text-mute"> per post</span></div>
-            </div>
-            </div>
+            ))}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="">
-
-            <Button disabled={loading} onClick={onSubscribe} size="lg" type="submit" className="w-full shadow-lg shadow-red-500/50 mt-10">
-              Buy Now
-   
-              <MoveUpRight className="w-4 h-4 ml-2 fill-white" />
-            </Button>
-
+        <DialogFooter>
+          <Button disabled={loading} onClick={onSubscribe} size="lg" type="submit" className="w-full">
+            Upgrade
+            <Zap className="w-4 h-4 ml-2 fill-white" />
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

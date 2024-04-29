@@ -97,13 +97,14 @@
     "tailwindcss-animate": "^1.0.6",
     "tus-js-client": "^4.0.1",
     "typewriter-effect": "^2.20.1",
-    "uppy": "^3.23.0",
+    "uppy": "^3.24.3",
     "zod": "^3.21.4",
     "zustand": "^4.3.9"
   },
   "devDependencies": {
     "@types/react": "^18.2.58",
     "@types/snowball-stemmers": "^0.6.2",
+    "daisyui": "^4.10.1",
     "typescript": "5.2.2"
   }
 }

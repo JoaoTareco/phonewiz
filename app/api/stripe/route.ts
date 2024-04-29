@@ -5,7 +5,7 @@ import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
 
-const settingsUrl = absoluteUrl("/settings");
+const settingsUrl = "http://localhost:3000/post-generator";
 
 export async function GET() {
   try {
@@ -35,7 +35,7 @@ export async function GET() {
       success_url: settingsUrl,
       cancel_url: settingsUrl,
       payment_method_types: ["card"],
-      mode: "subscription",
+      mode: "payment",
       billing_address_collection: "auto",
       customer_email: user.emailAddresses[0].emailAddress,
       line_items: [
@@ -43,13 +43,10 @@ export async function GET() {
           price_data: {
             currency: "EUR",
             product_data: {
-              name: "ctrlcap Pro",
-              description: "Pro plan."
+              name: "CtrlCap",
+              description: "30 CtrlCap Tokens."
             },
             unit_amount: 999,
-            recurring: {
-              interval: "month"
-            }
           },
           quantity: 1,
         },
@@ -58,6 +55,8 @@ export async function GET() {
         userId,
       },
     })
+
+    console.log(JSON.stringify({ url: stripeSession.url }))
 
     return new NextResponse(JSON.stringify({ url: stripeSession.url }))
   } catch (error) {

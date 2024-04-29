@@ -15,9 +15,14 @@ export const incrementApiLimit = async () => {
   });
 
   if (userApiLimit) {
+
+    if (Number(userApiLimit.count) === 0){
+      return;
+    }
+
     await prismadb.userApiLimit.update({
       where: { userId: userId },
-      data: { count: Number(userApiLimit.count) + 1 },
+      data: { count: Number(userApiLimit.count) - 1 },
     });
   } else {
     await prismadb.userApiLimit.create({
@@ -37,7 +42,7 @@ export const checkApiLimit = async () => {
     where: { userId: userId },
   });
 
-  if (!userApiLimit || Number(userApiLimit.count) < MAX_FREE_COUNTS) {
+  if (!userApiLimit || Number(userApiLimit.count) > 0) {
     return true;
   } else {
     return false;
@@ -58,8 +63,37 @@ export const getApiLimitCount = async () => {
   });
 
   if (!userApiLimit) {
-    return 0;
+    await prismadb.userApiLimit.create({
+      data: {
+        userId: userId,
+        count: MAX_FREE_COUNTS
+      }
+    })
+    return 10;
   }
 
   return Number(userApiLimit.count);
+};
+
+export const getBoughtTokensCount = async () => {
+  const { userId } = auth();
+
+  if (!userId) {
+    return 0;
+  }
+
+  const userApiLimit = await prismadb.userSubscription.findFirst({
+    where: {
+      userId
+    },
+    orderBy: {
+      created_at: 'desc',
+    },
+  });
+
+  if (!userApiLimit) {
+    return 0;
+  }
+
+  return Number(userApiLimit.post_tokens);
 };
