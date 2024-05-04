@@ -391,11 +391,11 @@ const ContentGenerator = () => {
         iconColor="text-gray-700"
         bgColor="bg-gray-700/10"
       />
-      <div className="px-4 lg:px-8">
+      <div className="px-4 lg:px-8 overflow-x-hidden">
       <Separator className="my-4" />
       
       {currentStep === 0 && (
-        <div className="h-full">
+        <div className="h-full ">
           <div className="flex justify-center pb-10">  
             <ul className="steps w-1/2">
               <li className="step step-primary">Topic</li>
@@ -453,12 +453,12 @@ const ContentGenerator = () => {
                       
                       disabled={isLoading1
                       } 
-                      placeholder="E.g. For me, the biggest lesson is how to market your products. Not being too pushy but still raising awareness and converting clients. For that, what I do is..." 
+                      placeholder="E.g. For me, the biggest lesson is how to market your products. For that, what I do is..." 
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    It is a good idea to provide your audience with value from your own experience. Add a personal touch to your content to increase engagement.
+                   {isMobile ? null : 'It is a good idea to provide your audience with value from your own experience. Add a personal touch to your content to increase engagement.'}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -478,7 +478,7 @@ const ContentGenerator = () => {
                     />
                   </FormControl>
                   <FormDescription>
-                    What do you want your audience to do?
+                  {isMobile ? null : 'What do you want your audience to do?'}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -578,8 +578,8 @@ const ContentGenerator = () => {
       </div>
       )}
       { currentStep === 1 && (
-        <div className="h-full">
-        <div className="flex justify-center pb-10">  
+        <div className="h-full overflow-x-hidden">
+        <div className="flex justify-center pb-10 ">  
           <ul className="steps w-1/2">
             <li className="step step-primary">Topic</li>
             <li className="step step-primary">Hook</li>
@@ -617,10 +617,10 @@ const ContentGenerator = () => {
             control={form2.control}
             name="hook"
             render={({ field }: { field: any }) => (
-          <RadioGroup onValueChange={field.onChange} defaultValue={field.value}  className="flex flex-col space-y-1">
-          <div className="grid grid-cols-3 gap-4">
+          <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className={`flex flex-col space-y-1 ${isMobile ? 'mr-2' : ''}`}>
+          <div  className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-3'}`}>
             {Object.entries(hookOptions).map(([key, label], index)  => (
-              <Card key={index} className={`${field.value === label ? 'p-5 bg-secondary' : 'p-5'}`}>
+              <Card key={index} className={`  ${field.value === label ? 'p-5 bg-secondary' : 'p-5'}`}>
               <FormItem className="flex items-center space-x-3 space-y-0" key={index}>
               <FormControl>
                 <RadioGroupItem value={label as string}/>
@@ -635,7 +635,7 @@ const ContentGenerator = () => {
           </RadioGroup>
             )}
           />
-          <div className="pt-10 flex justify-end ">
+          <div className="pt-10 flex justify-end pb-4">
 
           <Button type="submit">
               <span className="">Pick the template</span>
@@ -690,7 +690,7 @@ const ContentGenerator = () => {
             name="caption_template"
             render={({ field }: { field: any }) => (
           <RadioGroup onValueChange={field.onChange} defaultValue={field.value}  className="flex flex-col space-y-1">
-          <div className="grid grid-cols-3 gap-4">
+          <div  className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-3'}`}>
             {Object.entries(caption_templates).map(([key, label], index)  => (
               <Card key={index} className={`cursor-pointer ${field.value === label.label ? 'p-5 bg-secondary' : 'p-5'}`}>
               <FormItem className="flex items-center space-x-3 space-y-0" key={index}>
@@ -709,13 +709,14 @@ const ContentGenerator = () => {
           </RadioGroup>
             )}
           />
+          <div>
           <h2 className="text-xl font-medium pb-5 pt-6">Choose a video template</h2>
           <FormField
             control={form3.control}
             name="video_template"
             render={({ field }: { field: any }) => (
           <RadioGroup onValueChange={field.onChange} defaultValue={field.value}  className="flex flex-col space-y-1">
-          <div className="w-3/4 grid grid-cols-2 gap-4 content-center">
+          <div className={`grid content-center gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2 w-3/4 '}`}>
             {Object.entries(video_templates).map(([key, label], index)  => (
               <Card key={index} className={`cursor-pointer ${field.value === label.label ? 'p-5 bg-secondary' : 'p-5'}`}>
               <FormItem className="flex items-center space-x-3 space-y-0" key={index}>
@@ -746,7 +747,8 @@ const ContentGenerator = () => {
           </RadioGroup>
             )}
           />
-          <div className=" flex justify-end ">
+          </div>
+          <div className=" flex justify-end pt-5 pb-16">
 
           { isLoading3 && (
           <Button type="submit">
@@ -770,12 +772,12 @@ const ContentGenerator = () => {
       )}
         {generated_caption && generalProps && (
           <div className={`flex space-y-4 ${isMobile ? 'h-screen' : 'flex-col '}`} >
-            <div className={`${isMobile ? 'h-screen' : ' grid grid-rows-2 gap-6 lg:grid-cols-3 lg:grid-rows-1'}`}>
-            {isMobile && ( <Button variant="secondary" onClick={returnButton} className="mb-5">
+            <div className={`${isMobile ? 'h-screen' : ' grid gap-6 lg:grid-cols-3 lg:grid-rows-1'}`}>
+            {/* {isMobile && ( <Button variant="secondary" onClick={returnButton} className="mb-5">
                <Undo2 className="h-4 w-4 mr-1" />
                <span className="">Return</span>
-             </Button>)}
-           {!isMobile && (<div className="col-span-1">
+             </Button>)} */}
+           <div className="col-span-1">
             <Button variant="secondary" onClick={returnButton} className="mb-5">
                <Undo2 className="h-4 w-4 mr-1" />
                <span className="">Return</span>
@@ -787,14 +789,14 @@ const ContentGenerator = () => {
               videos={fullVideoList}
               video_template={video_template}
             ></RenderControls></div>)}
-           </div>)}
+           </div>
            {isLoading1 && (
               <div className="p-20">
                 <Loader />
               </div>
             )}
-           {isMobile && (<div className="flex text-center text-gray-900 mb-5 text-sm">Please access on PC or Mac to generate and download videos.</div>)}
-             {!isMobile && (<div className="rounded-md border bg-muted flex justify-center col-span-1 h-[78vh]">
+           {/* {!isMobile && (<div className="flex text-center text-gray-900 mb-5 text-sm">Please access on Desktop to generate and download videos.</div>)} */}
+            <div className="rounded-md border bg-muted flex justify-center col-span-1 h-[78vh]">
                 {/* {(video_template === "inputProps") && (  <Player
                     component={Main}
                     inputProps={generalProps}
@@ -861,11 +863,11 @@ const ContentGenerator = () => {
                   loop>
                     <source src="https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/user_2aPY12uVo8oyqxKieBV7qpNOgOJ/IMG_2199.mp4" type="video/mp4" />
                   </video> */}
-              </div>)}
-              {isMobile && (<div className="mb-1 ml-2">Generated Caption:</div>)}
+              </div>
+              {isMobile && (<div className="mb-1 ml-2 pt-5">Generated Caption:</div>)}
              <Textarea
                placeholder="You erased the whole caption!"
-               className={`${isMobile ? 'overflow-y-auto h-full' : 'col-span-1'}`}
+               className={`${isMobile ? 'overflow-y-auto h-full' : 'col-span-1  h-[78vh]'}`}
                defaultValue={generated_caption}
              />
            </div>
