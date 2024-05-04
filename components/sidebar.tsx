@@ -101,7 +101,7 @@ export const Sidebar = ({
             //     pathname === route.href ? "text-accent-foreground bg-secondary" : "text-muted-foreground",
             //   )}
             // >
-              <div className="flex items-center flex-1 text-sm group p-3 w-full justify-start font-medium cursor-pointer hover:text-accent-foreground  rounded-lg transition">
+              <div key={route.href} className="flex items-center flex-1 text-sm group p-3 w-full justify-start font-medium cursor-pointer hover:text-accent-foreground  rounded-lg transition">
                 {/* <route.icon className={cn("h-5 w-5 mr-3", route.color)} /> */}
                 {route.label} <Badge className="ml-2 text-xs " variant={'secondary'}>Only on Desktop</Badge>
               </div>
