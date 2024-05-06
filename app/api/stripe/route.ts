@@ -5,7 +5,7 @@ import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
 
-const settingsUrl = "http://localhost:3000/post-generator";
+const settingsUrl = "http://app.ctrlcap.com/post-generator";
 
 export async function GET() {
   try {
@@ -16,20 +16,20 @@ export async function GET() {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const userSubscription = await prismadb.userSubscription.findUnique({
-      where: {
-        userId
-      }
-    })
+    // const userSubscription = await prismadb.userSubscription.findUnique({
+    //   where: {
+    //     userId
+    //   }
+    // })
 
-    if (userSubscription && userSubscription.stripeCustomerId) {
-      const stripeSession = await stripe.billingPortal.sessions.create({
-        customer: userSubscription.stripeCustomerId,
-        return_url: settingsUrl,
-      })
+    // if (userSubscription && userSubscription.stripeCustomerId) {
+    //   const stripeSession = await stripe.billingPortal.sessions.create({
+    //     customer: userSubscription.stripeCustomerId,
+    //     return_url: settingsUrl,
+    //   })
 
-      return new NextResponse(JSON.stringify({ url: stripeSession.url }))
-    }
+    //   return new NextResponse(JSON.stringify({ url: stripeSession.url }))
+    // }
 
     const stripeSession = await stripe.checkout.sessions.create({
       success_url: settingsUrl,
