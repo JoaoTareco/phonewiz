@@ -4,6 +4,7 @@ import { OpenAI } from "openai";
 // import Configuration from "openai"
 import { checkSubscription } from "@/lib/subscription";
 import { checkApiLimit, incrementApiLimit } from "@/lib/api-limit";
+import prismadb from "@/lib/prismadb";
 
 // const configuration = new Configuration({
 //   apiKey: process.env.OPENAI_API_KEY,
@@ -218,6 +219,15 @@ And I will send you a link to check it out ✨️
     if (!isPro) {
       await incrementApiLimit();
     }
+
+
+    await prismadb.generated_posts.create({
+      data: {
+        userId: userId,
+        caption: contentWithLineBreaks,
+        video_options: JSON.stringify(body)
+      },
+    })
 
     return NextResponse.json(contentWithLineBreaks);
   } catch (error) {

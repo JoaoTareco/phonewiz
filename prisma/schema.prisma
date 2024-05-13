@@ -71,7 +71,7 @@ model UserApiLimit {
   userId     String?   @unique @db.VarChar
   count      Int?
   created_at DateTime? @default(now()) @db.Timestamptz(6)
-  updatedAt  DateTime? @db.Timestamptz(6)
+  updatedAt  DateTime? @default(now()) @db.Timestamptz(6)
 
   @@schema("public")
 }
@@ -133,4 +133,16 @@ model s3_multipart_uploads_parts {
   created_at  DateTime @default(now()) @db.Timestamptz(6)
 
   @@schema("storage")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model generated_posts {
+  id             BigInt   @id @default(autoincrement())
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
+  userId         String?  @db.VarChar
+  caption        String?
+  video_options  String?
+  caption_inputs String?
+
+  @@schema("public")
 }

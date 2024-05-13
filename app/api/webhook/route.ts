@@ -36,8 +36,6 @@ export async function POST(req: Request) {
       where: { userId: session?.metadata?.userId },
     });
 
-    console.log(userTokens)
-
     if (!userTokens) {
       await prismadb.userApiLimit.create({
         data: {
@@ -52,17 +50,17 @@ export async function POST(req: Request) {
       });
     }
 
-    await prismadb.userSubscription.create({
-      data: {
-        userId: session?.metadata?.userId,
-        // stripeSubscriptionId: subscription.id,
-        // stripeCustomerId: subscription.customer as string,
-        // stripePriceId: subscription.items.data[0].price.id,
-        // stripeCurrentPeriodEnd: String(new Date(
-        //   subscription.current_period_end * 1000
-        // )),
-      },
-    })
+    // await prismadb.userSubscription.create({
+    //   data: {
+    //     userId: session?.metadata?.userId,
+    //     // stripeSubscriptionId: subscription.id,
+    //     // stripeCustomerId: subscription.customer as string,
+    //     // stripePriceId: subscription.items.data[0].price.id,
+    //     // stripeCurrentPeriodEnd: String(new Date(
+    //     //   subscription.current_period_end * 1000
+    //     // )),
+    //   },
+    // })
   }
 
   if (event.type === "invoice.payment_succeeded") {
@@ -74,8 +72,6 @@ export async function POST(req: Request) {
       where: { userId: session?.metadata?.userId },
     });
 
-    console.log(userTokens)
-
     if (!userTokens) {
       await prismadb.userApiLimit.create({
         data: {
@@ -90,18 +86,18 @@ export async function POST(req: Request) {
       });
     }
 
-    await prismadb.userSubscription.update({
-      where: {
-        // stripeSubscriptionId: subscription.id,
-        userId: session?.metadata?.userId
-      },
-      data: {
-        stripePriceId: '999',
-        // stripeCurrentPeriodEnd: String(new Date(
-        //   subscription.current_period_end * 1000
-        // )),
-      },
-    })
+    // await prismadb.userSubscription.update({
+    //   where: {
+    //     // stripeSubscriptionId: subscription.id,
+    //     userId: session?.metadata?.userId
+    //   },
+    //   data: {
+    //     stripePriceId: '999',
+    //     // stripeCurrentPeriodEnd: String(new Date(
+    //     //   subscription.current_period_end * 1000
+    //     // )),
+    //   },
+    // })
   }
 
   return new NextResponse(null, { status: 200 })
