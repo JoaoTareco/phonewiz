@@ -11,6 +11,7 @@ import { FreeCounter } from "@/components/free-counter";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { useMediaQuery } from "react-responsive";
+import { FeedbackDialog } from "./feedback-form";
 
 const poppins = Montserrat ({ weight: '600', subsets: ['latin'] });
 
@@ -111,17 +112,7 @@ export const Sidebar = ({
       </div>
       <Card className="bg-white/10 border-1">
         <CardContent className="py-6">
-          {/* <div className="flex text-center text-sm font-medium text-muted-foreground space-y-2">
-
-             <LifeBuoy size={16} className="mr-1"/> Support
-          
-          </div> */}
-          {/* <Progress className="h-3" value={(apiLimitCount / MAX_FREE_COUNTS) * 100} /> */}
-          {/* <div className="flex text-center text-sm font-medium text-muted-foreground space-y-2 mt-3">
-
-          <Newspaper size={16} className="mr-1"/> What's New
-            
-          </div> */}
+        <FeedbackDialog/>
         </CardContent>
       </Card>
       <FreeCounter 
