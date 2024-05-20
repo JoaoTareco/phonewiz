@@ -5,7 +5,7 @@ import { Key, useEffect, useState } from "react";
 import { ArrowRight, BookOpen, Check, MessagesSquare, MoveUpRight, Zap, History, FileStack, FileVideo, RotateCw, ChevronRight, Undo2, Pencil } from "lucide-react";
 import { toast } from "react-hot-toast";
 
-
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
@@ -88,6 +88,7 @@ interface CaptionPlayground {
 
 export const CaptionPlayground: React.FC<CaptionPlayground> = ({ input_props, setStep,setPostHistoryOut }) => {
   const proModal = useProModal();
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [generated_caption, setGeneratedCaption] = useState<string>();
@@ -141,6 +142,8 @@ export const CaptionPlayground: React.FC<CaptionPlayground> = ({ input_props, se
       } else {
         toast.error("Something went wrong.");
       }
+    }finally {
+      router.refresh();
     }
   }
 
