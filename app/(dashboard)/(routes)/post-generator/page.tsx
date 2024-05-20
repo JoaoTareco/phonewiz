@@ -45,6 +45,8 @@ import { useMediaQuery } from 'react-responsive';
 import { BulletList } from "@/remotion/bullet-list/Main";
 import Stepper from "@/components/ui/stepper";
 import { Card } from "@/components/ui/card";
+import { PostHistory } from "@/components/post-history";
+import { CaptionPlayground } from "@/components/caption-playground";
 
 const caption_templates = [
   { label: "Topic Based", value: "topic" },
@@ -98,6 +100,7 @@ const ContentGenerator = () => {
   // const [selectedValue, setSelectedValue] = useState<string>();
   const [hookOptions, setHookOptions] = useState<any>();
   const [generalProps, setGeneralProps] = useState<any>();
+  const [selectedCaption, setSelectedCaption] = useState<any>();
   // const [componentId, setComponentId] = useState<any>();
   const [videos, setVideos] = useState<{ [key: string]: string }>({});
   type VideoObject = { video: string };
@@ -105,6 +108,9 @@ const ContentGenerator = () => {
   // const [texts, setTexts] = useState<{ [key: string]: string }>({});
   const [currentStep, setCurrentStep] = useState(0);
   const [loading3, setLoading3] = useState(false);
+
+  const [postHistoryOut, setPostHistoryOut] = useState<any>(null);
+
 
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
@@ -216,6 +222,7 @@ const ContentGenerator = () => {
       const response = await axios.post(`/api/get-caption`, body);
 
       setGeneratedCaption(response.data);
+      setPostHistoryOut(null)
 
       isLoading3 = false;
 
@@ -239,7 +246,7 @@ const ContentGenerator = () => {
 
       setVideoHook(values.hook)
 
-      setCurrentStep(2);
+      setCurrentStep(3);
 
 
     } catch (error: any) {
@@ -256,7 +263,7 @@ const ContentGenerator = () => {
     try {
       console.log(values)
       console.log(currentStep)
-      setCurrentStep(1);
+      setCurrentStep(2);
 
       hasGeneratedHooks = true;
       console.log(values)
@@ -324,7 +331,7 @@ const ContentGenerator = () => {
 
   const returnButton = async () => {
     try {
-      setCurrentStep(0);
+      setCurrentStep(1);
       setGeneratedCaption(undefined);
       setVideoTemplate(undefined)
       setCaptionTemplate(undefined)
@@ -382,20 +389,30 @@ const ContentGenerator = () => {
     { label: "Bullet List", value: "Bullet List", description: 'Concise caption with bullet points about your topic.' },
   ] as const
 
+  const returnFunction = () => {
+    setCurrentStep(0)
+  }
+
   return ( 
     <div>
-      <Heading
+     {currentStep === 0 && ( <div><Heading
         title="Post Generator"
         description="Generate enganging content."
         icon={Clapperboard}
         iconColor="text-gray-700"
         bgColor="bg-gray-700/10"
       />
+      </div>)}
       <div className="px-4 lg:px-8 overflow-x-hidden">
-      <Separator className="my-4" />
-      
-      {currentStep === 0 && (
+      {currentStep === 0 && (<Separator className="mb-4" />)}
+      {currentStep === 0 && <PostHistory setStep={setCurrentStep} setInputProps={setSelectedCaption} setPostHistoryOut={setPostHistoryOut} postHistoryOut={postHistoryOut}/>}
+      {currentStep === 5 && <CaptionPlayground setStep={setCurrentStep} input_props={selectedCaption} setPostHistoryOut={setPostHistoryOut}/>}
+      {currentStep === 1 && (
         <div className="h-full ">
+          <Button variant="secondary"  className="max-w-[6rem] mb-12" onClick={returnFunction}>
+            <Undo2 className="h-4 w-4 mr-1" />
+            <span className="text-sm">Return</span>
+          </Button>
           <div className="flex justify-center pb-10">  
             <ul className="steps w-1/2">
               <li className="step step-primary">Topic</li>
@@ -435,7 +452,7 @@ const ContentGenerator = () => {
                         
                         disabled={isLoading1
                         } 
-                        placeholder="E.g. Content creators that sell digital products in Instagram" 
+                        placeholder="E.g. Content creators that sell digital products in Instagram." 
                         {...field}
                       />
                     </FormControl>
@@ -577,8 +594,12 @@ const ContentGenerator = () => {
       {/* </Card> */}
       </div>
       )}
-      { currentStep === 1 && (
+      { currentStep === 2 && (
         <div className="h-full overflow-x-hidden">
+          <Button variant="secondary"  className="max-w-[6rem] mb-12" onClick={returnFunction}>
+            <Undo2 className="h-4 w-4 mr-1" />
+            <span className="text-sm">Return</span>
+          </Button>
         <div className="flex justify-center pb-10 ">  
           <ul className="steps w-1/2">
             <li className="step step-primary">Topic</li>
@@ -650,8 +671,12 @@ const ContentGenerator = () => {
         {/* </Card> */}
         </div>
       )}
-      {currentStep === 2 && !generated_caption && (
+      {currentStep === 3 && !generated_caption && (
         <div className="h-full">
+          <Button variant="secondary"  className="max-w-[6rem] mb-12" onClick={returnFunction}>
+            <Undo2 className="h-4 w-4 mr-1" />
+            <span className="text-sm">Return</span>
+          </Button>
          <div className="flex justify-center pb-10">  
            <ul className="steps w-1/2">
              <li className="step step-primary">Topic</li>
@@ -771,7 +796,7 @@ const ContentGenerator = () => {
         </div>
       )}
         {generated_caption && generalProps && (
-          <div className={`flex space-y-4 ${isMobile ? 'h-screen' : 'flex-col '}`} >
+          <div className={`flex space-y-4 mt-10 ${isMobile ? 'h-screen' : 'flex-col '}`} >
             <div className={`${isMobile ? 'h-screen' : ' grid gap-6 lg:grid-cols-3 lg:grid-rows-1'}`}>
             {/* {isMobile && ( <Button variant="secondary" onClick={returnButton} className="mb-5">
                <Undo2 className="h-4 w-4 mr-1" />

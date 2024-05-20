@@ -32,6 +32,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-tooltip": "^1.0.7",
     "@remotion/cli": "4.0.114",
     "@remotion/google-fonts": "4.0.114",
     "@remotion/lambda": "^4.0.114",
@@ -98,6 +99,7 @@
     "tus-js-client": "^4.0.1",
     "typewriter-effect": "^2.20.1",
     "uppy": "^3.24.3",
+    "vaul": "^0.9.1",
     "zod": "^3.21.4",
     "zustand": "^4.3.9"
   },
