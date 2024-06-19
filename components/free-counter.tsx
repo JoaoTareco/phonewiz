@@ -40,7 +40,7 @@ export const FreeCounter = ({
           <div className="text-center text-sm mb-4 space-y-2">
           <div className="tooltip tooltip-secondary tooltip-right" data-tip="You can use one token to either generate a new post or generate a new content plan.">
             <p>
-              <Badge variant={'secondary'} className="text-sm w-full flex justify-center shadow-md"><span className="mr-1 text-rose-600  font-bold">{apiLimitCount}</span> Tokens</Badge>
+              <Badge variant={'secondary'} className="text-sm w-full flex justify-center "><span className="mr-1 text-rose-600  font-bold">{apiLimitCount}</span> Tokens</Badge>
             </p>
           </div>
             {/* <Progress className="h-3" value={(apiLimitCount / boughtTokensCount) * 100} /> */}

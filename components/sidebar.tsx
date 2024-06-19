@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Montserrat } from 'next/font/google'
-import { Code, ImageIcon, LayoutDashboard, LifeBuoy, MessageSquare, Music, Newspaper, Settings, VideoIcon } from "lucide-react";
+import { Calendar, Clapperboard, Code, ImageIcon, LayoutDashboard, LifeBuoy, MessageSquare, Music, Newspaper, Settings, VideoIcon, Videotape } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
@@ -24,14 +24,14 @@ const routes = [
   // },
   {
     label: 'Post Generator',
-    icon: ImageIcon,
+    icon: Clapperboard,
     color: "text-pink-700",
     href: '/post-generator',
     mobile: true,
   },
   {
     label: 'Content Planner',
-    icon: LayoutDashboard,
+    icon: Calendar,
     href: '/content-calendar',
     color: "text-sky-500",
     mobile: false,
@@ -44,7 +44,7 @@ const routes = [
   // },
   {
     label: 'Content Bank',
-    icon: MessageSquare,
+    icon: Videotape,
     href: '/content-bank',
     color: "text-gray-500",
     mobile: true,
@@ -89,7 +89,7 @@ export const Sidebar = ({
             )}
           >
             <div className="flex items-center flex-1">
-              {/* <route.icon className={cn("h-5 w-5 mr-3", route.color)} /> */}
+              {/* <route.icon className="h-4 w-4 mr-2" /> */}
               {route.label}
             </div>
           </Link> 

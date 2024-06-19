@@ -475,7 +475,7 @@ const ContentGenerator = () => {
                     />
                   </FormControl>
                   <FormDescription>
-                   {isMobile ? null : 'It is a good idea to provide your audience with value from your own experience. Add a personal touch to your content to increase engagement.'}
+                   {isMobile ? null : 'Provide your audience with value from your own experience. This will make the content feel personal and increase engagement.'}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -494,9 +494,9 @@ const ContentGenerator = () => {
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>
+                  {/* <FormDescription>
                   {isMobile ? null : 'What do you want your audience to do?'}
-                  </FormDescription>
+                  </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}

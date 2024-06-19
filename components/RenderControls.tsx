@@ -9,11 +9,12 @@ import { ErrorComp } from "./remotion/Error";
 import { Input } from "./ui/input";
 import { ProgressBar } from "./ProgressBar";
 import { Spacing } from "./Spacing";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
 // import { Label } from "./ui/label";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { FontPicker } from "./fontPicker";
 
 export const RenderControls: React.FC<{
   setInputProps: React.Dispatch<React.SetStateAction<any>>;
@@ -32,6 +33,7 @@ export const RenderControls: React.FC<{
 
   const { renderMedia, state, undo } = useRendering(composition, inputProps);
   const [selectedVideo, setSelectedVideo] = useState<string>();
+  const [fontFamilyChosen, setFontFamily] = useState<any>();
 
   // const videoCount: number = Object.keys(inputProps).filter(key => key.startsWith('video')).length;
   // const textCount: number = Object.keys(inputProps).filter(key => key.startsWith('title')).length;
@@ -44,6 +46,12 @@ export const RenderControls: React.FC<{
   console.log(videos)
 
   console.log(videosArray);
+
+  useEffect(() => {
+    setInputProps((prevProps: any) => ({ ...prevProps, selectedFont: fontFamilyChosen }));
+    console.log(inputProps)
+  }, [fontFamilyChosen]); 
+
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
     const { value } = e.target;
@@ -133,6 +141,7 @@ export const RenderControls: React.FC<{
                 }
                 return null;
               })}
+            <FontPicker setProps={setInputProps}/>
             <div className="flex justify-start">
               <ButtonRe
                 disabled={state.status === "invoking"}

@@ -33,9 +33,6 @@ import '@uppy/core/dist/style.min.css';
 import '@uppy/dashboard/dist/style.min.css';
 
 
-const api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vZHRyeHRtaHd4d255d3NwZnVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQwMjM0NzksImV4cCI6MjAxOTU5OTQ3OX0.hTwPwcu50pbBDZIod4hz029-2cA5rCDzw_ZYSGclNMA';
-const project_id = 'modtrxtmhwxwnywspfuf';
-
 
 const VideoPage = () => {
   const router = useRouter();
@@ -116,12 +113,12 @@ const VideoPage = () => {
         iconColor="text-gray-700"
         bgColor="bg-gray-700/10"
       />
-      <div className="px-4 lg:px-8">
+      <div className="px-4 lg:px-8 overflow-hidden">
         <Separator className="my-4" />
         {!reloadVideos && (
              <div className="relative">
           <ScrollArea>
-            <div className="flex space-x-4 pb-4">
+            <div className="grid grid-cols-5 gap-4 ">
               <div className="h-96 w-64 object-cover transition-all aspect-[3/4] justify-center text-center rounded-md border border-dashed">
                 <h3 className="mt-20 text-lg font-semibold">Add a new video</h3>
                 <p className="mb-4 mt-2 text-sm text-muted-foreground">
@@ -148,8 +145,10 @@ const VideoPage = () => {
   
               {videos.map((videoUrl: string | undefined, index: Key | null | undefined) => (
                   <video className="h-96 w-64 object-cover transition-all hover:scale-105 aspect-[3/4] rounded-md" key={index}
-                  controls={true} 
+                  controls={false} 
                   // autoPlay
+                  onMouseOver={event => event.target.play()}
+                  onMouseOut={event => event.target.pause()}
                   muted
                   >
                     <source src={videoUrl} type="video/mp4" />
@@ -157,7 +156,7 @@ const VideoPage = () => {
                 ))}
          
             </div>
-            <ScrollBar orientation="horizontal" />
+            <ScrollBar orientation="vertical" />
           </ScrollArea>
         </div>)}
       </div>

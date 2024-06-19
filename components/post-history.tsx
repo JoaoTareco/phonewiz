@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { Key, useEffect, useState } from "react";
-import { ArrowRight, BookOpen, Check, MessagesSquare, MoveUpRight, Zap, History, FileStack, FileVideo } from "lucide-react";
+import { ArrowRight, BookOpen, Check, MessagesSquare, MoveUpRight, Zap, History, FileStack, FileVideo, PenLine } from "lucide-react";
 import { toast } from "react-hot-toast";
 
 
@@ -60,23 +60,10 @@ export const PostHistory: React.FC<PostHistoryrops> = ({ setStep, setInputProps,
 
   return (
     <div className="">
-        <div className="grid grid-cols-2 gap-2">
-          <div className="col-span-1">
-            <div className="h-60 object-cover transition-all justify-center text-center rounded-md border border-dashed p-1">
-                <h3 className="mt-16 text-lg font-semibold">Caption Playground</h3>
-                <p className="mb-4 mt-2 text-sm text-muted-foreground">
-                  Generate new captions and hooks with a tailored interface.
-                </p>
-                <div className="mt-5">
-                  <Button onClick={captionPlayground}>
-                  <FileStack size={16} className="mr-2"/> Generate 
-                  </Button>
-                </div>
-              </div>
-          </div>
-          <div className="col-span-1">
-            <div className="h-60 object-cover transition-all justify-center text-center rounded-md border border-dashed p-1">
-                <h3 className="mt-16 text-lg font-semibold">Full Post With Video</h3>
+        <div className="grid grid-rows-2 gap-2">
+        <div className="row-span-1">
+          <Card className="object-cover transition-all justify-center text-center h-[16rem] p-1 ">
+                <h3 className="mt-16 text-lg font-semibold">Post With Video</h3>
                 <p className="mb-4 mt-2 text-sm text-muted-foreground">
                   Generate new captions and hooks, together an edited video.
                 </p>
@@ -85,15 +72,45 @@ export const PostHistory: React.FC<PostHistoryrops> = ({ setStep, setInputProps,
                  <FileVideo size={16} className="mr-2"/> Generate 
                   </Button>
                 </div>
-              </div>
+              </Card>
+          </div>
+          <div className="row-span-1">
+            <div className="grid grid-cols-2 gap-2">
+            <div className="col-span-1">
+              <Card className="object-cover transition-all justify-center text-center h-[12rem] p-1">
+                <h3 className="mt-8 text-lg font-semibold">Caption Playground</h3>
+                <p className=" mt-2 text-sm text-muted-foreground">
+                  Generate new captions.
+                </p>
+                <div className="mt-5">
+                  <Button onClick={captionPlayground}>
+                  <PenLine size={16} className="mr-2"/> Generate 
+                  </Button>
+                </div>
+              </Card>
+            </div>
+            <div className="col-span-1">
+              <Card className="object-cover transition-all justify-center text-center h-[12rem] bg-slate-50 p-1">
+                <h3 className="mt-8 text-lg font-semibold text-gray-600">Bulk Create</h3>
+                <p className=" mt-2 text-sm text-muted-foreground">
+                 Comming Soon...
+                </p>
+                <div className="mt-5">
+                  <Button onClick={captionPlayground} disabled >
+                  <FileStack size={16} className="mr-2"/> Generate
+                  </Button>
+                </div>
+              </Card>
+            </div>
+            </div>
           </div>
         </div>
             
        {postHistory.length > 0 && (
         <div>
-        <Separator className="mt-10"/>
+        <Separator className=""/>
         
-        <h2 className="my-5 text-xl font-medium">Caption History</h2> 
+        <h2 className="my-5 text-xl font-medium">Post History</h2> 
         <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4">
           {postHistory.map((post: any, index: Key | null | undefined) => (
             <div key={index} className="col-span-1">

@@ -15,11 +15,11 @@ const DashboardLayout = async ({
   const boughtTokensCount = await getBoughtTokensCount();
 
   return ( 
-    <div className="h-full relative bg-zinc-50">
+    <div className="h-full relative bg-muted/40">
       <div className="hidden h-full md:flex md:w-41 md:flex-col md:fixed md:inset-y-0 z-80 bg-gray-900">
       <Sidebar isPro={isPro} apiLimitCount={apiLimitCount as number} boughtTokensCount={boughtTokensCount as number} />
       </div>
-      <main className="md:pl-60 pb-10 bg-zinc-50 h-screen overflow-y-auto">
+      <main className="md:pl-60 pb-10 bg-muted/40 h-screen overflow-y-auto">
         <Navbar />
         {children}
       </main>

@@ -8,8 +8,34 @@ import {
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
 } from "../lambda/types/constants";
-import { NextLogo } from "./MyComp/NextLogo";
+import {top25} from "../lib/fonts/fonts";
 import { BulletList } from "./bullet-list/Main";
+import { importFont } from "./fonts";
+
+const preloadFonts = async () => {
+  try {
+    // await Promise.all(top25.map(font => font.load()));
+    // console.log('All fonts have been preloaded.');
+    // const [handle] = useState(() => delayRender());
+
+    top25.forEach(async (font) => {
+      // Load font information
+      const loaded = await importFont(font.family);
+
+      console.log('Loaded font:', font.family);
+
+      // Load the font itself
+      await loaded.loadFont("normal", {weights: ["400"]});
+    }
+    );
+    // continueRender(handle);
+  } catch (error) {
+    console.error('Error preloading fonts:', error);
+  }
+};
+
+preloadFonts();
+
 
 export const RemotionRoot: React.FC = () => {
   return (
