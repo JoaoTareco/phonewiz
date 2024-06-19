@@ -31,10 +31,13 @@ import Tus from '@uppy/tus';
 
 import '@uppy/core/dist/style.min.css';
 import '@uppy/dashboard/dist/style.min.css';
+import React from "react";
+import { Loader } from "@/components/loader";
 
 
 const api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vZHRyeHRtaHd4d255d3NwZnVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQwMjM0NzksImV4cCI6MjAxOTU5OTQ3OX0.hTwPwcu50pbBDZIod4hz029-2cA5rCDzw_ZYSGclNMA';
 const project_id = 'modtrxtmhwxwnywspfuf';
+
 
 
 const VideoPage = () => {
@@ -46,7 +49,6 @@ const VideoPage = () => {
   const [uploaded, setUploaded] = useState<boolean>(false);
   const [reloadVideos, setReloadVideos] = useState<boolean>(false);
   const [file, setFile] = useState<File>()
-
 
   var uppy = new Uppy()
 
@@ -116,8 +118,9 @@ const VideoPage = () => {
         iconColor="text-gray-700"
         bgColor="bg-gray-700/10"
       />
-      <div className="px-4 lg:px-8 overflow-hidden">
+      <div className="px-4 lg:px-8">
         <Separator className="my-4" />
+        {reloadVideos && (<div className="flex justify-center "><Loader></Loader></div>)}
         {!reloadVideos && (
              <div className="relative">
           <ScrollArea>
@@ -147,11 +150,11 @@ const VideoPage = () => {
               </div>
   
               {videos.map((videoUrl: string | undefined, index: Key | null | undefined) => (
-                  <video className="h-96 w-64 object-cover transition-all hover:scale-105 aspect-[3/4] rounded-md" key={index}
+                  <video className="h-96 w-64 object-cover transition-all aspect-[3/4] rounded-md" key={index}
                   controls={false} 
                   // autoPlay
-                  onMouseOver={event => event.target.play()}
-                  onMouseOut={event => event.target.pause()}
+                  onMouseOver={event => (event.target as HTMLMediaElement).play()}
+                  onMouseOut={event => (event.target as HTMLMediaElement).pause()}
                   muted
                   >
                     <source src={videoUrl} type="video/mp4" />
