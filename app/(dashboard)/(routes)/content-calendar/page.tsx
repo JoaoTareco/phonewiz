@@ -54,8 +54,8 @@ const ContentPlan = () => {
   const [video_hook, setVideoHook] = useState<string>();
   const [CTA, setCTA] = useState<string>();
   const [videos, setVideos] = useState<{ [key: string]: string }>({});
-  type VideoObject = { video: string };
-  const [fullVideoList, setfullVideoList] = useState<VideoObject[]>([]);
+  // type VideoObject = { video: string };
+  const [fullVideoList, setfullVideoList] = useState([]);
   const [generalProps, setGeneralProps] = useState<any>();
   const [isLoading1, setIsLoading1] = useState(false);
   const [closeDialog, setCloseDialog] = useState(false);

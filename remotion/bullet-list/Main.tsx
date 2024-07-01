@@ -28,7 +28,7 @@ const styles: Record<string, React.CSSProperties> = {
   }
 };
 
-export const BulletList = ({ title, video1, selectedFont, fontColour, backgroundColour}: z.infer<typeof ReadCaptionProps>) => {
+export const BulletList = ({ title, video, selectedFont, fontColour, backgroundColour}: z.infer<typeof ReadCaptionProps>) => {
 
   const fetchData = useCallback(async () => {
     await importFont(selectedFont);
@@ -43,7 +43,7 @@ export const BulletList = ({ title, video1, selectedFont, fontColour, background
       fontFamily: selectedFont,
     }}>
       <Sequence from={0} durationInFrames={180}>
-      <OffthreadVideo src={video1} />
+      <OffthreadVideo src={'https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/user_2aPY12uVo8oyqxKieBV7qpNOgOJ/2022-03-29 15.50.40 2804691509773893389_51580555498.mp4'} />
       </Sequence>
       <Sequence from={0} durationInFrames={180}>
         <TextFade>

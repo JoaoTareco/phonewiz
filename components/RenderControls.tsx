@@ -19,16 +19,23 @@ import { FontPicker } from "./fontPicker";
 export const RenderControls: React.FC<{
   setInputProps: React.Dispatch<React.SetStateAction<any>>;
   inputProps: z.infer<typeof CompositionProps>;
-  videos: { video: string }[];
+  videos: string[];
   video_template: string | any;
 }> = ({ setInputProps, inputProps, videos, video_template }) => {
   
   let composition = "read-caption";
-
-  if (video_template === "No Call to Action") {
+  
+  if (video_template === "Read caption"){
+    inputProps.video = inputProps.video.slice(0, 2);
+  }
+  else if (video_template === "Single clip with hook") {
     composition = "bullet-list"
-    delete inputProps.video2;
+    // delete inputProps.video2;
+    inputProps.video = inputProps.video.slice(0, 1);
     delete inputProps.readCap;
+  } else if (video_template === "Slides") {
+    composition = "slides"
+    inputProps.video = inputProps.video.slice(0, 5);
   }
 
   const { renderMedia, state, undo } = useRendering(composition, inputProps);
@@ -38,19 +45,16 @@ export const RenderControls: React.FC<{
   // const videoCount: number = Object.keys(inputProps).filter(key => key.startsWith('video')).length;
   // const textCount: number = Object.keys(inputProps).filter(key => key.startsWith('title')).length;
 
-  const videosArray = Object.entries(videos).map(([name, url]) => ({ name, url }));
+  // const videosArray = Object.entries(videos).map(([name, url]) => ({ name, url: { video: url} }));
 
-  const videoUrls = Object.values(videos).map(videoObj => videoObj.video);
+  // const videoUrls = Object.values(videos).map(videoObj => videoObj.video);
 
-  console.log('the videos')
-  console.log(videos)
-
-  console.log(videosArray);
+  const videoUrls = videos
 
   useEffect(() => {
     setInputProps((prevProps: any) => ({ ...prevProps, selectedFont: fontFamilyChosen }));
     console.log(inputProps)
-  }, [fontFamilyChosen]); 
+  }, [fontFamilyChosen, inputProps, setInputProps]);
 
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
@@ -58,8 +62,11 @@ export const RenderControls: React.FC<{
     setInputProps((prevProps: any) => ({ ...prevProps, [key]: value }));
   };
 
-  const handleVideoChange = (url: string | undefined, key: string | undefined ) => {
-    setInputProps((prevProps: any) => ({ ...prevProps, [key as any]: url }));
+  const handleVideoChange = (url: string | undefined, index: number ) => {
+    const inputProps_copy = { ...inputProps };
+    inputProps_copy.video[index] = url;
+    setInputProps(inputProps_copy);
+    // setInputProps((prevProps: any) => ({ ...prevProps, [key as any]: url }));
   };
 
   return (
@@ -98,45 +105,49 @@ export const RenderControls: React.FC<{
                 } else if (key.startsWith('video')) {
                   // Assuming you have a dropdown component for videos
                   return (
-                    <div key={index} className="mb-5">
-                      {/* <label htmlFor={key}>{key}</label>  */}
-                      <Sheet>
-                        <SheetTrigger asChild>
-                          <Button variant="outline">Change Video {index != 1 ? index-1 : index}</Button>
-                        </SheetTrigger>
-                        <SheetContent side={"bottom"}>
-                          <SheetHeader>
-                            <SheetTitle>Change Video</SheetTitle>
-                            <SheetDescription>
-                              Choose another video for this segment.
-                            </SheetDescription>
-                          </SheetHeader>
-                          <div className="relative">
-                          <ScrollArea>
-                          <div className="flex space-x-4 pb-4 pt-5">
+                    inputProps.video.map((video: any, index1: any) => (
+                      <div key={index1} className="mb-5">
+                        {/* <label htmlFor={key}>{key}</label>  */}
+                        <Sheet>
+                          <SheetTrigger asChild>
+                            <Button variant="outline">Change Video {index1+1}</Button>
+                          </SheetTrigger>
+                          <SheetContent side={"bottom"}>
+                            <SheetHeader>
+                              <SheetTitle>Change Video</SheetTitle>
+                              <SheetDescription>
+                                Choose another video for this segment.
+                              </SheetDescription>
+                            </SheetHeader>
+                            <div className="relative">
+                            <ScrollArea>
+                            <div className="flex space-x-4 pb-4 pt-5">
                             {videoUrls.map((video, index1) => (
                                 <video  className={`h-64 w-42 object-cover transition-all hover:scale-95 aspect-[3/4] rounded-md  border-2 ${selectedVideo === video ? 'border-red-400' : 'border-transparent'} cursor-pointer`}
-                                    controls={true} 
-                          
+                                    controls={false} 
+                                    // autoPlay
+                                    onMouseOver={event => (event.target as HTMLMediaElement).play()}
+                                    onMouseOut={event => (event.target as HTMLMediaElement).pause()}
+                                    muted
                                     key={index1}
                                     onClick={() => setSelectedVideo(video)}
-                                    muted
                                     >
                                     <source src={video} type="video/mp4" />
                                   </video>
                             ))}
-                          </div>
-                          <ScrollBar orientation="horizontal" />
-                            </ScrollArea>
-                          </div>
-                          <SheetFooter>
-                            <SheetClose asChild>
-                              <Button type="submit" onClick={() => handleVideoChange(selectedVideo, key)}>Save changes</Button>
-                            </SheetClose>
-                          </SheetFooter>
-                        </SheetContent>
-                      </Sheet>
-                    </div>
+                            </div>
+                            <ScrollBar orientation="horizontal" />
+                              </ScrollArea>
+                            </div>
+                            <SheetFooter>
+                              <SheetClose asChild>
+                                <Button type="submit" onClick={() => handleVideoChange(selectedVideo, index1)}>Save changes</Button>
+                              </SheetClose>
+                            </SheetFooter>
+                          </SheetContent>
+                        </Sheet>
+                      </div>
+                    ))
                   );
                 }
                 return null;

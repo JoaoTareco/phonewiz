@@ -26,7 +26,7 @@ import { TextFade } from "./TextFade";
 //   importName: string;
 // }[] = getAvailableFonts();
 
-export const ReadCaption = ({ title, video1, video2, readCap="Read Caption ↓", selectedFont, fontColour, backgroundColour }: z.infer<typeof ReadCaptionProps>) => {
+export const ReadCaption = ({ title, video, readCap="Read Caption ↓", selectedFont, fontColour, backgroundColour }: z.infer<typeof ReadCaptionProps>) => {
 
   // const titleStyle: React.CSSProperties = useMemo(() => {
   //   return { fontFamily: selectedFont, fontSize: 60 , color: "#fff"};
@@ -56,10 +56,8 @@ export const ReadCaption = ({ title, video1, video2, readCap="Read Caption ↓",
   //   fetchData();
   // }, []);
 
-  console.log(selectedFont)
 
-
-
+  console.log(video[0])
   // useEffect(() => {
   //   async function maybeLoadGoogleFont() {
   //     // const gFont = availableFonts.find(
@@ -97,7 +95,7 @@ export const ReadCaption = ({ title, video1, video2, readCap="Read Caption ↓",
       justifyContent: 'center',
       height: '100%',
       textAlign: 'center',
-      padding: 10,
+      padding: 20,
       position: 'relative'  
     }
   };
@@ -112,20 +110,20 @@ export const ReadCaption = ({ title, video1, video2, readCap="Read Caption ↓",
       <Sequence from={0} durationInFrames={90}>
         <TextFade>
           <div style={styles.flexContainer} >
-              <h1 style={{ fontFamily: selectedFont, fontSize: 60 , color: fontColour, backgroundColor: backgroundColour, padding: 10, width: '95%'}}>{title}</h1>
+              <h1 style={{ fontFamily: selectedFont, fontSize: 60 , color: fontColour, backgroundColor: backgroundColour, padding: 10, width: '85%'}}>{title}</h1>
               </div>
         </TextFade>
         
-           <OffthreadVideo src={video1} />
+           <OffthreadVideo src={video[0]} />
       </Sequence>
       <Sequence from={90} durationInFrames={90}>
         <TextFade>
           <div style={styles.flexContainer} >
-            <h1 style={{ fontFamily: selectedFont, fontSize: 60 , color: fontColour, backgroundColor: backgroundColour, padding: 10, width: '100%'}}>{readCap}</h1>
+            <h1 style={{ fontFamily: selectedFont, fontSize: 60 , color: fontColour, backgroundColor: backgroundColour, padding: 10, width: '85%'}}>{readCap}</h1>
           </div>
         </TextFade>
         
-           <OffthreadVideo src={video2} />
+           <OffthreadVideo src={video[1]} />
       </Sequence>
     </AbsoluteFill>
   );

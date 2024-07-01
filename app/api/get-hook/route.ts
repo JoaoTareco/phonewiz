@@ -52,16 +52,16 @@ export async function POST(
       
       Here are some examples of great hooks. Mimic this type of language and writing. Don't use any complicated words. Don't use punctuation. Just very succinct and it should entice curiosity. The topic of these examples may have nothing related to the topic I want now:
       {"hook1": "The secret about affiliate marketing with instagram",
-       "hook2": "What I wish I'd known about affiliate marketing with instagram",
-       "hook3": "You are doing affiliate marketing wrong",
+       "hook2": "What top affiliate marketers don't want you to know",
+       "hook3": "One weird trick for affiliate marketing",
        "hook4": "Here's why your not making money on instagram",
        "hook5": "The Instagram marketing strategy that drives massive sales",
-       "hook6": "One weird trick for affiliate marketing",
-       "hook7": "The Instagram marketing loophole",
-       "hook8": "What top affiliate marketers don't want you to know",
+       "hook6": "You are doing affiliate marketing wrong",
+       "hook7": "What I wish I'd known about affiliate marketing with instagra 3 months ago when I started",
+       "hook8": "POV: you took action and now you've made 15k in the last 30 days, quit your job and are planning to go on holidays next month",
        "hook9": "The biggest lesson I've learnt about affiliate marketing with Instagram"}
       
-      Give me 9 hooks in a JSON format with a key for each hook. Return ONLY the JSON object, no other text.
+      Give me 9 hooks in a JSON format with a key for each hook. Make some hooks short and some longer like in the examples. Include at least one hook starting with "POV", talking as if its the viewer's POV (these are the only hooks that can have the character ":" in them). Return ONLY the JSON object, no other text. 
       `}
     ]
 

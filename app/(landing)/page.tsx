@@ -16,11 +16,11 @@
 import { useEffect } from 'react';
 
 const LandingPage = () => {
- useEffect(() => {
-    window.location.href = '/post-generator';
- }, []);
+//  useEffect(() => {
+//     window.location.href = '/post-generator';
+//  }, []);
 
- return null; // Return null since we're redirecting and not rendering any content
+ return; // Return null since we're redirecting and not rendering any content
 }
 
 export default LandingPage;

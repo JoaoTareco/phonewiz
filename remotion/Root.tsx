@@ -11,6 +11,8 @@ import {
 import {top25} from "../lib/fonts/fonts";
 import { BulletList } from "./bullet-list/Main";
 import { importFont } from "./fonts";
+// import { ReadCaptionFast } from "./read-caption-fast/Main";
+import { Slides } from "./slides/Main";
 
 const preloadFonts = async () => {
   try {
@@ -58,6 +60,24 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={defaultMyCompProps}
       />
+      <Composition
+        id={"slides"}
+        component={Slides}
+        durationInFrames={DURATION_IN_FRAMES}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={defaultMyCompProps}
+      />
+      {/* <Composition
+        id={"read-caption-fast"}
+        component={ReadCaptionFast}
+        durationInFrames={DURATION_IN_FRAMES}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={defaultMyCompProps}
+      /> */}
     </>
   );
 };

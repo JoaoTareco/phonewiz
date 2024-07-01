@@ -3,9 +3,9 @@ export const COMP_NAME = "read-caption";
 
 export const CompositionProps = z.object({
   title: z.string(),
-  video1: z.string(),
-  video2: z.string().optional(),
+  video: z.any(),
   readCap: z.string().optional(),
+  text: z.any().optional(),
   selectedFont: z.any(),
   fontColour: z.any(),
   backgroundColour: z.any()
@@ -13,9 +13,9 @@ export const CompositionProps = z.object({
 
 export const ReadCaptionProps = z.object({
   title: z.string(),
-  video1: z.string(),
-  video2: z.string(),
+  video: z.any(),
   readCap: z.string(),
+  text: z.any().optional(),
   selectedFont: z.any(),
   fontColour: z.any(),
   backgroundColour: z.any()
@@ -25,10 +25,10 @@ export const defaultMyCompProps: z.infer<typeof ReadCaptionProps> = {
   title: "Default",
   readCap: "Default",
   selectedFont: "Montserrat",
+  text: ["Default", "Default"],
   fontColour: "#ffffff",
   backgroundColour: "Transparent",
-  video1: "",
-  video2: "",
+  video: ["Default", "Default"],
 };
 
 export const DURATION_IN_FRAMES = 180;

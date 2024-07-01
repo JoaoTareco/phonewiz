@@ -65,7 +65,7 @@ export const PostHistory: React.FC<PostHistoryrops> = ({ setStep, setInputProps,
           <Card className="object-cover transition-all justify-center text-center h-[16rem] p-1 ">
                 <h3 className="mt-16 text-lg font-semibold">Post With Video</h3>
                 <p className="mb-4 mt-2 text-sm text-muted-foreground">
-                  Generate new captions and hooks, together an edited video.
+                  Generate a new video with a caption and a hook.
                 </p>
                 <div className="">
                  <Button onClick={videoGenerator}>

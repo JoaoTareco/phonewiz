@@ -47,6 +47,8 @@ import Stepper from "@/components/ui/stepper";
 import { Card } from "@/components/ui/card";
 import { PostHistory } from "@/components/post-history";
 import { CaptionPlayground } from "@/components/caption-playground";
+import { Badge } from "@/components/ui/badge";
+import { Slides } from "@/remotion/slides/Main";
 
 const caption_templates = [
   { label: "Topic Based", value: "topic" },
@@ -104,7 +106,7 @@ const ContentGenerator = () => {
   // const [componentId, setComponentId] = useState<any>();
   const [videos, setVideos] = useState<{ [key: string]: string }>({});
   type VideoObject = { video: string };
-  const [fullVideoList, setfullVideoList] = useState<VideoObject[]>([]);
+  const [fullVideoList, setfullVideoList] = useState<any>();
   // const [texts, setTexts] = useState<{ [key: string]: string }>({});
   const [currentStep, setCurrentStep] = useState(0);
   const [loading3, setLoading3] = useState(false);
@@ -151,8 +153,7 @@ const ContentGenerator = () => {
     genProps = {
       title: video_hook,
       readCap: "Read Caption ↓",
-      video1: videos.video1, // Assuming videos.video1 and videos.video2 are the correct video URLs
-      video2: videos.video2,
+      video: videos, // Assuming videos.video1 and videos.video2 are the correct video URLs
       selectedFont: "Montserrat"
     };
 
@@ -180,27 +181,25 @@ const ContentGenerator = () => {
       // } else if (video_template === 'readCaptionProps') {
       //   genProps = readCaptionProps;
       // }
+      const videoCount: number = Object.keys(genProps).filter((key) => key.startsWith('video')).length;
+        
     
-      axios.get(`/api/get-content`).then((response1: { data: any; }) => {
+      axios.get(`/api/get-content?videoCount=${videoCount}`).then((response1: { data: any; }) => {
           const videos = response1.data;
-          if(videos.length > 0){
+          console.log(videos)
+          if(videos.all_videos.length > 0){
 
-            const transformedVideos = videos.map((video: any) => ({ video: video.video }));
+            // const transformedVideos = videos.all_video.map((video: any) => ({ video: video.video }));
 
-            setfullVideoList(transformedVideos);
+            setfullVideoList(videos.all_videos);
+
+            console.log(fullVideoList)
   
         
-            const videoCount: number = Object.keys(genProps).filter((key) => key.startsWith('video')).length;
-        
-            console.log(videoCount);
-        
-            for (let i = 0; i < videoCount; i++) {
-              const videoName = `video${i + 1}`;
-              const randomIndex = Math.floor(Math.random() * videos.length); // Generate a random index
-              const randomVideo = videos[randomIndex]; // Access the video at the random index
-              console.log('here3');
-              setVideos((prevState: any) => ({ ...prevState, [videoName]: randomVideo.video }));
-            }
+            setVideos(videos.selected_videos );
+
+            console.log(videos.selected_videos)
+            
           }
       })
 
@@ -377,9 +376,11 @@ const ContentGenerator = () => {
   }, [video_hook,  videos.video1,  videos.video2]);
 
   const video_templates = [
-    { label: "Read Caption", value: 'read-caption', description:`Clear call-to-action for your viewer to read your caption.\n\nUses two clips from your content bank which you can change.`, url: 'https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/templates/read-caption.mp4?t=2024-04-13T16%3A36%3A01.379Z' },
+    { label: "Read caption", value: 'read-caption', description:`Clear call-to-action for your viewer to read your caption.`, url: 'https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/templates/read-caption.mp4?t=2024-04-13T16%3A36%3A01.379Z' },
     // { label: "Read Caption", value: 'readCaptionProps' },
-    { label: "No Call to Action", value: 'no-cta', description:`Just a straight video showing your hook. Lets your viewer naturally check the caption.\n\nUses one clip from your content bank which you can change.`, url: 'https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/templates/no-cta.mp4?t=2024-04-13T16%3A17%3A07.380Z' },
+    { label: "Single clip with hook", value: 'no-cta', description:`Unedited video showing your hook. Lets your viewer naturally check the caption.`, url: 'https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/templates/no-cta.mp4?t=2024-04-13T16%3A17%3A07.380Z' },
+    // { label: "Slides", value: 'slides', description:`Edited video showing information over multiple clips. Similar to a slideshow.`, url: 'https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/templates/no-cta.mp4?t=2024-04-13T16%3A17%3A07.380Z' },
+    // { label: "Read Caption Fast Edit", value: 'slides', description:`Clear call-to-action for your viewer to read your caption, with fast editing of multiple clips.`, url: 'https://modtrxtmhwxwnywspfuf.supabase.co/storage/v1/object/public/content-bank/templates/no-cta.mp4?t=2024-04-13T16%3A17%3A07.380Z' },
   ] as const
 
   const caption_templates = [
@@ -413,7 +414,7 @@ const ContentGenerator = () => {
             <Undo2 className="h-4 w-4 mr-1" />
             <span className="text-sm">Return</span>
           </Button>
-          <div className="flex justify-center pb-10">  
+          <div className="flex justify-center pb-5">  
             <ul className="steps w-1/2">
               <li className="step step-primary">Topic</li>
               <li className="step ">Hook</li>
@@ -600,7 +601,7 @@ const ContentGenerator = () => {
             <Undo2 className="h-4 w-4 mr-1" />
             <span className="text-sm">Return</span>
           </Button>
-        <div className="flex justify-center pb-10 ">  
+        <div className="flex justify-center pb-5 ">  
           <ul className="steps w-1/2">
             <li className="step step-primary">Topic</li>
             <li className="step step-primary">Hook</li>
@@ -677,7 +678,7 @@ const ContentGenerator = () => {
             <Undo2 className="h-4 w-4 mr-1" />
             <span className="text-sm">Return</span>
           </Button>
-         <div className="flex justify-center pb-10">  
+         <div className="flex justify-center pb-5">  
            <ul className="steps w-1/2">
              <li className="step step-primary">Topic</li>
              <li className="step step-primary">Hook</li>
@@ -741,7 +742,7 @@ const ContentGenerator = () => {
             name="video_template"
             render={({ field }: { field: any }) => (
           <RadioGroup onValueChange={field.onChange} defaultValue={field.value}  className="flex flex-col space-y-1">
-          <div className={`grid content-center gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2 w-3/4 '}`}>
+          <div className={`grid content-center gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2  '}`}>
             {Object.entries(video_templates).map(([key, label], index)  => (
               <Card key={index} className={`cursor-pointer ${field.value === label.label ? 'p-5 bg-secondary' : 'p-5'}`}>
               <FormItem className="flex items-center space-x-3 space-y-0" key={index}>
@@ -759,7 +760,8 @@ const ContentGenerator = () => {
                   </video> */}
                 
                   <div>
-                    <h2 className="text-lg font-medium pb-2">{label.label as string}</h2>
+                    <h2 className="text-lg font-medium pb-2">{label.label as string}
+                    </h2>
                     <span className="text-sm text-stone-500 dark:text-stone-400">{label.description as string}</span>
                   </div>
              
@@ -773,7 +775,7 @@ const ContentGenerator = () => {
             )}
           />
           </div>
-          <div className=" flex justify-end pt-5 pb-16">
+          <div className=" flex justify-end pt-10 pb-16">
 
           { isLoading3 && (
           <Button type="submit">
@@ -853,7 +855,7 @@ const ContentGenerator = () => {
                 </p>
 
               </div>)}
-           {fullVideoList.length >= 2 && video_template === "Read Caption" && (
+           {fullVideoList.length >= 2 && video_template === "Read caption" && (
               <Player
                   component={ReadCaption}
                   inputProps={generalProps}
@@ -867,9 +869,23 @@ const ContentGenerator = () => {
                   loop
                 />
                 )}
-            {fullVideoList.length >= 2 && video_template === "No Call to Action" && (
+            {fullVideoList.length >= 2 && video_template === "Single clip with hook" && (
               <Player
                   component={BulletList}
+                  inputProps={generalProps}
+                  durationInFrames={DURATION_IN_FRAMES}
+                  fps={VIDEO_FPS}
+                  compositionHeight={VIDEO_HEIGHT}
+                  compositionWidth={VIDEO_WIDTH}
+                  controls
+                  autoPlay
+                  style={{ height: "100%" }}
+                  loop
+                />
+                )}
+            {fullVideoList.length >= 2 && video_template === "Slides" && (
+              <Player
+                  component={Slides}
                   inputProps={generalProps}
                   durationInFrames={DURATION_IN_FRAMES}
                   fps={VIDEO_FPS}
