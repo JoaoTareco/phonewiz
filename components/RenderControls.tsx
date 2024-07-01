@@ -53,7 +53,7 @@ export const RenderControls: React.FC<{
 
   useEffect(() => {
     setInputProps((prevProps: any) => ({ ...prevProps, selectedFont: fontFamilyChosen }));
-    console.log(inputProps)
+    
   }, [fontFamilyChosen, inputProps, setInputProps]);
 
 
