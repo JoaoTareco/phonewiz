@@ -126,13 +126,14 @@ export const RenderControls: React.FC<{
                                 <video  className={`h-64 w-42 object-cover transition-all hover:scale-95 aspect-[3/4] rounded-md  border-2 ${selectedVideo === video ? 'border-red-400' : 'border-transparent'} cursor-pointer`}
                                     controls={false} 
                                     // autoPlay
+                                    preload="metadata"
                                     onMouseOver={event => (event.target as HTMLMediaElement).play()}
                                     onMouseOut={event => (event.target as HTMLMediaElement).pause()}
                                     muted
                                     key={index1}
                                     onClick={() => setSelectedVideo(video)}
                                     >
-                                    <source src={video} type="video/mp4" />
+                                    <source src={video} />
                                   </video>
                             ))}
                             </div>

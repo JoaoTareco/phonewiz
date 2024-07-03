@@ -106,9 +106,9 @@ const VideoPage = () => {
       />
       <div className="px-4 lg:px-8">
         <Separator className="my-4" />
-        <div className="relative">
+        <div className="relative flex justify-center">
           <ScrollArea>
-            <div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 gap-4 justify-center">
+            <div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 gap-4 max-w-fit ">
               <div className="h-96 w-64 object-cover transition-all aspect-[3/4] justify-center text-center rounded-md border border-dashed">
                 <h3 className="mt-20 text-lg font-semibold">Add a new video</h3>
                 <p className="mb-4 mt-2 text-sm text-muted-foreground">
@@ -155,11 +155,12 @@ const VideoPage = () => {
                  <video className="h-96 w-64 object-cover transition-all aspect-[3/4] rounded-md" key={index}
                   controls={false} 
                   // autoPlay
+                  preload="metadata"
                   onMouseOver={event => (event.target as HTMLMediaElement).play()}
                   onMouseOut={event => (event.target as HTMLMediaElement).pause()}
                   muted
                   >
-                    <source src={videoUrl} type="video/mp4" />
+                    <source src={videoUrl} />
                   </video>
                   </div>
                 ))}

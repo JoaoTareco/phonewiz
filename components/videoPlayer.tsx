@@ -20,8 +20,8 @@ const VideoPlayer: React.FC<{videoUrl: string}> = ({videoUrl}) => {
     }, []);
    
     return (
-       <video ref={videoRef} width="320" height="240" controls>
-         <source src={videoUrl} type="video/mp4" />
+       <video ref={videoRef} width="320" height="240" controls preload="metadata">
+         <source src={videoUrl}  />
        </video>
     );
    };
