@@ -220,7 +220,7 @@ const VideoPage = () => {
                             )}
                           </form>
                           {pexelsVideos.length === 0 && !isLoading && (
-                                <div className='justify-center text-center py-56 text-sm text-muted-foreground'>Uh... you've got to search for something...</div>
+                                <div className='justify-center text-center py-56 text-sm text-muted-foreground'>Uh... you&apos;ve got to search for something...</div>
                               )}
                           { isLoading && (
                             <ScrollArea className='h-[30rem] pt-4 '>
