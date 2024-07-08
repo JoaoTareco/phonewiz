@@ -210,7 +210,7 @@ And I will send you a link to check it out ✨️
     }
 
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o",
       messages: prompt as any
     });
 

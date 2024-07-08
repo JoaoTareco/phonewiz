@@ -84,6 +84,9 @@ const FormSchema3 = z.object({
   }),
   caption_template: z.string({
     required_error: "Please select a template for the caption.",
+  }),
+  video_source: z.string({
+    required_error: "Please select a source for the video.",
   })
 })
 
@@ -184,7 +187,7 @@ const ContentGenerator = () => {
       const videoCount: number = Object.keys(genProps).filter((key) => key.startsWith('video')).length;
         
     
-      axios.get(`/api/get-content?videoCount=${videoCount}`).then((response1: { data: any; }) => {
+      axios.get(`/api/get-content?videoCount=${videoCount}&video_topic=${video_topic}&video_source=${values.video_source}`).then((response1: { data: any; }) => {
           const videos = response1.data;
           console.log(videos)
           if(videos.all_videos.length > 0){
@@ -388,6 +391,12 @@ const ContentGenerator = () => {
     // { label: "Read Caption", value: 'readCaptionProps' },
     { label: "Story", value: 'Story', description: 'Longer caption that tells a story about your experience.' },
     { label: "Bullet List", value: "Bullet List", description: 'Concise caption with bullet points about your topic.' },
+  ] as const
+
+  const video_sources = [
+    { label: "Library", value: 'library', description: 'Clips from a library of creators picked specifically for your video topic.' },
+    // { label: "Read Caption", value: 'readCaptionProps' },
+    { label: "Content Bank", value: 'bank', description: 'Your saved or uploaded clips. If your content bank is empty, the Library will be used.' },
   ] as const
 
   const returnFunction = () => {
@@ -686,7 +695,6 @@ const ContentGenerator = () => {
            </ul>
          </div>
        {/* <Card className="p-5 h-[65vh]"> */}
-       <h2 className="text-xl font-medium pb-5">Choose a caption template</h2>
          { isLoading2 && (
            <div className="p-20">
              <Loader />
@@ -711,6 +719,45 @@ const ContentGenerator = () => {
         <div className="">
         <Form {...form3}>
           <form onSubmit={form3.handleSubmit(generateVideoCaption)}>
+          <h2 className="text-xl font-medium pb-2 pt-5">Choose the source for the video content</h2>
+          <FormField
+            control={form3.control}
+            name="video_source"
+            render={({ field }: { field: any }) => (
+          <RadioGroup onValueChange={field.onChange} defaultValue={field.value}  className="flex flex-col space-y-1">
+          <div className={`grid content-center gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2  '}`}>
+            {Object.entries(video_sources).map(([key, label], index)  => (
+              <Card key={index} className={`cursor-pointer ${field.value === label.label ? 'p-5 bg-secondary' : 'p-5'}`}>
+              <FormItem className="flex items-center space-x-3 space-y-0" key={index}>
+              <FormControl>
+                <RadioGroupItem value={label.label as string}/>
+              </FormControl>
+              <FormLabel className="font-normal cursor-pointer flex gap-4">
+                  {/* <video  className={`h-60  cursor-pointer`}
+                    controls={true} 
+                    muted
+                    autoPlay
+                    loop
+                    >
+                    <source src={label.url} type="video/mp4" />
+                  </video> */}
+                
+                  <div>
+                    <h2 className="text-lg font-medium pb-2">{label.label as string}
+                    </h2>
+                    <span className="text-sm text-stone-500 dark:text-stone-400">{label.description as string}</span>
+                  </div>
+             
+              </FormLabel>
+              </FormItem>
+              </Card>
+              
+            ))}
+          </div>
+          </RadioGroup>
+            )}
+          />
+          <h2 className="text-xl font-medium pb-2 pt-6">Choose a caption template</h2>
           <FormField
             control={form3.control}
             name="caption_template"
@@ -736,7 +783,7 @@ const ContentGenerator = () => {
             )}
           />
           <div>
-          <h2 className="text-xl font-medium pb-5 pt-6">Choose a video template</h2>
+          <h2 className="text-xl font-medium pb-2 pt-6">Choose a video template</h2>
           <FormField
             control={form3.control}
             name="video_template"

@@ -189,10 +189,6 @@ button[data-localization-key='userProfile.start.dangerSection.deleteAccountButto
     @apply hover:bg-accent hover:text-accent-foreground;
 }
 
-.cl-card {
-    @apply rounded-lg shadow-md;
-}
-
 .cl-userButtonPopoverCard {
     @apply rounded-md;
 }

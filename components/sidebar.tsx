@@ -29,13 +29,13 @@ const routes = [
     href: '/post-generator',
     mobile: true,
   },
-  {
-    label: 'Content Planner',
-    icon: Calendar,
-    href: '/content-calendar',
-    color: "text-sky-500",
-    mobile: false,
-  },
+  // {
+  //   label: 'Content Planner',
+  //   icon: Calendar,
+  //   href: '/content-calendar',
+  //   color: "text-sky-500",
+  //   mobile: false,
+  // },
   // {
   //   label: 'Templates',
   //   icon: ImageIcon,

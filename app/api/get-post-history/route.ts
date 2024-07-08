@@ -19,7 +19,7 @@ export async function GET(
       orderBy: {
         created_at: 'desc',
       },
-      take: 20,
+      take: 8,
     });
 
     

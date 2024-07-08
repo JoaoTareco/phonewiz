@@ -43,12 +43,12 @@ export const BulletList = ({ title, video, selectedFont, fontColour, backgroundC
       fontFamily: selectedFont,
     }}>
       <Sequence from={0} durationInFrames={180}>
-      <OffthreadVideo src={video[0]} />
-      </Sequence>
-      <Sequence from={0} durationInFrames={180}>
+      <AbsoluteFill>
         <TextFade>
           <div style={styles.flexContainer} ><h1 style={{ fontFamily: selectedFont, fontSize: 60 , color: fontColour, backgroundColor: backgroundColour, padding: 10, width: '95%'}}>{title}</h1></div>
         </TextFade>
+        <OffthreadVideo src={video[0]} />
+        </AbsoluteFill>
       </Sequence>
     </AbsoluteFill>
   );

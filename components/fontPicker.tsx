@@ -6,7 +6,7 @@ import { GradientPicker } from "./gradient-picker";
 import { set } from "zod";
  
 type FontPickerProps = {
-  setProps: (fontFamily: any) => void;
+  setProps: any;
 };
 
 const preloadFonts = async () => {
@@ -57,8 +57,11 @@ export const FontPicker: React.FC<FontPickerProps> = ({ setProps }) => {
       // Load the font itself
       const { fontFamily, ...otherInfo } = loaded.loadFont();
 
+      console.log(fontFamily)
+
       setProps((prevProps: any) => ({ ...prevProps, selectedFont: fontFamily }));
- 
+        
+      console.log()
       }
       
     },

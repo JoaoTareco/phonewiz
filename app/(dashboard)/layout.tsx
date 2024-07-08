@@ -3,6 +3,8 @@ import { Sidebar } from "@/components/sidebar";
 import { checkSubscription } from "@/lib/subscription";
 import { getApiLimitCount, getBoughtTokensCount } from "@/lib/api-limit";
 
+import { Toaster } from "@/components/ui/sonner"
+
 
 const DashboardLayout = async ({
   children,
@@ -23,6 +25,7 @@ const DashboardLayout = async ({
         <Navbar />
         {children}
       </main>
+      <Toaster />
     </div>
    );
 }

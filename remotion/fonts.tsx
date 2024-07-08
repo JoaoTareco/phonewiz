@@ -178,3 +178,28 @@ export const importFont = async (fontName: string) => {
       return await import("@remotion/google-fonts/Rubik");
   }
 };
+
+const preloadFonts = async () => {
+  try {
+    // await Promise.all(top25.map(font => font.load()));
+    // console.log('All fonts have been preloaded.');
+    // const [handle] = useState(() => delayRender());
+
+    top25.forEach(async (font) => {
+      // Load font information
+      const loaded = await importFont(font.family);
+
+      console.log('Loaded font:', font.family);
+
+      // Load the font itself
+      await loaded.loadFont("normal", {weights: ["400"]});
+    }
+    );
+    // continueRender(handle);
+  } catch (error) {
+    console.error('Error preloading fonts:', error);
+  }
+};
+
+// Immediately preload fonts when this module is loaded
+preloadFonts();

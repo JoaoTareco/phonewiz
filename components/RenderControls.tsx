@@ -51,10 +51,13 @@ export const RenderControls: React.FC<{
 
   const videoUrls = videos
 
-  useEffect(() => {
-    setInputProps((prevProps: any) => ({ ...prevProps, selectedFont: fontFamilyChosen }));
+  // useEffect(() => {
+  //   // setInputProps((prevProps: any) => ({ ...prevProps, selectedFont: fontFamilyChosen }));
+
+  //   // console.log('use effect')
+  //    console.log(inputProps)
     
-  }, [fontFamilyChosen, inputProps, setInputProps]);
+  // }, [inputProps]);
 
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
