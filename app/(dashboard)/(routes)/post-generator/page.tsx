@@ -870,7 +870,7 @@ const ContentGenerator = () => {
               </div>
             )}
            {/* {!isMobile && (<div className="flex text-center text-gray-900 mb-5 text-sm">Please access on Desktop to generate and download videos.</div>)} */}
-            <div className="rounded-md border bg-muted flex justify-center col-span-1 h-[78vh]">
+            <div className=" flex justify-center col-span-1 h-[78vh]">
                 {/* {(video_template === "inputProps") && (  <Player
                     component={Main}
                     inputProps={generalProps}
@@ -913,6 +913,7 @@ const ContentGenerator = () => {
                   controls
                   autoPlay
                   style={{ height: "100%" }}
+                  className="h-screen  object-cover transition-all  rounded-md "
                   loop
                 />
                 )}
@@ -927,6 +928,7 @@ const ContentGenerator = () => {
                   controls
                   autoPlay
                   style={{ height: "100%" }}
+                  className="h-screen  object-cover transition-all  rounded-md"
                   loop
                 />
                 )}
@@ -941,6 +943,7 @@ const ContentGenerator = () => {
                   controls
                   autoPlay
                   style={{ height: "100%" }}
+                  className="h-screen  object-cover transition-all rounded-md"
                   loop
                 />
                 )}
