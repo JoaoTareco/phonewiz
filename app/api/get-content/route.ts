@@ -1,4 +1,4 @@
-import { auth, clerkClient } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
 
@@ -57,14 +57,6 @@ export async function GET(
   req: Request
 ) {
   try {
-
-    const response = await clerkClient.users.getUserList({limit: 500});
-
-    response.forEach(user => {
-      user.emailAddresses.forEach(email => {
-        console.log(email.emailAddress);
-      });
-    });
     
     const { userId } = auth();
 
