@@ -70,7 +70,7 @@ export const Sidebar = ({
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   return (
-    <div className="space-y-4 py-4 flex flex-col h-full bg-background text-foreground border border-border">
+    <div className="space-y-4 py-4 flex flex-col h-full bg-background text-foreground">
       <div className="px-3 py-2 flex-1">
       <Link href="/content-calendar" className="flex items-left">
           <div className="relative h-16 w-32 ml-4 mr-4">
@@ -110,7 +110,7 @@ export const Sidebar = ({
           ))}
         </div>
       </div>
-      <Card className="bg-white/10 border-1">
+      <Card className="bg-white/10">
         <CardContent className="py-6">
         <FeedbackDialog/>
         </CardContent>
