@@ -164,7 +164,7 @@ export const CaptionPlayground: React.FC<CaptionPlayground> = ({ input_props, se
           >
             <Form {...form}>
             <form onSubmit={form.handleSubmit(getCaption)} id="form1" className="grid w-full items-start gap-6">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
+              <fieldset className="grid gap-6 rounded-lg  p-4 bg-white">
                 <legend className="-ml-1 px-1 text-sm font-medium">
                   Inputs
                 </legend>
@@ -321,9 +321,9 @@ export const CaptionPlayground: React.FC<CaptionPlayground> = ({ input_props, se
             </form>
             </Form>
           </div>
-          <div className={`relative flex ${isMobile ? "h-[42rem]" : "h-full"} flex-col rounded-xl bg-muted/100 p-4 lg:col-span-1 `}>
+          <Card className={`relative flex ${isMobile ? "h-[42rem]" : "h-full"} flex-col rounded-xl p-4 lg:col-span-1 `}>
             <div>
-            <Badge variant="outline" className="absolute right-3 top-3">
+            <Badge variant="outline" className="absolute right-3">
               Editable Caption
             </Badge>
             </div>
@@ -331,9 +331,9 @@ export const CaptionPlayground: React.FC<CaptionPlayground> = ({ input_props, se
             <div className="pt-10" />
             <Textarea2
                defaultValue={generated_caption}
-               className="h-full"
+               className="h-full bg-white"
              />
-          </div>
+          </Card>
         </main>
         <div className="absolute inset-x-0 bottom-0 p-6">
         <Drawer>
