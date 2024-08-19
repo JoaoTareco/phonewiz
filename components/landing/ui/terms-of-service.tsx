@@ -28,7 +28,7 @@ export default function TermsOfServiceDialog() {
         <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Acknowledgment and Acceptance of Terms</h2>
             <p className="text-base">
-                By utilizing any services provided by ctrlcap ("Services"), you indicate your agreement to comply with the following terms and conditions ("Terms"). Please note that ctrlcap is the operating entity of the Services. These Terms are subject to modification by ctrlcap at any time without prior notice. We recommend reviewing these Terms periodically, as your continued use of the Services signifies your acceptance of any revised terms. If you do not agree to these Terms, please refrain from accessing or using the Services.
+                By utilizing any services provided by ctrlcap (&quot;Services&quot;), you indicate your agreement to comply with the following terms and conditions (&quot;Terms&quot;). Please note that ctrlcap is the operating entity of the Services. These Terms are subject to modification by ctrlcap at any time without prior notice. We recommend reviewing these Terms periodically, as your continued use of the Services signifies your acceptance of any revised terms. If you do not agree to these Terms, please refrain from accessing or using the Services.
             </p>
         </section>
 
@@ -40,7 +40,7 @@ export default function TermsOfServiceDialog() {
             </p>
             <h3 className="text-xl font-semibold text-gray-800 mt-4 mb-2">Email Communication</h3>
             <p className="text-base">
-                Communication between users and ctrlcap primarily occurs via email. Therefore, users acknowledge that ctrlcap may utilize their email addresses to disseminate information regarding system updates, product releases, company news, and account status changes. It is the user's responsibility to thoroughly review all emails from ctrlcap to stay informed. ctrlcap bears no responsibility for information not received due to failure to read emails.
+                Communication between users and ctrlcap primarily occurs via email. Therefore, users acknowledge that ctrlcap may utilize their email addresses to disseminate information regarding system updates, product releases, company news, and account status changes. It is the user&apos;s responsibility to thoroughly review all emails from ctrlcap to stay informed. ctrlcap bears no responsibility for information not received due to failure to read emails.
             </p>
             <h3 className="text-xl font-semibold text-gray-800 mt-4 mb-2">Account Security</h3>
             <p className="text-base">
@@ -81,7 +81,7 @@ export default function TermsOfServiceDialog() {
         <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Disclaimer of Warranties</h2>
             <p className="text-base">
-                All materials and services provided on ctrlcap's platform are offered on an "as is" and "as available" basis without warranties, whether express or implied. ctrlcap makes no guarantees regarding the suitability, timeliness, security, or accuracy of the Services. Users agree to assume all risks associated with service usage.
+                All materials and services provided on ctrlcap&apos;s platform are offered on an &quot;as is&quot; and &quot;as available&quot; basis without warranties, whether express or implied. ctrlcap makes no guarantees regarding the suitability, timeliness, security, or accuracy of the Services. Users agree to assume all risks associated with service usage.
             </p>
             <p className="text-base mt-4">
                 ctrlcap may experience temporary service interruptions beyond its control. Users acknowledge that ctrlcap bears no liability for disruptions or delays in service availability.
@@ -108,7 +108,7 @@ export default function TermsOfServiceDialog() {
         <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">9. International Use</h2>
             <p className="text-base">
-                While ctrlcap's platform may be accessible worldwide, users are responsible for compliance with local laws. ctrlcap does not guarantee the legality of accessing its platform from territories where its content is prohibited.
+                While ctrlcap&apos;s platform may be accessible worldwide, users are responsible for compliance with local laws. ctrlcap does not guarantee the legality of accessing its platform from territories where its content is prohibited.
             </p>
         </section>
 
@@ -136,10 +136,10 @@ export default function TermsOfServiceDialog() {
         <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">13. Miscellaneous</h2>
             <p className="text-base">
-                In any legal action related to these Terms, the prevailing party is entitled to costs and attorney's fees. Any claims against ctrlcap must be filed within one year of the cause of action's occurrence.
+                In any legal action related to these Terms, the prevailing party is entitled to costs and attorney&apos;s fees. Any claims against ctrlcap must be filed within one year of the cause of action&apos;s occurrence.
             </p>
             <p className="text-base mt-4">
-                Users may not assign their rights and obligations under these Terms without ctrlcap's consent. ctrlcap may freely assign its rights and obligations.
+                Users may not assign their rights and obligations under these Terms without ctrlcap&apos;s consent. ctrlcap may freely assign its rights and obligations.
             </p>
             <p className="text-base mt-4">
                 If any provision of these Terms is deemed invalid or unenforceable, the remaining provisions shall remain in effect. Failure by ctrlcap to enforce any provision does not waive its right to do so in the future.

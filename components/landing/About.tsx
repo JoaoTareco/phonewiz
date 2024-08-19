@@ -98,7 +98,7 @@ const About = () => {
                   <h3 className="mb-0.5 text-metatitle2 text-black dark:text-white">
                     Choose a hook, caption and post formats.
                   </h3>
-                  <p className="text-sm"> Do you want to tell a story? Or do you want to create an "How To" guide?</p>
+                  <p className="text-sm"> Do you want to tell a story? Or do you want to create an &quot;How To&quot; guide?</p>
                 </div>
               </div>
               <div className="mt-7.5 flex items-center gap-5 py-2">
