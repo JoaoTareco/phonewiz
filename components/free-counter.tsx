@@ -38,7 +38,7 @@ export const FreeCounter = ({
       <Card className="bg-white/10 border-0">
         <CardContent className="py-6">
           <div className="text-center text-sm mb-4 space-y-2">
-          <div className="tooltip tooltip-secondary tooltip-right" data-tip="You can use one token to either generate a new post or generate a new content plan.">
+          <div className="tooltip tooltip-secondary tooltip-right" data-tip="You can use one token to generate a new post.">
             <p>
               <Badge variant={'secondary'} className="text-sm w-full flex justify-center "><span className="mr-1 text-rose-600  font-bold">{apiLimitCount}</span> Tokens</Badge>
             </p>

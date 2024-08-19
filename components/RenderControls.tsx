@@ -119,13 +119,16 @@ export const RenderControls: React.FC<{
                             <SheetHeader>
                               <SheetTitle>Change Video</SheetTitle>
                               <SheetDescription>
-                                Choose another video for this segment.
+                                
+                                {videoUrls.length > 0 && <p>Choose another video for this segment.</p>}
+                                {videoUrls.length === 0 && <p>Please add videos to your content bank to change this video.</p>}
                               </SheetDescription>
                             </SheetHeader>
                             <div className="relative">
                             <ScrollArea>
                             <div className="flex space-x-4 pb-4 pt-5">
-                            {videoUrls.map((video, index1) => (
+                            
+                            {videoUrls.length === 0 && <div>{videoUrls.map((video, index1) => (
                                 <video  className={`h-64 w-42 object-cover transition-all hover:scale-95 aspect-[3/4] rounded-md  border-2 ${selectedVideo === video ? 'border-red-400' : 'border-transparent'} cursor-pointer`}
                                     controls={false} 
                                     // autoPlay
@@ -138,7 +141,7 @@ export const RenderControls: React.FC<{
                                     >
                                     <source src={video} />
                                   </video>
-                            ))}
+                            ))}</div>}
                             </div>
                             <ScrollBar orientation="horizontal" />
                               </ScrollArea>

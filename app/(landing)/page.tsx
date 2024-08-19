@@ -1,26 +1,29 @@
-// import { LandingNavbar } from "@/components/landing-navbar";
-// import { LandingHero } from "@/components/landing-hero";
-// import { LandingContent } from "@/components/landing-content";
+import { Container } from "@/components/Container";
+import  Hero from "@/components/landing/Hero";
+import { SectionTitle } from "@/components/SectionTitle";
+import { Benefits } from "@/components/Benefits";
+import { Video } from "@/components/Video";
+import { Testimonials } from "@/components/Testimonials";
+// import { Faq } from "@/components/Faq";
+import { Cta } from "@/components/Cta";
 
-// const LandingPage = () => {
-//   return ( 
-//     <div className="h-full ">
-  
-//     </div>
-//    );
-// }
- 
-// export default LandingPage;
-
-"use client";
-import { useEffect } from 'react';
+import { benefitOne, benefitTwo } from "@/components/data";
+import About from "@/components/landing/About";
+import NavigationMenuLanding from "@/components/landing/Navbar";
+import Pricing from "@/components/landing/Pricing";
+import  Footer  from "@/components/landing/Footer";
 
 const LandingPage = () => {
-//  useEffect(() => {
-//     window.location.href = '/post-generator';
-//  }, []);
+  return (
 
- return; // Return null since we're redirecting and not rendering any content
+    <main>
+      <NavigationMenuLanding />
+      <Hero />
+      <About />
+      <Pricing />
+      <Footer />
+    </main>
+
+  );
 }
-
 export default LandingPage;

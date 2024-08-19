@@ -91,7 +91,7 @@ export const PostHistory: React.FC<PostHistoryrops> = ({ setStep, setInputProps,
             </div>
             <div className="col-span-1">
               <Card className="object-cover transition-all justify-center text-center h-[12rem] bg-slate-50 p-1">
-                <h3 className="mt-8 text-lg font-semibold text-gray-600">Bulk Create</h3>
+                <h3 className="mt-8 text-lg font-semibold text-gray-600">Automatic Posting</h3>
                 <p className=" mt-2 text-sm text-muted-foreground">
                  Comming Soon...
                 </p>

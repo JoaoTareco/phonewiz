@@ -72,7 +72,7 @@ export const Sidebar = ({
   return (
     <div className="space-y-4 py-4 flex flex-col h-full bg-background text-foreground">
       <div className="px-3 py-2 flex-1">
-      <Link href="/content-calendar" className="flex items-left">
+      <Link href="/post-generator" className="flex items-left">
           <div className="relative h-16 w-32 ml-4 mr-4">
             <Image fill alt="Logo" src="/ctrlcap.png" />
           </div>

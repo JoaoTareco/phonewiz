@@ -779,13 +779,13 @@ const ContentPlan = () => {
                   style={{ height: "100%" }}
                   loop
                 />)} */}
-            {fullVideoList.length < 2 && 
+            {/* {fullVideoList.length < 2 && 
             (<div className="grid content-center text-center space-x-4 p-4"> 
               <p className="mb-4 mt-2 text-sm text-muted-foreground">
                   To generate videos, first add at least two videos in your content bank.
                 </p>
-              </div>)}
-           {fullVideoList.length >= 2 && (<Player
+              </div>)} */}
+           <Player
                   component={ReadCaption}
                   inputProps={generalProps}
                   durationInFrames={DURATION_IN_FRAMES}
@@ -796,7 +796,7 @@ const ContentPlan = () => {
                   autoPlay
                   style={{ height: "100%" }}
                   loop
-                />)}
+                />
               {/* <video className="h-screen  object-cover transition-all aspect-[3/4] rounded-md" 
                   controls={false} 
                   autoPlay
