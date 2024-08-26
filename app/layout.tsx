@@ -31,7 +31,6 @@ export default async function RootLayout({
             }}
 >
       <html lang="en" suppressHydrationWarning>
-        <Analytics/>
         <CrispProvider />
         <head>
 
@@ -45,6 +44,7 @@ export default async function RootLayout({
           <ToasterProvider />
           <ModalProvider />
           {children}
+          <Analytics/>
         </body>
       </html>
     </ClerkProvider>
