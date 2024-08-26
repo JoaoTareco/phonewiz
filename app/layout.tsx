@@ -7,6 +7,7 @@ import { ModalProvider } from '@/components/modal-provider'
 
 import './globals.css'
 import { CrispProvider } from '@/components/crisp-provider'
+import { Analytics } from "@vercel/analytics/react"
 import Script from 'next/script'
 
 const font = Inter({ subsets: ['latin'] });
@@ -30,6 +31,7 @@ export default async function RootLayout({
             }}
 >
       <html lang="en" suppressHydrationWarning>
+        <Analytics/>
         <CrispProvider />
         <head>
 

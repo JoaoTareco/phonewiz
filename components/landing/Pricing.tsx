@@ -171,7 +171,7 @@ export default function Pricing() {
               <span className="font-bold text-5xl">Free</span>
             </CardHeader>
             <CardDescription className="text-center  ">
-              Get 5 free posts
+              Get 5 posts for free
             </CardDescription>
             <CardContent className="">
               <ul className="mt-7 space-y-2.5 text-sm">
@@ -199,9 +199,9 @@ export default function Pricing() {
         
           <Card className="border-primary border rounded-3xl">
             <CardHeader className="text-center pb-2">
-              <Badge className="uppercase w-max self-center mb-3">
+              {/* <Badge className="uppercase w-max self-center mb-3">
                 Most popular
-              </Badge>
+              </Badge> */}
               <CardTitle className="!mb-7">Early Bird</CardTitle>
               <span className="font-bold text-5xl">$11<span className="text-neutral-700 text-2xl"> / 30 posts</span></span>
             </CardHeader>

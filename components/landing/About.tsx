@@ -121,8 +121,8 @@ const About = () => {
       {/* <!-- ===== About End ===== --> */}
 
       {/* <!-- ===== About Two Start ===== --> */}
-      <section>
-        <div className="mx-auto max-w-c-1235 overflow-hidden px-20 md:px-20 ">
+      <section  className="overflow-hidden pb-20 pt-20 lg:pb-25 xl:pb-30 px-20">
+        <div className="mx-auto max-w-c-1235 px-4 md:px-8 xl:px-8">
           <div className="flex items-center gap-16 lg:gap-32.5">
             <motion.div
               variants={{
@@ -151,6 +151,7 @@ const About = () => {
               <p>
                 Create new posts with your own clips by uploading them to your content bank or choose from the hundreds of high quality clips available in the library.
               </p>
+              <div className="md:pb-20 xl:pb-40"></div>
               {/* <p>
                 Give personal insights in each post you create so it is still personal.
               </p> */}

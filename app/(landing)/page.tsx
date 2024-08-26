@@ -2,7 +2,7 @@ import { Container } from "@/components/Container";
 import  Hero from "@/components/landing/Hero";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Benefits } from "@/components/Benefits";
-import { Video } from "@/components/Video";
+import  Video  from "@/components/landing/Video";
 import { Testimonials } from "@/components/Testimonials";
 // import { Faq } from "@/components/Faq";
 import { Cta } from "@/components/Cta";
@@ -19,6 +19,7 @@ const LandingPage = () => {
     <main>
       <NavigationMenuLanding />
       <Hero />
+      <Video />
       <About />
       <Pricing />
       <Footer />
