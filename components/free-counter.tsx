@@ -11,7 +11,7 @@ import { Badge } from "./ui/badge";
 export const FreeCounter = ({
   isPro = false,
   apiLimitCount = 0,
-  boughtTokensCount = 10
+  boughtTokensCount = 20
 }: {
   isPro: boolean,
   apiLimitCount: number,

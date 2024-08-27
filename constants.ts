@@ -1,6 +1,6 @@
 import { Wallet, ImageIcon, Film, Music, StickyNote } from "lucide-react";
 
-export const MAX_FREE_COUNTS = 5;
+export const MAX_FREE_COUNTS = 10;
 
 export const tools = [
   {
@@ -18,7 +18,7 @@ export const tools = [
     bgColor: "bg-gray-700/10",
   },
   {
-    label: 'Price will forever be 9,99€ for you',
+    label: 'Price will forever be 11€ for you',
     icon: Wallet,
     color: "text-gray-700",
     bgColor: "bg-gray-700/10",

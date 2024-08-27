@@ -59,7 +59,7 @@ const routes = [
 export const Sidebar = ({
   apiLimitCount = 0,
   isPro = false,
-  boughtTokensCount = 10
+  boughtTokensCount = 20
 }: {
   apiLimitCount: number;
   isPro: boolean;

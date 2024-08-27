@@ -64,7 +64,7 @@ export const ProModal = () => {
               <img src="/discount.png" width="230" height="230" />
              <div className="">
               <div className=" mb-5 text-black"><span className="line-through text-mute">$29,99</span> <span className=" font-bold">$11</span></div>
-              <div className=""><span className="text-5xl font-bold text-primary">30</span> <span className="text-primary text-lg">Tokens</span></div>
+              <div className=""><span className="text-5xl font-bold text-primary">60</span> <span className="text-primary text-lg">Tokens</span></div>
               <div className=" text-black font-lg mt-5">That&apos;s just <span className="line-through text-mute">$1</span><span className=" font-bold"> $0,35</span> <span className="text-mute"> per post</span></div>
             </div>
             </div>

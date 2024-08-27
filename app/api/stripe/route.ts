@@ -5,7 +5,7 @@ import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
 
-const settingsUrl = "http://app.ctrlcap.com/post-generator";
+const settingsUrl = "http://ctrlcap.com/post-generator";
 
 export async function GET() {
   try {
@@ -44,7 +44,7 @@ export async function GET() {
             currency: "EUR",
             product_data: {
               name: "CtrlCap",
-              description: "30 CtrlCap Tokens."
+              description: "60 CtrlCap Tokens."
             },
             unit_amount: 999,
           },

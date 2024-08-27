@@ -46,7 +46,7 @@ export async function POST(req: Request) {
     } else if (userTokens.count) {
       await prismadb.userApiLimit.update({
         where: { userId: session?.metadata?.userId },
-        data: { count: Number(userTokens.count) + 30 }
+        data: { count: Number(userTokens.count) + 60 }
       });
     }
 
@@ -76,13 +76,13 @@ export async function POST(req: Request) {
       await prismadb.userApiLimit.create({
         data: {
           userId: session?.metadata?.userId,
-          count: 30,
+          count: 60,
         },
       })
     } else if (userTokens.count) {
       await prismadb.userApiLimit.update({
         where: { userId: session?.metadata?.userId },
-        data: { count: Number(userTokens.count) + 30 }
+        data: { count: Number(userTokens.count) + 60 }
       });
     }
 
