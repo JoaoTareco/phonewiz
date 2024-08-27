@@ -40,7 +40,7 @@ export async function POST(req: Request) {
       await prismadb.userApiLimit.create({
         data: {
           userId: session?.metadata?.userId,
-          count: 30,
+          count: 60,
         },
       })
     } else if (userTokens.count) {
