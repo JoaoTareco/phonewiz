@@ -203,7 +203,7 @@ export default function Pricing() {
                 Most popular
               </Badge> */}
               <CardTitle className="!mb-7">Early Bird</CardTitle>
-              <span className="font-bold text-5xl">$11<span className="text-neutral-700 text-2xl"> / 30 posts</span></span>
+              <span className="font-bold text-5xl">$11<span className="text-neutral-700 text-2xl"> / 60 posts</span></span>
             </CardHeader>
             <CardDescription className="text-center w-11/12 mx-auto">
               Support <span className="font-semibold text-black">ctrl<span className="text-primary">cap</span></span> from day one
