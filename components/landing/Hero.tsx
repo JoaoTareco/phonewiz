@@ -91,24 +91,24 @@ const Hero = () => {
                 </p>
 
                 
-                <div className="mt-10">
+                <div className="mt-8">
 
                   <SignedIn>
                   <Link href="/post-generator" >
-                  <Button className="px-6 py-2 mb-14 bold transform hover:-translate-y-1 transition duration-400">
+                  <Button className="px-6 py-2 mb-10 bold transform hover:-translate-y-1 transition duration-400">
                     Go to app
                   </Button>
                   </Link>
                     </SignedIn>
                     <SignedOut>
                     <Link href="/sign-up" >
-                  <Button className="px-6 py-2 mb-14 bold transform hover:-translate-y-1 transition duration-400">
+                  <Button className="px-6 py-2 mb-10 bold transform hover:-translate-y-1 transition duration-400">
                     Get Started
                   </Button>
                   </Link>
                 </SignedOut>
 
-                  <div className="flex flex-row md:items-center justify-center mb-4 md:mb-10 w-full">
+                  <div className="flex flex-row md:items-center justify-center w-full">
                     <AnimatedTooltip items={people} />
                     <p className="mt-4 md:mt-0 pl-8 text-xs md:text-sm">
                       Join <span className="font-semibold">132+ content creators</span>
