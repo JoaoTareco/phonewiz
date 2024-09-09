@@ -130,7 +130,7 @@ export async function GET(
       const videoUrls = getSpecificQualityVideoUrls(videos);
 
       const final_response = {
-        all_videos: all_videos,
+        all_videos: videoUrls,
         selected_videos: videoUrls
       }
 
