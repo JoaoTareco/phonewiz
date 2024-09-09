@@ -62,16 +62,18 @@ export async function POST(
        "hook9": "The biggest lesson I've learnt about affiliate marketing with Instagram"}
       
       Give me 9 hooks in a JSON format with a key for each hook. Make some hooks short and some longer like in the examples. Include at least one hook starting with "POV", talking as if its the viewer's POV (these are the only hooks that can have the character ":" in them). Return ONLY the JSON object, no other text. 
+      
+      If the target audiece is not provided, just infer it from the topic.
       `}
     ]
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
-      messages: prompt as any
+      messages: prompt as any,
+      response_format: { type: "json_object" }
     });
 
     const contentWithLineBreaks = JSON.parse(response.choices[0].message.content as any);
-    
 
     // if (!isPro) {
     //   await incrementApiLimit();

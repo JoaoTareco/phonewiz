@@ -90,6 +90,8 @@ It also includes full content research and editing tutorials, where I show you h
       The hook that will appear as text in the video is this: "${body.hook}".
       Also re-write these personal insights into the caption: "${body.personal_insights}".
       In the end, include also a call to action in the form of "${body.call_to_action}".
+
+      If the target audiece, personal insights or call to action are not provided, just infer them from the topic and the hook and previous examples.
       `}
     ]
 
@@ -143,6 +145,8 @@ And I send you a link to check it out!
       The hook that will appear as text in the video is this: "${body.hook}".
       Also re-write these personal insights into the caption: "${body.personal_insights}".
       In the end, include also a call to action in the form of "${body.call_to_action}".
+
+      If the target audiece, personal insights or call to action are not provided, just infer them from the topic and the hook and previous examples.
       `}
     ]
 
@@ -196,6 +200,8 @@ And I will send you a link to check it out ✨️
       The hook that will appear as text in the video is this: "${body.hook}".
       Also re-write these personal insights into the caption: "${body.personal_insights}".
       In the end, include also a call to action in the form of "${body.call_to_action}".
+
+      If the target audiece, personal insights or call to action are not provided, just infer them from the topic and the hook and previous examples.
       `}
     ]
 
