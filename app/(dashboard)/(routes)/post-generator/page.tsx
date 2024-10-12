@@ -1008,7 +1008,7 @@ const ContentGenerator = () => {
                <Undo2 className="h-4 w-4 mr-1" />
                <span className="">Return</span>
              </Button>
-             {fullVideoList.length >= 2 && (<div><h1 className="mb-5">Video Options</h1>
+             {fullVideoList.length >= 1 && (<div><h1 className="mb-5">Video Options</h1>
              <RenderControls
               setInputProps={setGeneralProps}
               inputProps={generalProps}
@@ -1047,7 +1047,7 @@ const ContentGenerator = () => {
                   style={{ height: "100%" }}
                   loop
                 />)} */}
-             {fullVideoList.length < 2 && 
+             {fullVideoList.length < 1 && 
             (<div className="grid content-center text-center space-x-4 p-4"> 
               <p className="mb-4 mt-2 text-sm text-muted-foreground">
                   To generate videos, first add at least two videos in your content bank.
@@ -1055,7 +1055,7 @@ const ContentGenerator = () => {
 
               </div>)}
           
-            {fullVideoList.length >= 2 && (
+            {fullVideoList.length >= 1 && (
                 <Player
                   component={Universal}
                   inputProps={generalProps}
