@@ -139,7 +139,6 @@ export default function Component() {
           },
           body: JSON.stringify(values),
         });
-        await generatePosts();
         setIsLoadingAudience(false);
         return; // Exit the loop if successful
       } catch (error) {
@@ -156,6 +155,8 @@ export default function Component() {
         }
       }
     }
+
+    await generatePosts();
   };
 
   const generatePosts = async () => {
