@@ -126,7 +126,7 @@ export default function Pricing() {
       
         {/* Title */}
         <h2 className="relative mb-6 text-3xl font-bold text-black dark:text-white xl:text-hero text-center">
-        Pay <span className="text-primary">only</span> for what you use, nothing else.
+        Get <span className="text-primary">unlimited</span> posts, to grow effortlessly
               </h2>
               <p className="text-center">
                 Or test out for <span className="font-bold">free</span>, no credit card required.
@@ -203,7 +203,7 @@ export default function Pricing() {
                 Most popular
               </Badge> */}
               <CardTitle className="!mb-7">Early Bird</CardTitle>
-              <span className="font-bold text-5xl">$11<span className="text-neutral-700 text-2xl"> / 60 posts</span></span>
+              <span className="font-bold text-5xl">$10<span className="text-neutral-700 text-2xl"> / unlimited posts</span></span>
             </CardHeader>
             <CardDescription className="text-center w-11/12 mx-auto">
               Support <span className="font-semibold text-black">ctrl<span className="text-primary">cap</span></span> from day one
@@ -212,7 +212,7 @@ export default function Pricing() {
               <ul className="mt-7 space-y-2.5 text-sm">
                 <li className="flex space-x-2">
                   <CheckIcon className="flex-shrink-0 mt-0.5 h-4 w-4" />
-                  <span className="text-muted-foreground">Up to 60 posts</span>
+                  <span className="text-muted-foreground">Unlimited posts</span>
                 </li>
                 <li className="flex space-x-2">
                   <CheckIcon className="flex-shrink-0 mt-0.5 h-4 w-4" />
@@ -222,10 +222,7 @@ export default function Pricing() {
                   <CheckIcon className="flex-shrink-0 mt-0.5 h-4 w-4" />
                   <span className="text-muted-foreground">Guarantee this price forever</span>
                 </li>
-                <li className="flex space-x-2">
-                  <CheckIcon className="flex-shrink-0 mt-0.5 h-4 w-4" />
-                  <span className="text-muted-foreground">Free tokens to test new features when they come out</span>
-                </li>
+               
               </ul>
             </CardContent>
             <CardFooter>
