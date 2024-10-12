@@ -1,4 +1,3 @@
-
 import React, { useCallback, useEffect, useState } from "react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select";
 import { top25 } from "@/lib/fonts/fonts";
@@ -34,45 +33,29 @@ const preloadFonts = async () => {
 preloadFonts();
 
 export const FontPicker: React.FC<FontPickerProps> = ({ setProps }) => {
-
-  const [background, setBackground] = useState(
-    'Transparent'
-  )
-  const [font, setFont] = useState(
-    '#ffffff'
-  )
-
+  const [background, setBackground] = useState('Transparent')
+  const [font, setFont] = useState('#ffffff')
+  const [selectedFont, setSelectedFont] = useState('')
 
   const newFonts = top25;
  
   const onChange = useCallback(
     async (value: string) => {
       const fonts = newFonts.find((f) => f.family === value);
-      // const fonts = newFonts[selectedIndex];
  
       if (fonts) {
-      // Load font information
-      const loaded = await fonts.load();
- 
-      // Load the font itself
-      const { fontFamily, ...otherInfo } = loaded.loadFont();
-
-      console.log(fontFamily)
-
-      setProps((prevProps: any) => ({ ...prevProps, selectedFont: fontFamily }));
-        
-      console.log()
+        const loaded = await fonts.load();
+        const { fontFamily } = loaded.loadFont();
+        setSelectedFont(fontFamily);
+        setProps({ selectedFont: fontFamily, fontColour: font, backgroundColour: background });
       }
-      
     },
-    [newFonts],
+    [newFonts, font, background, setProps],
   );
 
   useEffect(() => {
-
-    setProps((prevProps: any) => ({ ...prevProps, fontColour: font, backgroundColour: background }));
-
-  }, [font, background]);
+    setProps({ selectedFont, fontColour: font, backgroundColour: background });
+  }, [selectedFont, font, background, setProps]);
  
   return (
     <div className="grid grid-cols-2 pb-5">
@@ -82,22 +65,20 @@ export const FontPicker: React.FC<FontPickerProps> = ({ setProps }) => {
             <SelectValue placeholder="Select a font" />
           </SelectTrigger>
           <SelectContent className="overflow-y-auto max-h-[15rem]">
-          {newFonts.map((f) => {
-            return (
-              <SelectItem key={f.family} value={f.family} style={{ fontFamily: f.family }}> {f.family}</SelectItem>
-            );
-          })}
-        </SelectContent>
+          {newFonts.map((f) => (
+            <SelectItem key={f.family} value={f.family} style={{ fontFamily: f.family }}>{f.family}</SelectItem>
+          ))}
+          </SelectContent>
         </Select>
       </div>
       <div className="col-span-1">      
         <GradientPicker
-            className=""
-            font={font}
-            setFont={setFont}
-            background={background}
-            setBackground={setBackground}
-          />
+          className=""
+          font={font}
+          setFont={setFont}
+          background={background}
+          setBackground={setBackground}
+        />
       </div>
     </div>
   );

@@ -43,7 +43,7 @@ export const ProModal = () => {
         <DialogHeader>
           <DialogTitle className="flex justify-center items-center flex-col gap-y-4 pb-2">
             <div className="flex items-center font-semibold text-xl">
-              Upgrade to <p className="ml-1 font-bold">ctrl</p><p className="text-primary font-bold">cap</p>
+              Upgrade to <p className="ml-1 font-bold">ctrl</p><p className="text-primary font-bold mr-1">cap</p> Pro
               <Badge className="uppercase text-sm py-1 ml-2">
                 pro
               </Badge>

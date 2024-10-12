@@ -79,12 +79,14 @@ const FormSchema = z.object({
   }),
 })
 
-interface CaptionPlaygroundProps {
-  
+interface CaptionPlayground {
+  input_props: any,
+  setStep: (newValue: number) => void;
+  setPostHistoryOut: (props: any) => void;
 }
 
 
-export const CaptionPlayground: React.FC<CaptionPlaygroundProps> = ({ }) => {
+export const CaptionPlayground: React.FC<CaptionPlayground> = ({ input_props, setStep,setPostHistoryOut }) => {
   const proModal = useProModal();
   const router = useRouter();
 
@@ -96,6 +98,19 @@ export const CaptionPlayground: React.FC<CaptionPlaygroundProps> = ({ }) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
+
+
+  useEffect(() => {
+    console.log(input_props)
+    if(input_props){
+      form.setValue('topic',JSON.parse(input_props.video_options).video_topic)
+      form.setValue('cta',JSON.parse(input_props.video_options).call_to_action)
+      form.setValue('target_audience',JSON.parse(input_props.video_options).target_audience)
+      form.setValue('personal_insights',JSON.parse(input_props.video_options).personal_insights)
+      form.setValue('template',JSON.parse(input_props.video_options).caption_template)
+      setGeneratedCaption(input_props.caption)
+    }
+  }, []);
 
   const getCaption = async (values: z.infer<typeof FormSchema>) => {
     try {
@@ -117,8 +132,9 @@ export const CaptionPlayground: React.FC<CaptionPlaygroundProps> = ({ }) => {
       const response = await axios.post(`/api/get-caption`, body);
 
       setGeneratedCaption(response.data);
+      setPostHistoryOut(null)
 
-      setIsLoading(false) 
+      setIsLoading(false)
 
     } catch (error: any) {
       if (error?.response?.status === 403) {
@@ -129,6 +145,10 @@ export const CaptionPlayground: React.FC<CaptionPlaygroundProps> = ({ }) => {
     }finally {
       router.refresh();
     }
+  }
+
+  const returnFunction = () => {
+    setStep(0)
   }
 
   return (
@@ -279,7 +299,7 @@ export const CaptionPlayground: React.FC<CaptionPlaygroundProps> = ({ }) => {
                           <Textarea
                             disabled={isLoading} 
                             placeholder="E.g. If you want a free guide on how to get started, comment “guide” and I’ll send it to you!" 
-                            className="min-h-[5rem]"
+                            className="min-h-[9rem]"
                             {...field}
                           />
                         </FormControl>

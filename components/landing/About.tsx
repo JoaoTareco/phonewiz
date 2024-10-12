@@ -7,7 +7,7 @@ const About = () => {
   return (
     <>
       {/* <!-- ===== About Start ===== --> */}
-      <section className="overflow-hidden pb-20 pt-20 lg:pb-25 xl:pb-30 px-20">
+      <section className="overflow-hidden pb-20 pt-20 lg:pb-25 xl:pb-30 px-20 mx-auto w-5/6">
         <div className="mx-auto max-w-c-1235 px-4 md:px-8 xl:px-8">
           <div className="flex items-center gap-16 lg:gap-32.5">
             <motion.div
@@ -29,12 +29,12 @@ const About = () => {
               className="animate_left relative mx-auto hidden  md:block md:w-1/2"
             >
               <Image
-                src="/about-1.png"
+                src="/about-3.png"
                 alt="About"
                 className="dark:hidden shadow-sm rounded-lg border border-neutral-50"
-                width={688}
-                height={626}
-
+                width={1200}
+                height={1200}
+              
               />
               <Image
                 src=""
@@ -121,7 +121,7 @@ const About = () => {
       {/* <!-- ===== About End ===== --> */}
 
       {/* <!-- ===== About Two Start ===== --> */}
-      <section  className="overflow-hidden pb-20 pt-20 lg:pb-25 xl:pb-30 px-20">
+      <section className="overflow-hidden pb-20 pt-20 lg:pb-25 xl:pb-30 px-20 mx-auto w-5/6">
         <div className="mx-auto max-w-c-1235 px-4 md:px-8 xl:px-8">
           <div className="flex items-center gap-16 lg:gap-32.5">
             <motion.div
@@ -140,39 +140,14 @@ const About = () => {
               whileInView="visible"
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
-              className="animate_left md:w-1/2"
+              className="animate_left md:w-1/2 flex flex-col justify-center"
             >
-              {/* <h4 className="font-medium uppercase text-black dark:text-white">
-                Launch Your SaaS Fast
-              </h4> */}
               <h2 className="relative mb-6 text-3xl font-bold text-black dark:text-white xl:text-hero">
                 Content that is still  <span className="text-primary">personal</span>
               </h2>
               <p>
                 Create new posts with your own clips by uploading them to your content bank or choose from the hundreds of high quality clips available in the library.
               </p>
-              <div className="md:pb-20 xl:pb-40"></div>
-              {/* <p>
-                Give personal insights in each post you create so it is still personal.
-              </p> */}
-              {/* <div>
-                <a
-                  href="#"
-                  className="group mt-7.5 inline-flex items-center gap-2.5 text-black hover:text-primary dark:text-white dark:hover:text-primary"
-                >
-                  <span className="duration-300 group-hover:pr-2">
-                    Know More
-                  </span>
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="currentColor"
-                  >
-                    <path d="M10.4767 6.16701L6.00668 1.69701L7.18501 0.518677L13.6667 7.00034L7.18501 13.482L6.00668 12.3037L10.4767 7.83368H0.333344V6.16701H10.4767Z" />
-                  </svg>
-                </a>
-              </div> */}
             </motion.div>
             <motion.div
               variants={{
@@ -193,18 +168,18 @@ const About = () => {
               className="animate_right relative mx-auto hidden aspect-[588/526.5] md:block md:w-1/2"
             >
               <Image
-                src="/about-2.jpeg"
+                src="/about-4.jpeg"
                 alt="About"
                 className="dark:hidden shadow-sm rounded-lg border border-neutral-50"
-                width={688}
-                height={626}
+                width={860}
+                height={783}
               />
               <Image
                 src=""
                 alt="About"
                 className="hidden dark:block"
-                width={688}
-                height={626}
+                width={860}
+                height={783}
               />
             </motion.div>
           </div>

@@ -13,6 +13,7 @@ import { BulletList } from "./bullet-list/Main";
 import { importFont } from "./fonts";
 // import { ReadCaptionFast } from "./read-caption-fast/Main";
 import { Slides } from "./slides/Main";
+import { Universal } from "./universal/Main";
 
 const preloadFonts = async () => {
   try {
@@ -68,6 +69,19 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={defaultMyCompProps}
+      />
+      <Composition
+        id={"universal"}
+        component={Universal}
+        durationInFrames={DURATION_IN_FRAMES}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={{
+          ...defaultMyCompProps,
+          textSequences: [],
+          videoSequences: []
+        }}
       />
       {/* <Composition
         id={"read-caption-fast"}

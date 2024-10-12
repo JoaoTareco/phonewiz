@@ -82,7 +82,7 @@ export default function NavigationMenuLanding() {
     <div className="flex items-center justify-center">
   
          <SignedIn>
-            <Link href="/post-generator" >
+            <Link href="/home" >
                 <Button className="hover:-translate-x-1 transition duration-400">Go to app <ArrowUpRight className="pl-2"/></Button>
             </Link>
             </SignedIn>

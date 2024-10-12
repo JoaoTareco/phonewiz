@@ -19,6 +19,8 @@ import { useProModal } from "@/hooks/use-pro-modal";
 import { tools } from "@/constants";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { checkSubscription } from "@/lib/subscription";
+import { SubscriptionButton } from "./subscription-button";
 
 export const ProModal = () => {
   const proModal = useProModal();
@@ -43,7 +45,7 @@ export const ProModal = () => {
         <DialogHeader>
           <DialogTitle className="flex justify-center items-center flex-col gap-y-4 pb-2">
             <div className="flex items-center font-semibold text-xl">
-             Get more Tokens for <p className="ml-1 font-bold">ctrl</p><p className="text-primary font-bold">cap</p>
+             Upgrade to <p className="ml-1 font-bold">ctrl</p><p className="text-primary font-bold mr-1">cap</p> Pro
             </div>
           </DialogTitle>
           <DialogDescription className="text-center pt-2 space-y-2 text-zinc-900 font-medium">
@@ -63,9 +65,9 @@ export const ProModal = () => {
             <div className="">
               <img src="/discount.png" width="230" height="230" />
              <div className="">
-              <div className=" mb-5 text-black"><span className="line-through text-mute">$29,99</span> <span className=" font-bold">$11</span></div>
-              <div className=""><span className="text-5xl font-bold text-primary">60</span> <span className="text-primary text-lg">Tokens</span></div>
-              <div className=" text-black font-lg mt-5">That&apos;s just <span className="line-through text-mute">$1</span><span className=" font-bold"> $0,35</span> <span className="text-mute"> per post</span></div>
+              <div className=" mb-5 text-black"><span className="line-through text-mute">$29,99</span> <span className=" font-bold">$10</span></div>
+              <div className=""><span className="text-2xl font-bold text-primary">Unlimited</span> <span className="text-primary text-2xl">Posts</span></div>
+              <div className=" text-black font-lg mt-5">And guarantee this price forever</div>
             </div>
             </div>
           </DialogDescription>
@@ -73,7 +75,7 @@ export const ProModal = () => {
         <DialogFooter className="">
 
             <Button disabled={loading} onClick={onSubscribe} size="lg" type="submit" className="w-full shadow-lg shadow-red-500/50 mt-10">
-              Buy Now
+              Upgrade
    
               <MoveUpRight className="w-4 h-4 ml-2 fill-white" />
             </Button>

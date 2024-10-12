@@ -6,8 +6,8 @@ import { SetStateAction, useEffect, useMemo, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { Check, ChevronRight, ChevronsUpDown, Clapperboard, Send, Undo2, RotateCw } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Check, ChevronRight, ChevronsUpDown, Clapperboard, Send, Undo2, RotateCw, Disc3, Info } from "lucide-react";
 
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/ui/button";
@@ -49,6 +49,11 @@ import { PostHistory } from "@/components/post-history";
 import { CaptionPlayground } from "@/components/caption-playground";
 import { Badge } from "@/components/ui/badge";
 import { Slides } from "@/remotion/slides/Main";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import { Universal } from "@/remotion/universal/Main";
+import Link from "next/link";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Image from 'next/image';
 
 const caption_templates = [
   { label: "Topic Based", value: "topic" },
@@ -79,16 +84,18 @@ const FormSchema2 = z.object({
 })
 
 const FormSchema3 = z.object({
-  video_template: z.string({
-    required_error: "Please select a template for the video.",
-  }),
+  //video_template: z.string({
+  //  required_error: "Please select a template for the video.",
+  //}),
   caption_template: z.string({
     required_error: "Please select a template for the caption.",
   }),
-  video_source: z.string({
-    required_error: "Please select a source for the video.",
-  })
+  //video_source: z.string({
+  //  required_error: "Please select a source for the video.",
+  //})
 })
+
+const MAX_SELECTABLE_VIDEOS = 8;
 
 const ContentGenerator = () => {
   const proModal = useProModal();
@@ -104,20 +111,31 @@ const ContentGenerator = () => {
   // const [video_link, setVideoLink] = useState<any>();
   // const [selectedValue, setSelectedValue] = useState<string>();
   const [hookOptions, setHookOptions] = useState<any>();
-  const [generalProps, setGeneralProps] = useState<any>();
+  const [generalProps, setGeneralProps] = useState<any>({
+    // ... other properties
+    video: [], // Initialize as an empty array
+  });
   const [selectedCaption, setSelectedCaption] = useState<any>();
   // const [componentId, setComponentId] = useState<any>();
   const [videos, setVideos] = useState<{ [key: string]: string }>({});
   type VideoObject = { video: string };
-  const [fullVideoList, setfullVideoList] = useState<any>();
+  const [fullVideoList, setFullVideoList] = useState<string[]>([]);
   // const [texts, setTexts] = useState<{ [key: string]: string }>({});
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [loading3, setLoading3] = useState(false);
 
   const [postHistoryOut, setPostHistoryOut] = useState<any>(null);
+  const [comingFromPlanner, setComingFromPlanner] = useState(false);
 
+  const [selectedVideos, setSelectedVideos] = useState<string[]>([])
+
+  const [isLoadingVideos, setIsLoadingVideos] = useState(true);
 
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+
+  const [trackUrl, setTrackUrl] = useState<string>('');
+
+  const [showNoVideosDialog, setShowNoVideosDialog] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -136,112 +154,184 @@ const ContentGenerator = () => {
   let isLoading3 = form3.formState.isSubmitting;
   let hasGeneratedHooks = false;
 
+  const searchParams = useSearchParams()
 
   useEffect(() => {
-    let genProps = {};
+    const id = searchParams.get('id')
+    const topic = searchParams.get('topic')
+    const hook = searchParams.get('hook')
+    const cta = searchParams.get('cta')
+    const target_audience = searchParams.get('target_audience')
+    const personal_insights = searchParams.get('personal_insights')
 
-    // if (video_template === 'inputProps') {
-    //   genProps = {
-    //     title: video_hook,
-    //     video: videos.video1 // Assuming videos.video1 is the correct video URL
-    //   };
-    // } else if (video_template === 'readCaptionProps') {
-    //   genProps = {
-    //     title: video_hook,
-    //     video1: videos.video1, // Assuming videos.video1 and videos.video2 are the correct video URLs
-    //     video2: videos.video2
-    //   };
-    // }
+    if (id && topic && hook) {
+      setCurrentStep(3)
+      setVideoTopic(topic)
+      setVideoHook(hook || '')
+      setCallToAction(cta || '')
+      setTargetAudience(target_audience || '')
+      setPersonalInsights(personal_insights || '')
+      setGeneratedCaption(undefined)
+      setComingFromPlanner(true)
+    }
+  }, [searchParams])
 
-    genProps = {
+  useEffect(() => {
+    const totalDuration = 6 * 30; // 6 seconds at 30 fps
+    const firstVideoDuration = 3 * 30; // 3 seconds at 30 fps
+
+    const videoSequences = selectedVideos.map((video, index) => {
+      if (index === 0) {
+        // First video stays for 3 seconds
+        return {
+          video,
+          startFrame: 0,
+          durationInFrames: firstVideoDuration
+        };
+      } else {
+        // Calculate duration for remaining videos
+        const remainingVideos = selectedVideos.length - 1;
+        const remainingDuration = totalDuration - firstVideoDuration;
+        const durationPerVideo = Math.floor(remainingDuration / remainingVideos);
+        const startFrame = firstVideoDuration + (index - 1) * durationPerVideo;
+
+        return {
+          video,
+          startFrame,
+          durationInFrames: durationPerVideo
+        };
+      }
+    });
+
+    const textSequences = [
+      {
+        id: 'hook',
+        type: 'text' as const,
+        content: video_hook,
+        start: 0,
+        duration: 6, // Show text for full 6 seconds
+        x: 0,
+        y: 0,
+        font: "Montserrat",
+        color: 'white',
+        backgroundColor: 'rgba(0,0,0,0.5)'
+      },
+      // Add more text sequences as needed
+    ];
+
+    const genProps = {
+      videoSequences,
+      textSequences,
       title: video_hook,
       readCap: "Read Caption ↓",
-      video: videos, // Assuming videos.video1 and videos.video2 are the correct video URLs
+      video: selectedVideos,
       selectedFont: "Montserrat"
     };
 
     setGeneralProps(genProps);
-  }, [videos, video_template,video_hook]); // Specify the correct dependencies
+  }, [selectedVideos, video_hook]); // Add any other dependencies that should trigger this effect
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      setIsLoadingVideos(true);
+      try {
+        const response = await axios.get('/api/get-content');
+        setFullVideoList(response.data.all_videos);
+        if (response.data.all_videos.length === 0) {
+          setShowNoVideosDialog(true);
+        }
+      } catch (error) {
+        console.error('Failed to fetch videos:', error);
+        toast.error('Failed to load videos from content bank. Please try again.');
+      } finally {
+        setIsLoadingVideos(false);
+      }
+    };
+
+    fetchVideos();
+  }, []);
 
   const generateVideoCaption = async (values: z.infer<typeof FormSchema3>) => {
     try {
-
-      // setVideoHook(values.hook)
-
       isLoading3 = true;
 
-      let genProps = {};
-
-      genProps = readCaptionProps;
-
-      console.log('here here here is the video 23o')
-
-      setVideoTemplate(values.video_template)
-
-  
-      // if (video_template === 'inputProps') {
-      //   genProps = inputProps;
-      // } else if (video_template === 'readCaptionProps') {
-      //   genProps = readCaptionProps;
-      // }
-      const videoCount: number = Object.keys(genProps).filter((key) => key.startsWith('video')).length;
-        
-    
-      axios.get(`/api/get-content?videoCount=${videoCount}&video_topic=${video_topic}&video_source=${values.video_source}`).then((response1: { data: any; }) => {
-          const videos = response1.data;
-          console.log(videos)
-          if(videos.all_videos.length > 0){
-
-            // const transformedVideos = videos.all_video.map((video: any) => ({ video: video.video }));
-
-            setfullVideoList(videos.all_videos);
-
-            console.log(fullVideoList)
-  
-        
-            setVideos(videos.selected_videos );
-
-            console.log(videos.selected_videos)
-            
-          }
-      })
-
-      // setVideoLink(randomVideo.video)
-
+      // Prepare both requests
+      const templateRequest = axios.get(`/api/get-video-template?count=${selectedVideos.length}`);
       const body = {
         hook: video_hook,
         target_audience: target_audience,
-        video_template: values.video_template,
         caption_template: values.caption_template,
         video_topic: video_topic,
         call_to_action: call_to_action,
         personal_insights: personal_insights
+      };
+      const captionRequest = axios.post(`/api/get-caption`, body);
+
+      // Make both requests concurrently
+      const [templateResponse, captionResponse] = await Promise.all([templateRequest, captionRequest]);
+
+      
+
+      const videoTemplate = templateResponse.data.template;
+
+      setTrackUrl(videoTemplate.track_url)
+
+      if (!videoTemplate) {
+        toast.error("Failed to get a video template. Please try again.");
+        return;
       }
 
-      console.log('here here here is the video template:')
-      console.log(video_template)
+      const videoSequences = videoTemplate.sequences.map((seq: any, index: number) => ({
+        ...seq,
+        video: selectedVideos[index] || selectedVideos[selectedVideos.length - 1] // Use last video if we run out
+      }));
 
-      const response = await axios.post(`/api/get-caption`, body);
+      const textSequences = [
+        {
+          id: 'hook',
+          type: 'text' as const,
+          content: video_hook,
+          start: 0,
+          duration: 6, // Show text for full 6 seconds
+          x: 0,
+          y: 0,
+          font: "Montserrat",
+          color: 'white',
+          backgroundColor: 'rgba(0,0,0,0.5)'
+        },
+        // Add more text sequences as needed
+      ];
 
-      setGeneratedCaption(response.data);
-      setPostHistoryOut(null)
+      setGeneralProps({
+        videoSequences,
+        textSequences,
+        title: video_hook,
+        readCap: "Read Caption ↓",
+        video: selectedVideos,
+        selectedFont: "Montserrat"
+      });
 
-      isLoading3 = false;
+      console.log('Selected video template:', videoTemplate.value);
+
+      setGeneratedCaption(captionResponse.data);
+      setPostHistoryOut(null);
 
       setHookOptions(undefined);
       form.reset();
       form2.reset();
+      setComingFromPlanner(false);
     } catch (error: any) {
       if (error?.response?.status === 403) {
-        setCurrentStep(0);
+        setCurrentStep(1);
         proModal.onOpen();
       } else {
         toast.error("Something went wrong.");
       }
     } finally {
+      isLoading3 = false;
       router.refresh();
     }
-  }
+  };
 
   const getTemplates = async (values: z.infer<typeof FormSchema2>) => {
     try {
@@ -253,7 +343,7 @@ const ContentGenerator = () => {
 
     } catch (error: any) {
       if (error?.response?.status === 403) {
-        setCurrentStep(0);
+        setCurrentStep(1);
         proModal.onOpen();
       } else {
         toast.error("Something went wrong.");
@@ -286,7 +376,7 @@ const ContentGenerator = () => {
 
     } catch (error: any) {
       if (error?.response?.status === 403) {
-        setCurrentStep(0);
+        setCurrentStep(1);
         proModal.onOpen();
       } else {
         toast.error("Something went wrong.");
@@ -317,7 +407,7 @@ const ContentGenerator = () => {
 
     } catch (error: any) {
       if (error?.response?.status === 403) {
-        setCurrentStep(0);
+        setCurrentStep(1);
         proModal.onOpen();
       } else {
         toast.error("Something went wrong.");
@@ -340,6 +430,7 @@ const ContentGenerator = () => {
       setVideoTopic(undefined)
       setHookOptions(undefined);
       setTargetAudience(undefined)
+      setComingFromPlanner(false)
 
       form.reset();
       form2.reset();
@@ -351,7 +442,7 @@ const ContentGenerator = () => {
 
     } catch (error: any) {
       if (error?.response?.status === 403) {
-        setCurrentStep(0);
+        setCurrentStep(1);
         proModal.onOpen();
       } else {
         toast.error("Something went wrong.");
@@ -400,29 +491,66 @@ const ContentGenerator = () => {
   ] as const
 
   const returnFunction = () => {
-    setCurrentStep(0)
+    setCurrentStep(1)
   }
+
+  const handleVideoSelection = (video: string) => {
+    setSelectedVideos(prev => {
+      if (prev.includes(video)) {
+        return prev.filter(v => v !== video);
+      } else {
+        if (prev.length >= MAX_SELECTABLE_VIDEOS) {
+          toast.error(`You can select a maximum of ${MAX_SELECTABLE_VIDEOS} videos.`);
+          return prev;
+        }
+        return [...prev, video];
+      }
+    });
+  };
 
   return ( 
     <div>
-     {currentStep === 0 && ( <div><Heading
+    <div><Heading
         title="Post Generator"
         description="Generate enganging content."
         icon={Clapperboard}
         iconColor="text-gray-700"
         bgColor="bg-gray-700/10"
       />
-      </div>)}
+      </div>
       <div className="px-4 lg:px-8 overflow-x-hidden">
-      {currentStep === 0 && (<Separator className="mb-4" />)}
-      {currentStep === 0 && <PostHistory setStep={setCurrentStep} setInputProps={setSelectedCaption} setPostHistoryOut={setPostHistoryOut} postHistoryOut={postHistoryOut}/>}
-      {currentStep === 5 && <CaptionPlayground setStep={setCurrentStep} input_props={selectedCaption} setPostHistoryOut={setPostHistoryOut}/>}
+      <Separator className="mb-4" />
+      <Dialog open={showNoVideosDialog} onOpenChange={setShowNoVideosDialog}>
+        <DialogContent className="">
+          <DialogHeader>
+            <DialogTitle>No videos to use in post generation</DialogTitle>
+          </DialogHeader>
+          <p className="text-md text-gray-700">
+            You don&apos;t have any videos in your content bank. Please add some before trying to generate a post.
+          </p>
+          <div className="flex flex-col items-center space-y-4">
+            <Image
+              src="/content-bank-tutorial.png"
+              alt="Content Bank Tutorial"
+              width={800}
+              height={400}
+              className="rounded-md border-2 border-gray-200"
+            />
+            <p className="text-md text-gray-700">
+              It&apos;s very easy! If you don&apos;t have any videos of your own to upload, you can use the Library tab to find videos that match your style.
+            </p>
+          </div>
+          <div className="flex justify-end space-x-2 mt-4">
+            <Button variant="secondary" onClick={() => router.push('/content-bank')}>
+              Go to Content Bank
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    
       {currentStep === 1 && (
         <div className="h-full ">
-          <Button variant="secondary"  className="max-w-[6rem] mb-12" onClick={returnFunction}>
-            <Undo2 className="h-4 w-4 mr-1" />
-            <span className="text-sm">Return</span>
-          </Button>
+        
           <div className="flex justify-center pb-5">  
             <ul className="steps w-1/2">
               <li className="step step-primary">Topic</li>
@@ -538,7 +666,7 @@ const ContentGenerator = () => {
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className={` ${isMobile ? '' : ''}`}>
+                  <PopoverContent className={` ${isMobile ? '' : ''}`}>Re
                     <Command>
                       <CommandInput placeholder="Search caption templates..." />
                       <CommandEmpty>No video template found.</CommandEmpty>
@@ -606,10 +734,6 @@ const ContentGenerator = () => {
       )}
       { currentStep === 2 && (
         <div className="h-full overflow-x-hidden">
-          <Button variant="secondary"  className="max-w-[6rem] mb-12" onClick={returnFunction}>
-            <Undo2 className="h-4 w-4 mr-1" />
-            <span className="text-sm">Return</span>
-          </Button>
         <div className="flex justify-center pb-5 ">  
           <ul className="steps w-1/2">
             <li className="step step-primary">Topic</li>
@@ -682,18 +806,17 @@ const ContentGenerator = () => {
         </div>
       )}
       {currentStep === 3 && !generated_caption && (
-        <div className="h-full">
-          <Button variant="secondary"  className="max-w-[6rem] mb-12" onClick={returnFunction}>
-            <Undo2 className="h-4 w-4 mr-1" />
-            <span className="text-sm">Return</span>
-          </Button>
-         <div className="flex justify-center pb-5">  
-           <ul className="steps w-1/2">
-             <li className="step step-primary">Topic</li>
-             <li className="step step-primary">Hook</li>
-             <li className="step step-primary">Templates</li>
-           </ul>
-         </div>
+       <div> <div>{!comingFromPlanner && (
+          <div className="h-full">
+            <div className="flex justify-center pb-5">  
+              <ul className="steps w-1/2">
+                <li className="step step-primary">Topic</li>
+                <li className="step step-primary">Hook</li>
+                <li className="step step-primary">Templates</li>
+              </ul>
+            </div>
+          </div>
+        )}</div>
        {/* <Card className="p-5 h-[65vh]"> */}
          { isLoading2 && (
            <div className="p-20">
@@ -717,9 +840,49 @@ const ContentGenerator = () => {
               )} */}
           </div>
         <div className="">
+        <div>
+      <h2 className="text-xl font-medium pb-4 pt-6">Select videos for your post (max {MAX_SELECTABLE_VIDEOS})</h2>
+      {isLoadingVideos ? (
+        <div className="flex justify-center items-center h-64">
+          <Loader />
+        </div>
+      ) : (
+        <ScrollArea className="w-full whitespace-nowrap rounded-md border">
+          <div className="flex overflow-x-auto mx-2">
+            {fullVideoList.length > 0 ? (
+              fullVideoList.map((video, index) => (
+                <div key={index} className="relative flex-shrink-0 mx-1 my-2">
+                  <video
+                    className={`h-64 w-42 object-cover transition-all hover:scale-95 aspect-[3/4] rounded-md border-2 ${
+                      selectedVideos.includes(video) ? 'border-primary' : 'border-transparent'
+                    } cursor-pointer ${selectedVideos.length >= MAX_SELECTABLE_VIDEOS && !selectedVideos.includes(video) ? 'opacity-50' : ''}`}
+                    controls={true}
+                    muted
+                    autoPlay={false}
+                    onClick={() => handleVideoSelection(video)}
+                  >
+                    <source src={video} />
+                  </video>
+                  {selectedVideos.includes(video) && (
+                    <div className="absolute top-2 right-2 bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center">
+                      {selectedVideos.indexOf(video) + 1}
+                    </div>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p className="text-center w-full py-8">
+                No videos available in your content bank. Please add some videos first.
+              </p>
+            )}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      )}
+    </div>
         <Form {...form3}>
           <form onSubmit={form3.handleSubmit(generateVideoCaption)}>
-          <h2 className="text-xl font-medium pb-2 pt-5">Choose the source for the video content</h2>
+          {/* <h2 className="text-xl font-medium pb-2 pt-5">Choose the source for the video content</h2>
           <FormField
             control={form3.control}
             name="video_source"
@@ -733,14 +896,7 @@ const ContentGenerator = () => {
                 <RadioGroupItem value={label.label as string}/>
               </FormControl>
               <FormLabel className="font-normal cursor-pointer flex gap-4">
-                  {/* <video  className={`h-60  cursor-pointer`}
-                    controls={true} 
-                    muted
-                    autoPlay
-                    loop
-                    >
-                    <source src={label.url} type="video/mp4" />
-                  </video> */}
+             
                 
                   <div>
                     <h2 className="text-lg font-medium pb-2">{label.label as string}
@@ -756,8 +912,8 @@ const ContentGenerator = () => {
           </div>
           </RadioGroup>
             )}
-          />
-          <h2 className="text-xl font-medium pb-2 pt-6">Choose a caption template</h2>
+          />*/}
+          <h2 className="text-xl font-medium pb-4 pt-8">Choose a caption template</h2>
           <FormField
             control={form3.control}
             name="caption_template"
@@ -782,6 +938,7 @@ const ContentGenerator = () => {
           </RadioGroup>
             )}
           />
+          {/* Video template selection 
           <div>
           <h2 className="text-xl font-medium pb-2 pt-6">Choose a video template</h2>
           <FormField
@@ -797,14 +954,7 @@ const ContentGenerator = () => {
                 <RadioGroupItem value={label.label as string}/>
               </FormControl>
               <FormLabel className="font-normal cursor-pointer flex gap-4">
-                  {/* <video  className={`h-60  cursor-pointer`}
-                    controls={true} 
-                    muted
-                    autoPlay
-                    loop
-                    >
-                    <source src={label.url} type="video/mp4" />
-                  </video> */}
+              
                 
                   <div>
                     <h2 className="text-lg font-medium pb-2">{label.label as string}
@@ -821,7 +971,9 @@ const ContentGenerator = () => {
           </RadioGroup>
             )}
           />
+          
           </div>
+          */}
           <div className=" flex justify-end pt-10 pb-16">
 
           { isLoading3 && (
@@ -902,51 +1054,22 @@ const ContentGenerator = () => {
                 </p>
 
               </div>)}
-           {fullVideoList.length >= 2 && video_template === "Read caption" && (
-              <Player
-                  component={ReadCaption}
+          
+            {fullVideoList.length >= 2 && (
+                <Player
+                  component={Universal}
                   inputProps={generalProps}
-                  durationInFrames={DURATION_IN_FRAMES}
+                  durationInFrames={6 * 30} // Always 6 seconds at 30 fps
                   fps={VIDEO_FPS}
                   compositionHeight={VIDEO_HEIGHT}
                   compositionWidth={VIDEO_WIDTH}
                   controls
                   autoPlay
                   style={{ height: "100%" }}
-                  className="h-screen  object-cover transition-all  rounded-md "
+                  className="h-screen object-cover transition-all rounded-md"
                   loop
                 />
-                )}
-            {fullVideoList.length >= 2 && video_template === "Single clip with hook" && (
-              <Player
-                  component={BulletList}
-                  inputProps={generalProps}
-                  durationInFrames={DURATION_IN_FRAMES}
-                  fps={VIDEO_FPS}
-                  compositionHeight={VIDEO_HEIGHT}
-                  compositionWidth={VIDEO_WIDTH}
-                  controls
-                  autoPlay
-                  style={{ height: "100%" }}
-                  className="h-screen  object-cover transition-all  rounded-md"
-                  loop
-                />
-                )}
-            {fullVideoList.length >= 2 && video_template === "Slides" && (
-              <Player
-                  component={Slides}
-                  inputProps={generalProps}
-                  durationInFrames={DURATION_IN_FRAMES}
-                  fps={VIDEO_FPS}
-                  compositionHeight={VIDEO_HEIGHT}
-                  compositionWidth={VIDEO_WIDTH}
-                  controls
-                  autoPlay
-                  style={{ height: "100%" }}
-                  className="h-screen  object-cover transition-all rounded-md"
-                  loop
-                />
-                )}
+              )}
               {/* <video className="h-screen  object-cover transition-all aspect-[3/4] rounded-md" 
                   controls={false} 
                   autoPlay
@@ -956,11 +1079,41 @@ const ContentGenerator = () => {
                   </video> */}
               </div>
               {isMobile && (<div className="mb-1 ml-2 pt-5">Generated Caption:</div>)}
+              <div>
+              <Card className="mb-2 bg-secondary h-[4vh] flex items-center ">
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center">
+                    
+                    <Button variant="token">
+                    <Disc3 className="h-4 w-4 mr-2"/>
+                    <Link href={trackUrl} target="_blank" rel="noopener noreferrer">
+                      <span className="text-sm">Use this trending audio</span>
+                      </Link>
+                      </Button>
+                   
+                  </div>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="token">
+                        <Info className="h-4 w-4"/>
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Disclaimer</DialogTitle>
+                        </DialogHeader>
+                          By clicking the &quot;Use this trending audio&quot; button, you will be redirected to Instagram&apos;s platform. Our app does not host, control, or assume responsibility for the content, including any audio, available on Instagram. Please ensure that you comply with Instagram&apos;s Terms of Use and copyright rules when using audio from their platform. Any legal or copyright issues related to the use of this audio are the sole responsibility of the user. Our app is independent of Instagram and is not affiliated with or endorsed by Instagram in any way.
+                    </DialogContent>
+                  </Dialog>
+                </div>
+             </Card>
              <Textarea
                placeholder="You erased the whole caption!"
-               className={`${isMobile ? 'overflow-y-auto h-full' : 'col-span-1  h-[78vh]'}`}
+               className={`${isMobile ? 'overflow-y-auto h-full' : 'col-span-1  h-[74vh]'}`}
                defaultValue={generated_caption}
              />
+            
+           </div>
            </div>
          </div>
         )}

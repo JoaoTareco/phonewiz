@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
-import { absoluteUrl } from "@/lib/utils";
 
-const settingsUrl = "http://ctrlcap.com/post-generator";
+
+const settingsUrl = "http://localhost:3000/home";
 
 export async function GET() {
   try {
@@ -16,37 +16,40 @@ export async function GET() {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // const userSubscription = await prismadb.userSubscription.findUnique({
-    //   where: {
-    //     userId
-    //   }
-    // })
+    const userSubscription = await prismadb.userSubscription.findUnique({
+      where: {
+        userId
+      }
+    })
 
-    // if (userSubscription && userSubscription.stripeCustomerId) {
-    //   const stripeSession = await stripe.billingPortal.sessions.create({
-    //     customer: userSubscription.stripeCustomerId,
-    //     return_url: settingsUrl,
-    //   })
+    if (userSubscription && userSubscription.stripeCustomerId) {
+      const stripeSession = await stripe.billingPortal.sessions.create({
+        customer: userSubscription.stripeCustomerId,
+        return_url: settingsUrl,
+      })
 
-    //   return new NextResponse(JSON.stringify({ url: stripeSession.url }))
-    // }
+      return new NextResponse(JSON.stringify({ url: stripeSession.url }))
+    }
 
     const stripeSession = await stripe.checkout.sessions.create({
       success_url: settingsUrl,
       cancel_url: settingsUrl,
       payment_method_types: ["card"],
-      mode: "payment",
+      mode: "subscription",
       billing_address_collection: "auto",
       customer_email: user.emailAddresses[0].emailAddress,
       line_items: [
         {
           price_data: {
-            currency: "EUR",
+            currency: "USD",
             product_data: {
-              name: "CtrlCap",
-              description: "60 CtrlCap Tokens."
+              name: "CtrlCap Pro",
+              description: "Unlimited Post Generations"
             },
-            unit_amount: 999,
+            unit_amount: 1000,
+            recurring: {
+              interval: "month"
+            }
           },
           quantity: 1,
         },
@@ -55,8 +58,6 @@ export async function GET() {
         userId,
       },
     })
-
-    console.log(JSON.stringify({ url: stripeSession.url }))
 
     return new NextResponse(JSON.stringify({ url: stripeSession.url }))
   } catch (error) {

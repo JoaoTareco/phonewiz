@@ -51,6 +51,7 @@ model objects {
   path_tokens      String[]  @default(dbgenerated("string_to_array(name, '/'::text)"))
   version          String?
   owner_id         String?
+  user_metadata    Json?
 
   @@unique([bucket_id, name], map: "bucketid_objname")
   @@index([name], map: "name_prefix_search")
@@ -72,9 +73,9 @@ model UserSubscription {
   id                     Int       @id @default(autoincrement())
   userId                 String?   @unique @db.VarChar
   stripeCustomerId       String?   @db.VarChar
-  stripeSubscriptionId   String?   @db.VarChar
+  stripeSubscriptionId   String?   @unique @db.VarChar
   stripePriceId          String?   @db.VarChar
-  stripeCurrentPeriodEnd String?   @db.VarChar
+  stripeCurrentPeriodEnd DateTime? @db.Timestamp(6)
   created_at             DateTime? @default(now()) @db.Timestamptz(6)
   post_tokens            Int?      @db.SmallInt
 
@@ -82,8 +83,22 @@ model UserSubscription {
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model audiences {
+  id           Int      @id @default(autoincrement()) @db.SmallInt
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+  niche        String?
+  struggles    String?
+  mistakes     String?
+  social_proof String?
+  user_id      String?  @db.VarChar
+  innactive    Boolean?
+
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model content_plans {
-  id           BigInt   @id @default(autoincrement())
+  id           Int      @id @default(autoincrement()) @db.SmallInt
   content_plan Json?    @db.Json
   created_at   DateTime @default(now()) @db.Timestamptz(6)
   niche        String?
@@ -106,6 +121,7 @@ model s3_multipart_uploads {
   version          String
   owner_id         String?
   created_at       DateTime @default(now()) @db.Timestamptz(6)
+  user_metadata    Json?
 
   @@index([bucket_id, key, created_at], map: "idx_multipart_uploads_list")
   @@schema("storage")
@@ -135,6 +151,12 @@ model generated_posts {
   caption        String?
   video_options  String?
   caption_inputs String?
+  cta            String?
+  hook           String?
+  objective      String?
+  texts          String?
+  topic          String?
+  videos         String?
 
   @@schema("public")
 }
@@ -155,6 +177,17 @@ model savedLibraryVideos {
   userId     String?  @db.VarChar
   url        String?  @db.VarChar
   created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model video_templates {
+  id             BigInt   @id @default(autoincrement())
+  num_videos     Int?     @db.SmallInt
+  videoSequences Json?    @db.Json
+  track_url      String?  @db.VarChar
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
 
   @@schema("public")
 }

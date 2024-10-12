@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { Badge } from "./ui/badge";
+import { SubscriptionButton } from "./subscription-button";
 
 export const FreeCounter = ({
   isPro = false,
@@ -45,12 +46,14 @@ export const FreeCounter = ({
           </div>
             {/* <Progress className="h-3" value={(apiLimitCount / boughtTokensCount) * 100} /> */}
           </div>
+
           <Button onClick={proModal.onOpen} type="submit" className="w-full text-sm">
-          Get More <Coins className="w-4 h-4 ml-2"/>
-          
+          <Zap className="w-4 h-4 mr-2" />
+          Upgrade
           {/* <Plus className="w-4 h-4 ml-2 fill-white"/> */}
             
           </Button>
+
         </CardContent>
       </Card>
     </div>

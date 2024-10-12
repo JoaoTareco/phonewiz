@@ -94,7 +94,7 @@ const Hero = () => {
                 <div className="mt-8">
 
                   <SignedIn>
-                  <Link href="/post-generator" >
+                  <Link href="/home" >
                   <Button className="px-6 py-2 mb-10 bold transform hover:-translate-y-1 transition duration-400">
                     Go to app
                   </Button>

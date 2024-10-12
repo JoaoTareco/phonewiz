@@ -12,14 +12,14 @@ export async function GET() {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const contentPlan = await prisma.content_plans.findFirst({
+    const audience = await prisma.audiences.findFirst({
       where: { user_id: userId },
       orderBy: { created_at: 'desc' }
     });
 
-    return NextResponse.json(contentPlan);
+    return NextResponse.json(audience);
   } catch (error) {
-    console.error("[GET_CONTENT_PLAN_ERROR]", error);
+    console.error("[GET_AUDIENCE_ERROR]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

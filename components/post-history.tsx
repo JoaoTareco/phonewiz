@@ -116,11 +116,11 @@ export const PostHistory: React.FC<PostHistoryrops> = ({ setStep, setInputProps,
             <div key={index} className="col-span-1">
               <Card className="">
                 <CardHeader>
-                  <span className="font-semibold">{JSON.parse(post.video_options).video_topic}</span>
+                  <span className="font-semibold">{!post.video_options ? post.topic : JSON.parse(post.video_options).video_topic}</span>
                 </CardHeader>
                 <CardContent>
 
-                <span className="bg-gradient-to-b from-black to-transparent inline-block text-transparent bg-clip-text">{post.caption.substring(0,120)}</span>
+                <span className="bg-gradient-to-b from-black to-transparent inline-block text-transparent bg-clip-text">{!post.caption ? 'No caption yet' : post.caption.substring(0,120)}</span>
                 </CardContent>
                 <CardFooter className="flex justify-between">
                   <span className="font-thin text-xs">{post.created_at.substring(0,10)}</span>

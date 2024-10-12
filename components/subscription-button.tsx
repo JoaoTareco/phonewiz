@@ -2,10 +2,12 @@
 
 import axios from "axios";
 import { useState } from "react";
-import { Zap } from "lucide-react";
+
 import { toast } from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "./ui/card";
+import { Cog, Settings2 } from "lucide-react";
 
 export const SubscriptionButton = ({
   isPro = false
@@ -28,10 +30,20 @@ export const SubscriptionButton = ({
     }
   };
 
+  if (!isPro) {
+    return null;
+  }
+
   return (
-    <Button variant={isPro ? "default" : "default"} disabled={loading} onClick={onClick} >
-      {isPro ? "Manage Subscription" : "Upgrade"}
-      {!isPro && <Zap className="w-4 h-4 ml-2 fill-white" />}
+    <div className="px-3">
+    <Card className="bg-white/10 border-0">
+      <CardContent className="py-6">
+    <Button className="w-full text-sm" variant={isPro ? "default" : "default"} disabled={loading} onClick={onClick} >
+      {isPro && <Cog className="w-4 h-4 mr-2" />}
+      {isPro ? "Settings" : "Upgrade"}
     </Button>
+    </CardContent>
+    </Card>
+    </div>
   )
 };

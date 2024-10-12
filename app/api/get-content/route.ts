@@ -91,8 +91,6 @@ export async function GET(
     const video_topic = url.searchParams.get('video_topic')
     const video_source = url.searchParams.get('video_source')
 
-    console.log(video_topic)
-
     if (video_source === "Library" || (video_source === "Content Bank" && all_videos.length < 2) ) {
       const prompt=[
         {"role": "system", "content": "You are a viral content expert."},
@@ -123,7 +121,6 @@ export async function GET(
       }
     });
 
-      console.log(library_videos.data.videos[0].video_files)
      
       // Usage:
       const videos: Video[] = library_videos.data.videos;
@@ -137,17 +134,9 @@ export async function GET(
       return NextResponse.json(final_response);
     }
 
-    let selected_videos : any = []
-
-    for (let i = 0; i < all_videos.length; i++) {
-      const randomIndex = Math.floor(Math.random() * all_videos.length); // Generate a random index
-      const randomVideo = all_videos[randomIndex]; // Access the video at the random indexn
-      selected_videos.push(randomVideo);
-    }
 
     const final_response = {
-      all_videos: all_videos,
-      selected_videos: selected_videos
+      all_videos: all_videos
     }
     
     return NextResponse.json(final_response);
