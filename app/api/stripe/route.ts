@@ -5,7 +5,7 @@ import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
 
 
-const settingsUrl = "http://localhost:3000/home";
+const settingsUrl = "https://ctrlcap.com/home";
 
 export async function GET() {
   try {
