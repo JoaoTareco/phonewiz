@@ -856,7 +856,7 @@ const ContentGenerator = () => {
                     className={`h-64 w-42 object-cover transition-all hover:scale-95 aspect-[3/4] rounded-md border-2 ${
                       selectedVideos.includes(video) ? 'border-primary' : 'border-transparent'
                     } cursor-pointer ${selectedVideos.length >= MAX_SELECTABLE_VIDEOS && !selectedVideos.includes(video) ? 'opacity-50' : ''}`}
-                    controls={true}
+                    controls={false}
                     muted
                     autoPlay={false}
                     onClick={() => handleVideoSelection(video)}
@@ -1079,7 +1079,7 @@ const ContentGenerator = () => {
                   </video> */}
               </div>
               {isMobile && (<div className="mb-1 ml-2 pt-5">Generated Caption:</div>)}
-              <div>
+              <div >
               <Card className="mb-2 bg-secondary h-[4vh] flex items-center ">
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center">
@@ -1109,7 +1109,7 @@ const ContentGenerator = () => {
              </Card>
              <Textarea
                placeholder="You erased the whole caption!"
-               className={`${isMobile ? 'overflow-y-auto h-full' : 'col-span-1  h-[74vh]'}`}
+               className={`${isMobile ? 'h-[74vh] ' : 'col-span-1  h-[74vh]'}`}
                defaultValue={generated_caption}
              />
             
