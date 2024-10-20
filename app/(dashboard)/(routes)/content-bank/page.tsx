@@ -254,10 +254,10 @@ const VideoPage = () => {
                         </Card>
                       </TabsContent>
                       <TabsContent value="upload" className='w-[20rem] md:w-[40rem]'>
-                        <Card className=' justify-center h-[20rem] w-[20rem] md:w-[40rem] lg:w-[60rem]'>
-                          <div  className='mt-28'>
+                        <Card className=' justify-center h-[20rem] w-[20rem] md:w-[40rem] '>
+                          <div  className='mt-28 w-[20rem] md:w-[40rem]'>
                         <FilePond
-                          className=""
+                          className=" "
                           files={files}
                           onupdatefiles={setFiles}
                           allowMultiple={false}
