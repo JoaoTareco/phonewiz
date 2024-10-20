@@ -60,6 +60,7 @@ import { useProModal } from "@/hooks/use-pro-modal";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Textarea2 } from "./ui/textarea2";
 import { useMediaQuery } from "react-responsive";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 const FormSchema = z.object({
   personal_insights: z.string({
@@ -320,13 +321,14 @@ export const CaptionPlayground: React.FC<CaptionPlaygroundProps> = ({ }) => {
                 <span className="">Generate</span>
               </Button>
             </DrawerTrigger>
-            <DrawerContent className=" overflow-y-auto">
+            <DrawerContent className="  h-5/6">
               <DrawerHeader>
                 <DrawerTitle>Generate</DrawerTitle>
                 <DrawerDescription>
                   Generate a new caption.
                 </DrawerDescription>
               </DrawerHeader>
+              <ScrollArea className="overflow-y-auto">
               <Form {...form}>
             <form onSubmit={form.handleSubmit(getCaption)} id="form1" className="grid w-full items-start gap-6">
               <fieldset className="grid gap-6 rounded-lg border p-4">
@@ -480,6 +482,7 @@ export const CaptionPlayground: React.FC<CaptionPlaygroundProps> = ({ }) => {
               </fieldset>
             </form>
             </Form>
+            </ScrollArea>
             <DrawerFooter>
             <DrawerClose asChild>
             <Button form="form1" type="submit" variant={"outline"} className="mt-5">
