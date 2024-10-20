@@ -179,7 +179,7 @@ const VideoPage = () => {
                         <TabsTrigger value="library">Library</TabsTrigger>
                         <TabsTrigger value="upload">Upload</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="library" className='lg:w-[60rem] w-[40rem] h-[39rem]'>
+                      <TabsContent value="library" className='lg:w-[60rem] w-[40rem] md:w-[40rem] h-[39rem]'>
                         <Card className='h-[20rem]'>
                           {/* <CardHeader>
                             <CardTitle>Lib</CardTitle>
@@ -253,8 +253,8 @@ const VideoPage = () => {
                           </CardFooter> */}
                         </Card>
                       </TabsContent>
-                      <TabsContent value="upload" className=''>
-                        <Card className=' justify-center h-[20rem] w-[60rem]'>
+                      <TabsContent value="upload" className='w-[20rem] md:w-[40rem]'>
+                        <Card className=' justify-center h-[20rem] w-[20rem] md:w-[40rem] lg:w-[60rem]'>
                           <div  className='mt-28'>
                         <FilePond
                           className=""
