@@ -22,10 +22,13 @@ import '@uppy/core/dist/style.min.css';
 import '@uppy/dashboard/dist/style.min.css';
 import { toast } from 'sonner';
 
+import { FilePond, registerPlugin } from 'react-filepond';
+import 'filepond/dist/filepond.min.css';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 
-const api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vZHRyeHRtaHd4d255d3NwZnVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQwMjM0NzksImV4cCI6MjAxOTU5OTQ3OX0.hTwPwcu50pbBDZIod4hz029-2cA5rCDzw_ZYSGclNMA';
-const project_id = 'modtrxtmhwxwnywspfuf';
-
+// Register FilePond plugins
+registerPlugin(FilePondPluginFileValidateType, FilePondPluginFileValidateSize);
 
 const VideoPage = () => {
   const [videos, setVideos] = useState<string[]>([]);
@@ -39,6 +42,7 @@ const VideoPage = () => {
   const [pexelsVideos, setPexelsVideos] = useState<any[]>([]);
   const [videosToSave, setVideosToSave] = useState<Set<any>>(new Set());
   const [open, setOpen] = React.useState(false)
+  const [files, setFiles] = useState([]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,30 +53,6 @@ const VideoPage = () => {
     setIsLoading(false)
   };
 
-  const uppy = new Uppy();
-
-  uppy.use(Tus, {
-    endpoint: `https://${project_id}.supabase.co/storage/v1/upload/resumable`,
-    headers: {
-      authorization: `Bearer ${api_key}`,
-    },
-    chunkSize: 6 * 1024 * 1024,
-    allowedMetaFields: ['bucketName', 'objectName', 'contentType', 'cacheControl'],
-  });
-
-  uppy.on('file-added', (file) => {
-    file.meta = {
-      ...file.meta,
-      bucketName: 'content-bank',
-      objectName: `${userId}/${file.name}`,
-      contentType: file.type,
-    };
-  });
-
-  uppy.on('complete', (result) => {
-    setUploaded(true);
-    console.log('Upload complete! We’ve uploaded these files:', result.successful);
-  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,6 +61,7 @@ const VideoPage = () => {
         setVideos(response.data.all_videos);
         const userData = await axios.get(`/api/get-user-id`);
         setUserId(userData.data);
+
         setLoadingStates(new Array(response.data.length).fill(true));
       } catch (error) {
         console.error('API Error:', error);
@@ -185,7 +166,7 @@ const VideoPage = () => {
                       Add new videos
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="justify-center max-w-fit">
+                  <DialogContent className="justify-center max-w-fit h-[38rem]">
                     <DialogHeader>
                       <DialogTitle>Add a new video</DialogTitle>
                       <DialogDescription>
@@ -199,7 +180,7 @@ const VideoPage = () => {
                         <TabsTrigger value="upload">Upload</TabsTrigger>
                       </TabsList>
                       <TabsContent value="library" className='lg:w-[60rem] w-[40rem] h-[39rem]'>
-                        <Card>
+                        <Card className='h-[20rem]'>
                           {/* <CardHeader>
                             <CardTitle>Lib</CardTitle>
                             <CardDescription>
@@ -220,10 +201,10 @@ const VideoPage = () => {
                             )}
                           </form>
                           {pexelsVideos.length === 0 && !isLoading && (
-                                <div className='justify-center text-center py-56 text-sm text-muted-foreground'>Uh... you&apos;ve got to search for something...</div>
+                                <div className='justify-center text-center py-40 text-sm text-muted-foreground'>Uh... you&apos;ve got to search for something...</div>
                               )}
                           { isLoading && (
-                            <ScrollArea className='h-[30rem] pt-4 '>
+                            <ScrollArea className='h-[20rem] pt-4 '>
                             <div className="grid 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-fit overflow-y-auto">
                                 {Array(20).fill(0).map((_, index) => (
                                   <Skeleton 
@@ -235,7 +216,7 @@ const VideoPage = () => {
                                 </ScrollArea>
                               )}
                            {pexelsVideos.length !== 0 && !isLoading && (
-                            <ScrollArea className='h-[30rem] pt-4 '>
+                            <ScrollArea className='h-[20rem] pt-4 '>
                             <div className="grid 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-fit overflow-y-auto">
                             {pexelsVideos.map((video: { id: number, url: string }, index: number) => (
                               <div key={video.id} className={`${videosToSave.has(video.url) ? 'border-primary border-2 rounded-lg' : ''}`}>
@@ -273,16 +254,64 @@ const VideoPage = () => {
                         </Card>
                       </TabsContent>
                       <TabsContent value="upload" className=''>
-                        <Card className=' justify-center'>
-                        {uppy && (
-                        <Dashboard
-                          uppy={uppy}
-                          plugins={['Dashboard']}
-                          closeAfterFinish={false}
-                          note={'Videos longer than 3 seconds only, up to 30 MB'}
+                        <Card className=' justify-center h-[20rem] w-[60rem]'>
+                          <div  className='mt-28'>
+                        <FilePond
                           className=""
+                          files={files}
+                          onupdatefiles={setFiles}
+                          allowMultiple={false}
+                          maxFiles={1}
+                          acceptedFileTypes={['video/*']}
+                          maxFileSize="15MB"
+                          server={{
+                            process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                              const formData = new FormData();
+                              formData.append('file', file, file.name);
+
+                              const request = new XMLHttpRequest();
+                              request.open('POST', '/api/upload-video');
+                              request.setRequestHeader('X-User-Id', userId || '');
+
+                              request.upload.onprogress = (e) => {
+                                progress(e.lengthComputable, e.loaded, e.total);
+                              };
+
+                              request.onload = function() {
+                                if (request.status >= 200 && request.status < 300) {
+                                  load(request.responseText);
+                                  const jsonResponse = JSON.parse(request.responseText);
+                                  if (jsonResponse.url) {
+                                    toast.success('Video uploaded successfully');
+                                    setUploaded(true);
+                                  } else {
+                                    error('Upload failed');
+                                    toast.error('Failed to upload video');
+                                  }
+                                } else {
+                                  error('Upload failed');
+                                  toast.error('Failed to upload video');
+                                }
+                              };
+
+                              request.onerror = function() {
+                                error('Upload failed');
+                                toast.error('Failed to upload video');
+                              };
+
+                              request.send(formData);
+
+                              return {
+                                abort: () => {
+                                  request.abort();
+                                  abort();
+                                }
+                              };
+                            }
+                          }}
+                          labelIdle='Drag & Drop your video or <span class="filepond--label-action">Browse</span>'
                         />
-                      )}
+                        </div>
                         </Card>
                       </TabsContent>
                     </Tabs>
@@ -303,14 +332,14 @@ const VideoPage = () => {
                   )}
                  <video className="h-96 w-64 object-cover transition-all aspect-[3/4] rounded-md" key={index}
                   controls={true}
-                  typeof='video/webm' 
-                  // autoPlay
-                  preload="metadata"
+                 // autoPlay
+                  preload="auto"
                   // onMouseOver={event => (event.target as HTMLMediaElement).play()}
                   // onMouseOut={event => (event.target as HTMLMediaElement).pause()}
-                  muted
+                   crossOrigin="anonymous"
+                  playsInline
                   >
-                    <source src={videoUrl} />
+                    <source src={videoUrl} type='video/mp4'/>
                   </video>
                   </div>
                 ))}
