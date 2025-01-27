@@ -39,7 +39,7 @@ export const PostHistory: React.FC<PostHistoryrops> = ({ setStep, setInputProps,
     } else {
       setPostHistory(postHistoryOut)
     }
-  }, []);
+  }, [postHistoryOut, setPostHistoryOut]);
 
 
   const captionPlayground = () => {

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Check, MoveUpRight, Zap } from "lucide-react";
 import { toast } from "react-hot-toast";
+import Image from 'next/image'
 
 import { 
   Dialog, 
@@ -63,7 +64,13 @@ export const ProModal = () => {
               </Card>
             ))} */}
             <div className="">
-              <img src="/discount.png" width="230" height="230" />
+              <Image 
+                src="/discount.png"
+                alt="Pro modal image"
+                width={230}
+                height={230}
+                className={cn("rounded-md")}
+              />
              <div className="">
               <div className=" mb-5 text-black"><span className="line-through text-mute">$29,99</span> <span className=" font-bold">$10</span></div>
               <div className=""><span className="text-2xl font-bold text-primary">Unlimited</span> <span className="text-primary text-2xl">Posts</span></div>

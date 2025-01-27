@@ -10,6 +10,7 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription } fr
 import { Textarea } from "@/components/ui/textarea"
 import { useForm } from "react-hook-form"
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 type PostType = 'video' | 'carousel'
 type PostTag = 'Awareness' | 'Nurture' | 'Convertion'
@@ -75,8 +76,11 @@ export function InstagramPostCard({
       <CardContent >
         <div className="flex space-x-4">
           <div className="relative w-32 h-56 bg-muted flex-shrink-0">
-          <img
+            <Image 
               src={"https://images.pexels.com/photos/3692643/pexels-photo-3692643.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"}
+              alt="Post thumbnail"
+              width={128}
+              height={192}
               className="absolute inset-0 w-full h-full object-cover rounded-md"
               style={{filter: 'brightness(20%)'}}
             />

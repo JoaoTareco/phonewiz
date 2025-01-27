@@ -114,7 +114,7 @@ const Hero = () => {
                   }}
                   className="text-xl sm:text-xl md:text-6xl lg:text-6xl xl:text-6xl font-semibold text-neutral-700 mx-auto  md:px-2 lg:px-6 xl:px-18 2xl:px-28 pb-6 lg:pb-10 leading-normal"
                 >
-                  The AI Receptionist You've Been 
+                  The AI Receptionist You&apos;ve Been 
                   {" "}
                   <Highlight className="text-black dark:text-white leading-normal">
                   Looking For
@@ -246,7 +246,7 @@ const Hero = () => {
             <DialogTitle>Great to see you joining us!</DialogTitle>
             <DialogDescription className="">
             <br/>
-              We are letting new content creators in every day. We'll notify you when you've got access:
+              We&apos;ll notify you when you&apos;ve got access:
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmit}>

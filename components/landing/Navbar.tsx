@@ -113,7 +113,7 @@ export default function NavigationMenuLanding() {
             <DialogTitle>Great to see you joining us!</DialogTitle>
             <DialogDescription className="">
             <br/>
-              We are letting new content creators in every day. We'll notify you when you've got access:
+              We are letting new content creators in every day. We&apos;ll notify you when you&apos;ve got access:
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmit}>
@@ -157,7 +157,7 @@ export default function NavigationMenuLanding() {
             <DialogTitle>Great to see you joining us!</DialogTitle>
             <DialogDescription className="">
             <br/>
-              We are letting new content creators in every day. We'll notify you when you've got access:
+              We are letting new content creators in every day. We&apos;ll notify you when you&apos;ve got access:
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmit}>
