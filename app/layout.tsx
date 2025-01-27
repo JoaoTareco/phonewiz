@@ -31,7 +31,7 @@ export default async function RootLayout({
             }}
 >
       <html lang="en" suppressHydrationWarning>
-        <CrispProvider />
+        
         <head>
 
         <Script

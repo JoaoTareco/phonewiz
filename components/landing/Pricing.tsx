@@ -187,11 +187,11 @@ export default function Pricing() {
               </ul>
             </CardContent>
             <CardFooter>
-            <Link href="/sign-up" className="w-full ">
+            {/* <Link href="/sign-up" className="w-full ">
               <Button className="w-full " variant={"outline"}>
                 Sign up
               </Button>
-              </Link>
+              </Link> */}
             </CardFooter>
           </Card>
 
@@ -226,7 +226,7 @@ export default function Pricing() {
               </ul>
             </CardContent>
             <CardFooter>
-            <Link href="/sign-up" className="w-full "> <Button className="w-full">Sign up</Button></Link>
+            {/* <Link href="/sign-up" className="w-full "> <Button className="w-full">Sign up</Button></Link> */}
               
             </CardFooter>
           </Card>

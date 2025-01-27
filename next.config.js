@@ -6,7 +6,9 @@ const nextConfig = {
       "oaidalleapiprodscus.blob.core.windows.net",
       "cdn.openai.com",
       "images.unsplash.com",
-      "assets.aceternity.com"
+      "assets.aceternity.com",
+      "modtrxtmhwxwnywspfuf.supabase.co",
+      "videos.pexels.com"
     ]
   },
   typescript: {

@@ -10,73 +10,11 @@ const Footer = () => {
       <footer className=" bg-white dark:border-strokedark dark:bg-blacksection">
         <div className="mx-auto max-w-c-1390 px-4 md:px-8">
           {/* <!-- Footer Top --> */}
-          <div className="py-2 lg:py-6">
+          <div className="">
             <div className="flex flex-wrap sm:gap-8 justify-between lg:gap-0">
-              <motion.div
-                variants={{
-                  hidden: {
-                    opacity: 0,
-                    y: -20,
-                  },
+             
 
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                  },
-                }}
-                initial="hidden"
-                whileInView="visible"
-                transition={{ duration: 1, delay: 0.5 }}
-                viewport={{ once: true }}
-                className="animate_top w-1/2 lg:w-1/4"
-              >
-                <a href="/" className="relative">
-                  <Image
-                    width={110}
-                    height={80}
-                    src="/ctrlcap.png"
-                    alt="Logo"
-                    className="dark:hidden"
-                  />
-                  <Image
-                    width={110}
-                    height={80}
-                    src="/ctrlcap.png"
-                    alt="Logo"
-                    className="hidden dark:block"
-                  />
-                </a>
-              </motion.div>
-
-              <motion.div
-                variants={{
-                  hidden: {
-                    opacity: 0,
-                    y: -20,
-                  },
-
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                  },
-                }}
-                initial="hidden"
-                whileInView="visible"
-                transition={{ duration: 1, delay: 0.5 }}
-                viewport={{ once: true }}
-                className="animate_top  text-right "
-              >
-
-                <p className=" text-sectiontitle uppercase tracking-[5px]">
-                  contact
-                </p>
-                <a
-                  href="#"
-                  className="text-itemtitle font-medium text-black dark:text-white"
-                >
-                  support@ctrlcap.com
-                </a>
-              </motion.div>
+              
 
               {/* <div className="flex w-full flex-col gap-8 md:flex-row md:justify-between md:gap-0 lg:w-2/3 xl:w-7/12 text-center">
                 <motion.div
@@ -282,7 +220,7 @@ const Footer = () => {
               className="animate_top text-sm"
             >
               <p>
-                &copy; {new Date().getFullYear()} Ctrlcap. All rights reserved
+              &copy; {new Date().getFullYear()} PhoneWiz. All rights reserved
               </p>
             </motion.div>
 
@@ -304,7 +242,19 @@ const Footer = () => {
               viewport={{ once: true }}
               className="animate_top"
             >
-              <ul className="flex items-center gap-5">
+        
+
+                <p className=" text-sectiontitle uppercase tracking-[5px]">
+                  contact
+                </p>
+                <a
+                  href="#"
+                  className="text-itemtitle font-medium text-black dark:text-white"
+                >
+                  support@phonewiz.com
+                </a>
+        
+              {/* <ul className="flex items-center gap-5">
                
                 <li>
                   <a href="https://www.instagram.com/ctrlcap.ai/" aria-label="social icon">
@@ -328,7 +278,7 @@ const Footer = () => {
                   </a>
                 </li>
                 
-              </ul>
+              </ul> */}
             </motion.div>
           </div>
           {/* <!-- Footer Bottom --> */}

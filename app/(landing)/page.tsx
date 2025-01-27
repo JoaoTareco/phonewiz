@@ -19,9 +19,7 @@ const LandingPage = () => {
     <main>
       <NavigationMenuLanding />
       <Hero />
-      <Video />
-      <About />
-      <Pricing />
+
       <Footer />
     </main>
 

@@ -63,7 +63,7 @@ export const FeedbackDialog = () => {
     <Dialog >
         <DialogTrigger asChild>
 
-            <Button variant="feedback" className="w-full flex justify-center"><MessagesSquare className="w-4 h-4 mr-1"/><span className="text-xs">Give Feedback</span></Button>
+            <Button variant="feedback" className="w-full flex justify-center"><MessagesSquare className="w-4 h-4 mr-1"/><span className="text-xs">Support</span></Button>
 
 
         </DialogTrigger>

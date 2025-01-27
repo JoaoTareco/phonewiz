@@ -20,10 +20,34 @@ import { ArrowUpRight, Menu } from "lucide-react"
 import { useMediaQuery } from "react-responsive"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/nextjs"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { toast } from "react-hot-toast"
 
 
 export default function NavigationMenuLanding() {
     const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+    const [showDialog, setShowDialog] = React.useState(false);
+    const [email, setEmail] = React.useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      try {
+        const response = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        if (response.ok) {
+          toast.success("You've been added to the waitlist, we'll be in touch soon!");
+          setShowDialog(false);
+        } else {
+          toast.error("There was an error. Please try again.");
+        }
+      } catch (error) {
+        toast.error("There was an error. Please try again.");
+      }
+    };
 
     const routes = [
         {
@@ -38,21 +62,14 @@ export default function NavigationMenuLanding() {
           label: 'Contact',
           href: '/',
         },
-        
-      ];
+    ];
 
     if (!isMobile) {
   return (
+    <>
     <div className="w-full px-4 sm:px-10 py-1 flex justify-between ">
         <div className="flex">
-        <Image
-        src="/ctrlcap.png"
-        alt="About"
-        className=""
-        width={100}
-        height={50}
-
-        />
+        <span className="py-3">PHONEWIZ LOGO HERE</span>
     <NavigationMenu className="px-10">
       <NavigationMenuList>
       {/* <NavigationMenuItem>
@@ -81,42 +98,80 @@ export default function NavigationMenuLanding() {
     </div>
     <div className="flex items-center justify-center">
   
-         <SignedIn>
-            <Link href="/home" >
-                <Button className="hover:-translate-x-1 transition duration-400">Go to app <ArrowUpRight className="pl-2"/></Button>
+   
+            <Link href="/dashboard" >
+                <Button className="hover:-translate-x-1 transition duration-400">Go to dashboard <ArrowUpRight className="pl-2"/></Button>
             </Link>
-            </SignedIn>
-            <SignedOut>
-            <Link href="/sign-up" >
-                <Button className="hover:-translate-x-1 transition duration-400 ">Get 5 free posts <ArrowUpRight className="pl-2"/></Button>
-            </Link>
-        </SignedOut>
+           
    
     </div>
     </div>
+
+    <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Great to see you joining us!</DialogTitle>
+            <DialogDescription className="">
+            <br/>
+              We are letting new content creators in every day. We'll notify you when you've got access:
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmit}>
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <Button type="submit" className="mt-4">Get Access</Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </>
   )} else {
       return (
         <>
    
         <div className="w-full px-4 sm:px-10 py-1 flex justify-between ">
             <Image
-            
             src="/ctrlcap.png"
             alt="About"
             className=""
             width={100}
             height={50}
-
             />
         <div className="flex items-center justify-center">
-        
-
-            <Link href="/sign-up" >
-                <Button className="hover:-translate-x-1 transition duration-400 text-xs">Get 5 free posts <ArrowUpRight className="pl-2"/></Button>
-            </Link>
-
+            <Button 
+              className="hover:-translate-x-1 transition duration-400 text-xs"
+              onClick={() => setShowDialog(true)}
+            >
+              Get Access <ArrowUpRight className="pl-2"/>
+            </Button>
         </div>
         </div>
+
+        <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Great to see you joining us!</DialogTitle>
+            <DialogDescription className="">
+            <br/>
+              We are letting new content creators in every day. We'll notify you when you've got access:
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmit}>
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <Button type="submit" className="mt-4">Get Access</Button>
+          </form>
+        </DialogContent>
+      </Dialog>
         </>
       )
   }

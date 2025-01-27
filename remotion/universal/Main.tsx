@@ -60,6 +60,8 @@ export const Universal = ({
                   fontSize: 60,
                   color: seq.color,
                   backgroundColor: seq.backgroundColor,
+                  borderRadius: 30,
+                  backgroundSize: "bg-contain",
                   padding: 10,
                 }}>{seq.content}</h1>
               </div>
