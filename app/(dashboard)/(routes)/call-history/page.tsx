@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react"
 import { CallHistoryTable } from "@/app/(dashboard)/(routes)/call-history/table"
 import { CallRecord } from "@/app/(dashboard)/(routes)/call-history/types"
+import { Heading } from "@/components/heading"
+import { Phone } from "lucide-react"
+import { Loader } from "@/components/loader"
 
 export default function CallHistoryPage() {
   const [callHistory, setCallHistory] = useState<CallRecord[]>([])
@@ -30,26 +33,28 @@ export default function CallHistoryPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-5 px-10">
-        <h1 className="text-2xl font-bold mb-5">Call History</h1>
-        <div>Loading...</div>
-      </div>
+    
+        
+      <Loader/>
+      
+       
     )
   }
 
   if (error) {
     return (
-      <div className="container mx-auto py-5 px-10">
-        <h1 className="text-2xl font-bold mb-5">Call History</h1>
+      <div className="min-h-screen bg-gray-50 py-5 px-10">
+        <Heading title={"Call History"} description={"View full list of completed calls"} icon={Phone}></Heading>
         <div className="text-red-500">Error: {error}</div>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto py-5 px-10">
-      <h1 className="text-2xl font-bold mb-5">Call History</h1>
-      <CallHistoryTable callHistory={callHistory} />
+    <div className="min-h-screen bg-gray-50 py-5 px-10">
+      <Heading title={"Call History"} description={"View full list of completed calls"} icon={Phone}></Heading>
+      <div className="px-10"><CallHistoryTable callHistory={callHistory} /></div>
+      
     </div>
   )
 }

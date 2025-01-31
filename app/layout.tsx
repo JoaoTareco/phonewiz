@@ -24,11 +24,6 @@ export default async function RootLayout({
 }) {
   return (
     <ClerkProvider
-    appearance={{
-        variables: {
-            colorPrimary: 'hsl(346.8, 77.2%, 49.8%)', // change this value (you can get it from you're css variables, make sure to include 'hsl' and commas)
-                },
-            }}
 >
       <html lang="en" suppressHydrationWarning>
         

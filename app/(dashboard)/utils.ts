@@ -17,7 +17,7 @@ export const processCallData = (records: CallRecord[]) => {
       evening: 0,   // 5PM - 9PM
       night: 0      // 9PM - 6AM
     },
-    callVolume: new Array(7).fill(0) // Last 7 days
+    callVolume: new Array(31).fill(0) // Changed to 31 days
   }
 
   records.forEach(record => {
@@ -50,10 +50,11 @@ export const processCallData = (records: CallRecord[]) => {
       stats.callDistribution.night++
     }
 
-    // Call volume for last 7 days
-    const daysAgo = Math.floor((now.getTime() - callDate.getTime()) / (1000 * 60 * 60 * 24))
-    if (daysAgo < 7) {
-      stats.callVolume[6 - daysAgo]++
+    // Call volume for the month
+    if (callDate.getMonth() === startOfMonth.getMonth() && 
+        callDate.getFullYear() === startOfMonth.getFullYear()) {
+      const dayOfMonth = callDate.getDate() - 1 // Convert to 0-based index
+      stats.callVolume[dayOfMonth]++
     }
   })
 

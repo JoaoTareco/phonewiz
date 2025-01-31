@@ -11,7 +11,7 @@ export async function GET() {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const response = await fetch('https://aitable.ai/fusion/v1/datasheets/dstmaBg6YMZ0RqXZk7/records?viewId=viwu90rRLNDH5&fieldKey=name', {
+    const response = await fetch('https://aitable.ai/fusion/v1/datasheets/dstmaBg6YMZ0RqXZk7/records?viewId=viwu90rRLNDH5&maxRecords=100&sort={"field": "startedAt", "order": "desc"}', {
       headers: {
         'Authorization': 'Bearer usk1XPGa2GLcFGADNMUgBcJ'
       }

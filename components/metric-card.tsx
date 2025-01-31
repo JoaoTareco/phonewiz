@@ -9,10 +9,10 @@ export function MetricCard({ title, value }: MetricCardProps) {
   return (
     <Card className="bg-white">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg font-medium text-gray-500">{title}</CardTitle>
+        <CardTitle className="text-lg font-medium">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-6xl font-normal text-[#6C5DD3]">{value}</div>
+        <div className="text-6xl font-normal text-primary">{value}</div>
       </CardContent>
     </Card>
   )
